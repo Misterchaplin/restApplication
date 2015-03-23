@@ -14,9 +14,11 @@ import net.vues.VAccueil;
 
 
 
+
 import org.apache.http.client.ClientProtocolException;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Shell;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -38,6 +40,8 @@ public class AccueilController implements SelectionListener {
 					vAccueil.getGrpConnexion().setVisible(true);
 					vAccueil.getBtnConnect().addSelectionListener(new SelectionListener() {
 						
+						private Shell shell;
+
 						@Override
 						public void widgetSelected(SelectionEvent arg0) {
 							Utilisateur user= new Utilisateur();
@@ -45,22 +49,27 @@ public class AccueilController implements SelectionListener {
 							user.setPassword(vAccueil.getTxtMdp().getText());
 							//System.out.println(user);
 							TestHttp test=new TestHttp();
-							String baseUrl="http://localhost/rest-qcm/";
-	
+							String baseUrl="http://127.0.0.1/rest-QCM/";
+							
 							try {
-								String reponse=test.get(baseUrl+"utilisateurs");
+								System.out.println(test.postClassic(baseUrl+"user/connect", user));
+								
+							/*String reponse=test.get(baseUrl+"utilisateurs");
 								ArrayList<Utilisateur> utilisateurs = test.getGson().fromJson(reponse, new TypeToken<List<Utilisateur>>(){}.getType());
 								
 								for (Utilisateur users : utilisateurs) {
 									if(user.getLogin().startsWith(users.getLogin()) && user.getPassword().startsWith(users.getPassword())){
 										System.out.println(users.getId());
 										vAccueil.getGrpConnexion().setVisible(false);
-										vAccueil.getLblInformation().setText("");
+										vAccueil.getLblRefused().setVisible(false);
+										vAccueil.getLblConnect().setVisible(true);
+										vAccueil.getLblConnect().setText("Bienvenue, "+users.getNom());
+										
 									}
 									else{
-										vAccueil.getLblInformation().setText("Log incorrect");
+										vAccueil.getLblRefused().setVisible(true);
 									}
-								}
+								}*/
 									
 									
 								
@@ -72,13 +81,24 @@ public class AccueilController implements SelectionListener {
 							
 						}
 						
+						private void showMessageDialog(Object object,
+								String string) {
+							// TODO Auto-generated method stub
+							
+						}
+
+						private void MessageDialog(String string) {
+							// TODO Auto-generated method stub
+							
+						}
+
 						@Override
 						public void widgetDefaultSelected(SelectionEvent arg0) {
 							// TODO Auto-generated method stub
 							
 						}
 					});
-					// on ouvre la fenÃªtre seulement si elle n'est pas dÃ©jÃ 
+					// on ouvre la fenêtre seulement si elle n'est pas déjà
 					// ouverte
 					/*if (nbOpenedWindowConnection == 0) {
 						nbOpenedWindowConnection = 1;
@@ -89,7 +109,7 @@ public class AccueilController implements SelectionListener {
 						vLogin.open();
 					}*/
 				}
-				// si on se dÃ©connecte
+				// si on se déconnecte
 				/*else {
 					AppController.setActiveUser(null);
 					vAccueil.getItemConnexion().setText("Connexion");
@@ -117,7 +137,7 @@ public class AccueilController implements SelectionListener {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				// on ouvre la fenÃªtre seulement si elle n'est pas dÃ©jÃ  ouverte
+				// on ouvre la fenêtre seulement si elle n'est pas déjà ouverte
 				if (nbOpenedWindowProduit == 0) {
 					nbOpenedWindowProduit = 1;
 					VListProduits vListProduits = new VListProduits();

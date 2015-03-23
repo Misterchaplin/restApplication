@@ -86,7 +86,7 @@ public class TestHttp {
 	    CloseableHttpClient httpClient = HttpClients.createDefault();
 	    try {
 	        HttpPost postRequest = new HttpPost(urlToRead);
-	        postRequest.setHeader("content-type","utf-8");
+	        postRequest.setHeader("content-type","application/x-www-form-urlencoded");
 	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 	         
 	        JsonElement elm = gson.toJsonTree(o);
