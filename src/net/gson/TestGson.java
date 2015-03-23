@@ -1,5 +1,6 @@
 package net.gson;
 
+import net.models.ActifUser;
 import net.models.Utilisateur;
 
 import com.google.gson.Gson;
@@ -20,6 +21,10 @@ public class TestGson {
 	
 	public Utilisateur jsonToUser(String jsonString){
 		return gson.fromJson(jsonString, Utilisateur.class);
+	}
+	
+	public ActifUser jsonToActif(String jsonString){
+		return gson.fromJson(jsonString, ActifUser.class);
 	}
 	
 	public static void main(String args[]){

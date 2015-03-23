@@ -4,10 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.gson.TestGson;
 import net.http.TestHttp;
+import net.models.ActifUser;
 import net.models.Domaine;
 import net.models.Utilisateur;
 import net.vues.VAccueil;
+
+
+
 
 
 
@@ -52,8 +57,11 @@ public class AccueilController implements SelectionListener {
 							String baseUrl="http://127.0.0.1/rest-QCM/";
 							
 							try {
-								System.out.println(test.postClassic(baseUrl+"user/connect", user));
-								
+								String reponse = test.postClassic(baseUrl+"user/connect", user);
+								System.out.println(reponse);
+								TestGson test2=new TestGson();
+								ActifUser actif=test2.jsonToActif(reponse);
+								System.out.println(actif);
 							/*String reponse=test.get(baseUrl+"utilisateurs");
 								ArrayList<Utilisateur> utilisateurs = test.getGson().fromJson(reponse, new TypeToken<List<Utilisateur>>(){}.getType());
 								
