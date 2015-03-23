@@ -28,6 +28,18 @@ public class VAccueil {
 	private Text txtLogin;
 	private Group grpConnexion;
 	private Button btnConnect;
+	private Group grpInformation;
+	
+	public Group getGrpInformation() {
+		return grpInformation;
+	}
+
+	public Label getLblInformation() {
+		return lblInformation;
+	}
+
+	private Label lblInformation;
+	
 
 	public Button getBtnConnect() {
 		return btnConnect;
@@ -131,6 +143,18 @@ public class VAccueil {
 		btnConnect = new Button(grpConnexion, SWT.NONE);
 		btnConnect.setBounds(178, 145, 87, 25);
 		btnConnect.setText("Se connecter");
+		
+		grpInformation = new Group(accueil, SWT.NONE);
+		grpInformation.setText("Information :");
+		FormData fd_grpInformation = new FormData();
+		fd_grpInformation.right = new FormAttachment(menuConnexion, 0, SWT.RIGHT);
+		fd_grpInformation.bottom = new FormAttachment(grpConnexion, -17);
+		fd_grpInformation.left = new FormAttachment(0, 10);
+		fd_grpInformation.top = new FormAttachment(0, 47);
+		grpInformation.setLayoutData(fd_grpInformation);
+		
+		lblInformation = new Label(grpInformation, SWT.NONE);
+		lblInformation.setBounds(10, 21, 490, 15);
 
 	}
 

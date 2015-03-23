@@ -48,17 +48,17 @@ public class AccueilController implements SelectionListener {
 							String baseUrl="http://localhost/rest-qcm/";
 	
 							try {
-								//Domaine dom=test.getGson().fromJson(test.get(baseUrl+"domaines/2"), Domaine.class);
-							//	dom.setLibelle(dom.getLibelle()+" modifié");
-							//	System.out.println(dom.getLibelle());
-								String reponse=test.get(baseUrl+"domaines");
-								ArrayList<Domaine> domaines = test.getGson().fromJson(reponse, new TypeToken<List<Domaine>>(){}.getType());
-								//System.out.println(domaines);
+								String reponse=test.get(baseUrl+"utilisateurs");
+								ArrayList<Utilisateur> utilisateurs = test.getGson().fromJson(reponse, new TypeToken<List<Utilisateur>>(){}.getType());
 								
-								
-								for (Domaine domaine : domaines) {
-									if(domaine.getLibelle().startsWith("domaine1")){
-										System.out.println(domaine.getId());
+								for (Utilisateur users : utilisateurs) {
+									if(user.getLogin().startsWith(users.getLogin()) && user.getPassword().startsWith(users.getPassword())){
+										System.out.println(users.getId());
+										vAccueil.getGrpConnexion().setVisible(false);
+										vAccueil.getLblInformation().setText("");
+									}
+									else{
+										vAccueil.getLblInformation().setText("Log incorrect");
 									}
 								}
 									
