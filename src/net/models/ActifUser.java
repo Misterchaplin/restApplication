@@ -5,13 +5,13 @@ public class ActifUser {
 	public String toString() {
 		return "connectedUser [connected=" + connected + ", token=" + token + "]";
 	}
-	private String connected;
+	private Boolean connected;
 	private String token;
 	
-	public String getconnected() {
+	public Boolean getconnected() {
 		return connected;
 	}
-	public void setconnected(String connected) {
+	public void setconnected(Boolean connected) {
 		this.connected = connected;
 	}
 	public String getToken() {

@@ -19,4 +19,5 @@ public class AppController {
 		vAccueil.init();
 		accueilController.init();
 	}
+	
 }
