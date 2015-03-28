@@ -82,6 +82,7 @@ public class VLogin {
 
 	/**
 	 * Create contents of the window.
+	 * @wbp.parser.entryPoint
 	 */
 	protected void createContents() {
 		shell = new Shell();

@@ -42,7 +42,7 @@ public class LoginController implements SelectionListener {
 				if(actif.getconnected()==true){
 					vLogin.getShell().close();
 					AccueilController.vAccueil.getItemConnexion().setEnabled(false);
-					AccueilController.vAccueil.getItemMonProfil().setEnabled(true);
+					
 				}
 				else{
 					vLogin.getLblInformation().setText("Erreur dans l'authentification.");

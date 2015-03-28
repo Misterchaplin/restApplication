@@ -1,6 +1,11 @@
 package net.controllers;
 
+import java.io.IOException;
+
+import net.gson.TestGson;
+import net.http.TestHttp;
 import net.models.ActifUser;
+import net.models.Questionnaire;
 import net.vues.VAccueil;
 import net.vues.VLogin;
 
@@ -9,12 +14,33 @@ import org.eclipse.swt.events.SelectionListener;
 
 public class AccueilController implements SelectionListener {
 	public static VAccueil vAccueil;
+	private String qcm;
 
 	public AccueilController(VAccueil vAccueil) {
 		this.vAccueil = vAccueil;
 	}
 
 	public void init() {
+		TestHttp test = new TestHttp();
+		String baseUrl="http://127.0.0.1/rest-QCM/";
+		try {
+			qcm=test.get(baseUrl+"questionnaires/search/Phalcon");
+			
+			System.out.println(qcm);
+			TestGson gsonQuestionnaire=new TestGson();
+			Questionnaire[]  h= gsonQuestionnaire.jsonToAllQuestionnaire(qcm);
+			for (Questionnaire questionnaire : h) {
+				System.out.println(questionnaire);
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 		// onglet connexion
 		vAccueil.getItemConnexion().addSelectionListener(new SelectionListener() {
 
@@ -28,7 +54,7 @@ public class AccueilController implements SelectionListener {
 					loginController.init();
 					vLogin.open();
 					
-					System.out.println(AppController.getActiveUser());
+				//	vAccueil.getTvAccueil().sett
 					/*if(AppController.getActiveUser().getconnected()==true){
 						vAccueil.getItemConnexion().setEnabled(false);
 					}*/

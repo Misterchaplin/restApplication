@@ -71,6 +71,7 @@ public class TestHttp {
 		result=httpClient.execute(getRequest,responseHandler);
 		return result;
 	}
+
 	
 	public String delete(String id) throws ClientProtocolException, IOException{
 		String result="";

@@ -1,6 +1,7 @@
 package net.gson;
 
 import net.models.ActifUser;
+import net.models.Questionnaire;
 import net.models.Utilisateur;
 
 import com.google.gson.Gson;
@@ -11,7 +12,7 @@ public class TestGson {
 	
 	public TestGson(){
 		GsonBuilder builder = new GsonBuilder();
-		builder.setDateFormat("dd/MM/yyyy");
+		builder.setDateFormat("dd-MM-yyyy");
 		gson= builder.create();
 	}
 	
@@ -25,6 +26,14 @@ public class TestGson {
 	
 	public ActifUser jsonToActif(String jsonString){
 		return gson.fromJson(jsonString, ActifUser.class);
+	}
+	
+	public Questionnaire jsonToQuestionnaire(String jsonString){
+		return gson.fromJson(jsonString, Questionnaire.class);
+	}
+	
+	public Questionnaire[] jsonToAllQuestionnaire(String jsonString){
+		return gson.fromJson(jsonString, Questionnaire[].class);
 	}
 	
 	public static void main(String args[]){
