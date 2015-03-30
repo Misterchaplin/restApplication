@@ -6,7 +6,7 @@ public class Questionnaire {
 	private Integer id;
 	private String libelle;
 	private Integer domaine_id;
-	private Integer utilisateur_id;
+	private Integer questionnaire_id;
 	private Date date;
 	
 	public Integer getId() {
@@ -27,11 +27,12 @@ public class Questionnaire {
 	public void setDomaine_id(Integer domaine_id) {
 		this.domaine_id = domaine_id;
 	}
-	public Integer getUtilisateur_id() {
-		return utilisateur_id;
+	
+	public Integer getQuestionnaire_id() {
+		return questionnaire_id;
 	}
-	public void setUtilisateur_id(Integer utilisateur_id) {
-		this.utilisateur_id = utilisateur_id;
+	public void setQuestionnaire_id(Integer questionnaire_id) {
+		this.questionnaire_id = questionnaire_id;
 	}
 	public Date getDate() {
 		return date;
@@ -44,7 +45,7 @@ public class Questionnaire {
 	public String toString() {
 		return "Questionnaire [id=" + id + ", libelle=" + libelle
 				+ ", domaine_id=" + domaine_id + ", utilisateur_id="
-				+ utilisateur_id + ", date=" + date + "]";
+				+ questionnaire_id + ", date=" + date + "]";
 	}
 	
 }

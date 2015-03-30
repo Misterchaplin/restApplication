@@ -16,8 +16,12 @@ public class AppController {
 
 	public AppController(VAccueil vAccueil) {
 		AccueilController accueilController = new AccueilController(vAccueil);
+		GroupeController groupeController = new GroupeController(vAccueil);
+		QcmController qcmController  = new QcmController(vAccueil);
 		vAccueil.init();
 		accueilController.init();
+		groupeController.init();
+		qcmController.init();
 	}
 	
 }

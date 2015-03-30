@@ -41,12 +41,26 @@ public class VAccueil {
 	private Group grpInformation;
 	private Label lblInformation;
 	private TableColumnLayout tLayout;
-	private Text text;
-	private Text text_1;
-	private Text text_2;
-	private Text text_3;
-	private Text text_4;
-	private Text text_5;
+	private Text txtQcm;
+	private Text txtQuestionQcm;
+	private Text txtQcm1;
+	private Text txtQcm3;
+	private Text txtQcm2;
+	private Text txtQcm4;
+	private Table table;
+	private Text txtLibelle;
+	
+	public Text getTxtQcm() {
+		return txtQcm;
+	}
+
+	public Text getTxtLibelle() {
+		return txtLibelle;
+	}
+
+	private Text txtCode;
+	private Button btnAjouterGroupe;
+	private Button btnAjouterQcm;
 	
 	public Group getGrpInformation() {
 		return grpInformation;
@@ -66,6 +80,13 @@ public class VAccueil {
 
 	public ToolItem getItemLogin() {
 		return itemLogin;
+	}
+	public Button getBtnAjouterGroupe() {
+		return btnAjouterGroupe;
+	}
+
+	public Table getTvAccueil() {
+		return getTvAccueil();
 	}
 
 
@@ -138,16 +159,34 @@ public class VAccueil {
 		TabItem tbtmAccueil = new TabItem(tabGestion, SWT.NONE);
 		tbtmAccueil.setText("Accueil");
 		
-		Composite composite_2 = new Composite(tabGestion, SWT.NONE);
-		tbtmAccueil.setControl(composite_2);
+		Composite cpAccueil = new Composite(tabGestion, SWT.NONE);
+		tbtmAccueil.setControl(cpAccueil);
+		
+		Group grpListeDesQuestionnaires = new Group(cpAccueil, SWT.NONE);
+		grpListeDesQuestionnaires.setText("Liste des questionnaires");
+		grpListeDesQuestionnaires.setBounds(10, 29, 440, 330);
+		
+		TableViewer tableViewer = new TableViewer(grpListeDesQuestionnaires, SWT.BORDER | SWT.FULL_SELECTION);
+		table = tableViewer.getTable();
+		table.setBounds(10, 22, 420, 298);
+		
+		TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+		TableColumn tblclmnQuestionnaires = tableViewerColumn.getColumn();
+		tblclmnQuestionnaires.setWidth(100);
+		tblclmnQuestionnaires.setText("Questionnaires");
+		
+		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
+		TableColumn tblclmnGroupe = tableViewerColumn_1.getColumn();
+		tblclmnGroupe.setWidth(100);
+		tblclmnGroupe.setText("Groupe");
 		
 		TabItem tbtmQcm = new TabItem(tabGestion, SWT.NONE);
 		tbtmQcm.setText("QCM");
 		
-		Composite composite = new Composite(tabGestion, SWT.NONE);
-		tbtmQcm.setControl(composite);
+		Composite cpQcm = new Composite(tabGestion, SWT.NONE);
+		tbtmQcm.setControl(cpQcm);
 		
-		Group grpAjouterQcm = new Group(composite, SWT.NONE);
+		Group grpAjouterQcm = new Group(cpQcm, SWT.NONE);
 		grpAjouterQcm.setText("Ajouter QCM");
 		grpAjouterQcm.setBounds(10, 28, 435, 319);
 		
@@ -155,77 +194,110 @@ public class VAccueil {
 		lblNomQcm.setBounds(10, 42, 64, 15);
 		lblNomQcm.setText("Nom QCM :");
 		
-		text = new Text(grpAjouterQcm, SWT.BORDER);
-		text.setBounds(80, 36, 136, 21);
+		txtQcm = new Text(grpAjouterQcm, SWT.BORDER);
+		txtQcm.setBounds(80, 36, 136, 21);
 		
-		Label lblQuestion = new Label(grpAjouterQcm, SWT.NONE);
-		lblQuestion.setBounds(10, 84, 55, 15);
-		lblQuestion.setText("Question :");
+		Label lblQuestionQcm = new Label(grpAjouterQcm, SWT.NONE);
+		lblQuestionQcm.setBounds(10, 84, 55, 15);
+		lblQuestionQcm.setText("Question :");
 		
-		text_1 = new Text(grpAjouterQcm, SWT.BORDER);
-		text_1.setBounds(80, 78, 316, 21);
+		txtQuestionQcm = new Text(grpAjouterQcm, SWT.BORDER);
+		txtQuestionQcm.setBounds(80, 78, 316, 21);
 		
 		Group grpReponse = new Group(grpAjouterQcm, SWT.NONE);
 		grpReponse.setText("Reponse");
 		grpReponse.setBounds(6, 137, 390, 168);
 		
-		text_2 = new Text(grpReponse, SWT.BORDER);
-		text_2.setBounds(10, 43, 117, 21);
+		txtQcm1 = new Text(grpReponse, SWT.BORDER);
+		txtQcm1.setBounds(10, 43, 117, 21);
 		
-		text_3 = new Text(grpReponse, SWT.BORDER);
-		text_3.setBounds(10, 110, 117, 21);
+		txtQcm3 = new Text(grpReponse, SWT.BORDER);
+		txtQcm3.setBounds(10, 110, 117, 21);
 		
-		text_4 = new Text(grpReponse, SWT.BORDER);
-		text_4.setBounds(232, 43, 102, 21);
+		txtQcm2 = new Text(grpReponse, SWT.BORDER);
+		txtQcm2.setBounds(232, 43, 102, 21);
 		
-		text_5 = new Text(grpReponse, SWT.BORDER);
-		text_5.setBounds(232, 110, 102, 21);
+		txtQcm4 = new Text(grpReponse, SWT.BORDER);
+		txtQcm4.setBounds(232, 110, 102, 21);
 		
-		Button btnCheck1 = new Button(grpReponse, SWT.CHECK);
-		btnCheck1.setText("1");
-		btnCheck1.addSelectionListener(new SelectionAdapter() {
+		Button btnCkGroupe1 = new Button(grpReponse, SWT.CHECK);
+		btnCkGroupe1.setText("1");
+		btnCkGroupe1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		btnCheck1.setBounds(133, 43, 35, 21);
+		btnCkGroupe1.setBounds(133, 43, 35, 21);
 		
-		Button btnCheck3 = new Button(grpReponse, SWT.CHECK);
-		btnCheck3.setText("3");
-		btnCheck3.setBounds(133, 112, 35, 16);
+		Button btnCkGroupe3 = new Button(grpReponse, SWT.CHECK);
+		btnCkGroupe3.setText("3");
+		btnCkGroupe3.setBounds(133, 112, 35, 16);
 		
-		Button btnCheck2 = new Button(grpReponse, SWT.CHECK);
-		btnCheck2.setBounds(343, 48, 37, 16);
-		btnCheck2.setText("2");
+		Button btnCkGroupe2 = new Button(grpReponse, SWT.CHECK);
+		btnCkGroupe2.setBounds(343, 48, 37, 16);
+		btnCkGroupe2.setText("2");
 		
-		Button btnCheck4 = new Button(grpReponse, SWT.CHECK);
-		btnCheck4.setLocation(344, 112);
-		btnCheck4.setSize(36, 16);
-		btnCheck4.setText("4");
+		Button btnCkGroupe4 = new Button(grpReponse, SWT.CHECK);
+		btnCkGroupe4.setLocation(344, 112);
+		btnCkGroupe4.setSize(36, 16);
+		btnCkGroupe4.setText("4");
 		
-		Label lblGroupe = new Label(grpAjouterQcm, SWT.NONE);
-		lblGroupe.setBounds(244, 42, 55, 15);
-		lblGroupe.setText("Groupe :");
+		Label lblGroupeQcm = new Label(grpAjouterQcm, SWT.NONE);
+		lblGroupeQcm.setBounds(244, 42, 55, 15);
+		lblGroupeQcm.setText("Groupe :");
 		
 		ComboViewer comboViewer = new ComboViewer(grpAjouterQcm, SWT.NONE);
-		Combo combo = comboViewer.getCombo();
-		combo.setBounds(305, 36, 91, 23);
+		Combo cbQcm = comboViewer.getCombo();
+		cbQcm.setBounds(305, 36, 91, 23);
 		
-		Button btnAjouter = new Button(composite, SWT.NONE);
-		btnAjouter.setBounds(460, 124, 75, 25);
-		btnAjouter.setText("Ajouter");
+		btnAjouterQcm = new Button(cpQcm, SWT.NONE);
+		btnAjouterQcm.setBounds(460, 124, 75, 25);
+		btnAjouterQcm.setText("Ajouter");
 		
 		TabItem tbtmGroupe = new TabItem(tabGestion, SWT.NONE);
 		tbtmGroupe.setText("Groupe");
 		
-		Composite composite_1 = new Composite(tabGestion, SWT.NONE);
-		tbtmGroupe.setControl(composite_1);
+		Composite cpGroupe = new Composite(tabGestion, SWT.NONE);
+		tbtmGroupe.setControl(cpGroupe);
+		
+		Group grpAjouterUnGroupe = new Group(cpGroupe, SWT.NONE);
+		grpAjouterUnGroupe.setText("Ajouter un groupe");
+		grpAjouterUnGroupe.setBounds(10, 26, 398, 260);
+		
+		Label lblNewLabel = new Label(grpAjouterUnGroupe, SWT.NONE);
+		lblNewLabel.setBounds(45, 68, 55, 15);
+		lblNewLabel.setText("Libelle :");
+		
+		Label lblNewLabel_1 = new Label(grpAjouterUnGroupe, SWT.NONE);
+		lblNewLabel_1.setBounds(45, 109, 80, 15);
+		lblNewLabel_1.setText("Questionnaire :");
+		
+		Label lblNewLabel_2 = new Label(grpAjouterUnGroupe, SWT.NONE);
+		lblNewLabel_2.setBounds(45, 143, 55, 15);
+		lblNewLabel_2.setText("Code :");
+		
+		txtLibelle = new Text(grpAjouterUnGroupe, SWT.BORDER);
+		txtLibelle.setBounds(131, 65, 138, 21);
+		
+		txtCode = new Text(grpAjouterUnGroupe, SWT.BORDER);
+		txtCode.setBounds(131, 140, 138, 21);
+		
+		btnAjouterGroupe = new Button(grpAjouterUnGroupe, SWT.NONE);
+		
+		btnAjouterGroupe.setBounds(131, 192, 75, 25);
+		btnAjouterGroupe.setText("Ajouter");
+		
+		ComboViewer comboViewer_1 = new ComboViewer(grpAjouterUnGroupe, SWT.NONE);
+		Combo cbQuestionnaire = comboViewer_1.getCombo();
+		cbQuestionnaire.setBounds(131, 101, 138, 23);
 		
 		/*createColumnNom(tbAccueil, "Libelle", 1);
 		createColumnDate(tbAccueil, "Date", 1);
 		createColumnGroupe(tbAccueil, "Groupe", 1);*/
 	}
-	public Table getTvAccueil() {
-		return getTvAccueil();
+
+	public Button getBtnAjouterQcm() {
+		return btnAjouterQcm;
 	}
+	
 }

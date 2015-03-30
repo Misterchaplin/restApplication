@@ -21,15 +21,17 @@ public class AccueilController implements SelectionListener {
 	}
 
 	public void init() {
-		TestHttp test = new TestHttp();
+		/*TestHttp test = new TestHttp();
 		String baseUrl="http://127.0.0.1/rest-QCM/";
 		try {
-			qcm=test.get(baseUrl+"questionnaires/search/Phalcon");
+			qcm=test.get(baseUrl+"questionnaires/groupe");
 			
 			System.out.println(qcm);
 			TestGson gsonQuestionnaire=new TestGson();
-			Questionnaire[]  h= gsonQuestionnaire.jsonToAllQuestionnaire(qcm);
-			for (Questionnaire questionnaire : h) {
+		/*	Questionnaire h= gsonQuestionnaire.jsonToQuestionnaire(qcm);
+			System.out.println(h);*/
+		/*	Questionnaire[]  d= gsonQuestionnaire.jsonToAllQuestionnaire(qcm);
+			for (Questionnaire questionnaire : d) {
 				System.out.println(questionnaire);
 			}
 			
@@ -37,7 +39,7 @@ public class AccueilController implements SelectionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 		
 		
 		
