@@ -32,6 +32,8 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.wb.swt.TableViewerColumnSorter;
+import org.eclipse.jface.viewers.Viewer;
 
 public class VAccueil {
 
@@ -61,6 +63,7 @@ public class VAccueil {
 	private Text txtCode;
 	private Button btnAjouterGroupe;
 	private Button btnAjouterQcm;
+	private TableViewerColumn tableViewerColumn;
 	
 	public Group getGrpInformation() {
 		return grpInformation;
@@ -168,16 +171,26 @@ public class VAccueil {
 		
 		TableViewer tableViewer = new TableViewer(grpListeDesQuestionnaires, SWT.BORDER | SWT.FULL_SELECTION);
 		table = tableViewer.getTable();
+		table.setToolTipText("");
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+		table.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println("aaaacdsv dfgg ");
+			}
+		});
 		table.setBounds(10, 22, 420, 298);
 		
-		TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+		tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn tblclmnQuestionnaires = tableViewerColumn.getColumn();
-		tblclmnQuestionnaires.setWidth(100);
+		tblclmnQuestionnaires.setWidth(206);
 		tblclmnQuestionnaires.setText("Questionnaires");
+		
 		
 		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn tblclmnGroupe = tableViewerColumn_1.getColumn();
-		tblclmnGroupe.setWidth(100);
+		tblclmnGroupe.setWidth(241);
 		tblclmnGroupe.setText("Groupe");
 		
 		TabItem tbtmQcm = new TabItem(tabGestion, SWT.NONE);
@@ -294,6 +307,10 @@ public class VAccueil {
 		/*createColumnNom(tbAccueil, "Libelle", 1);
 		createColumnDate(tbAccueil, "Date", 1);
 		createColumnGroupe(tbAccueil, "Groupe", 1);*/
+	}
+
+	public TableViewerColumn getTableViewerColumn() {
+		return tableViewerColumn;
 	}
 
 	public Button getBtnAjouterQcm() {

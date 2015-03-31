@@ -21,9 +21,9 @@ public class AccueilController implements SelectionListener {
 	}
 
 	public void init() {
-		/*TestHttp test = new TestHttp();
+		TestHttp test = new TestHttp();
 		String baseUrl="http://127.0.0.1/rest-QCM/";
-		try {
+		/*try {
 			qcm=test.get(baseUrl+"questionnaires/groupe");
 			
 			System.out.println(qcm);
@@ -38,8 +38,8 @@ public class AccueilController implements SelectionListener {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		*/
+		}*/
+		
 		
 		
 		
