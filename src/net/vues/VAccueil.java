@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.wb.swt.TableViewerColumnSorter;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.ui.forms.widgets.FormToolkit;
 
 public class VAccueil {
 
@@ -50,6 +51,10 @@ public class VAccueil {
 	private Text txtQcm2;
 	private Text txtQcm4;
 	private Table table;
+	public Table getTable() {
+		return table;
+	}
+
 	private Text txtLibelle;
 	
 	public Text getTxtQcm() {
@@ -64,7 +69,18 @@ public class VAccueil {
 	private Button btnAjouterGroupe;
 	private Button btnAjouterQcm;
 	private TableViewerColumn tableViewerColumn;
+	private ComboViewer cbvQuestionnaireGroupe;
+	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
+	private Combo cbQuestionnaireGroupe;
 	
+	public Combo getCbQuestionnaireGroupe() {
+		return cbQuestionnaireGroupe;
+	}
+
+	public ComboViewer getCbvQuestionnaireGroupe() {
+		return cbvQuestionnaireGroupe;
+	}
+
 	public Group getGrpInformation() {
 		return grpInformation;
 	}
@@ -174,12 +190,7 @@ public class VAccueil {
 		table.setToolTipText("");
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		table.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				System.out.println("aaaacdsv dfgg ");
-			}
-		});
+		
 		table.setBounds(10, 22, 420, 298);
 		
 		tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
@@ -297,12 +308,15 @@ public class VAccueil {
 		
 		btnAjouterGroupe = new Button(grpAjouterUnGroupe, SWT.NONE);
 		
+		
 		btnAjouterGroupe.setBounds(131, 192, 75, 25);
 		btnAjouterGroupe.setText("Ajouter");
 		
-		ComboViewer comboViewer_1 = new ComboViewer(grpAjouterUnGroupe, SWT.NONE);
-		Combo cbQuestionnaire = comboViewer_1.getCombo();
-		cbQuestionnaire.setBounds(131, 101, 138, 23);
+		cbvQuestionnaireGroupe = new ComboViewer(grpAjouterUnGroupe, SWT.NONE);
+		cbvQuestionnaireGroupe.setContentProvider(ArrayContentProvider.getInstance());
+		cbQuestionnaireGroupe = cbvQuestionnaireGroupe.getCombo();
+		
+		cbQuestionnaireGroupe.setBounds(131, 101, 138, 23);
 		
 		/*createColumnNom(tbAccueil, "Libelle", 1);
 		createColumnDate(tbAccueil, "Date", 1);
@@ -316,5 +330,4 @@ public class VAccueil {
 	public Button getBtnAjouterQcm() {
 		return btnAjouterQcm;
 	}
-	
 }
