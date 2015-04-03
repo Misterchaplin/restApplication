@@ -26,15 +26,17 @@ public class AccueilController implements SelectionListener {
 		TestHttp test = new TestHttp();
 		String baseUrl="http://127.0.0.1/rest-QCM/";
 		try {
-			qcm=test.get(baseUrl+"questionnaires/groupe");
+			qcm=test.get(baseUrl+"questionnaires/groupes/5");
 			
 			System.out.println(qcm);
+			
 			TestGson gsonQuestionnaire=new TestGson();
-		/*	Questionnaire h= gsonQuestionnaire.jsonToQuestionnaire(qcm);
-			System.out.println(h);*/
+			//Questionnaire h= gsonQuestionnaire.jsonToQuestionnaire(qcm);
+			//System.out.println(h);
 			Questionnaire[]  d= gsonQuestionnaire.jsonToAllQuestionnaire(qcm);
 			for (Questionnaire questionnaire : d) {
-				System.out.println(questionnaire);
+				System.out.println(questionnaire.getLesGroupes());
+				
 			}
 			
 		} catch (IOException e) {

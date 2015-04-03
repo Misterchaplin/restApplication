@@ -1,6 +1,7 @@
 package net.gson;
 
 import net.models.ActifUser;
+import net.models.Groupe;
 import net.models.Questionnaire;
 import net.models.Utilisateur;
 
@@ -34,6 +35,14 @@ public class TestGson {
 	
 	public Questionnaire[] jsonToAllQuestionnaire(String jsonString){
 		return gson.fromJson(jsonString, Questionnaire[].class);
+	}
+	
+	public Groupe jsonToGroupe(String jsonString){
+		return gson.fromJson(jsonString, Groupe.class);
+	}
+	
+	public Groupe[] jsonToAllGroupe(String jsonString){
+		return gson.fromJson(jsonString, Groupe[].class);
 	}
 	
 	public static void main(String args[]){

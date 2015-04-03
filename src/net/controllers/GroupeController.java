@@ -33,7 +33,7 @@ public class GroupeController implements SelectionListener {
 		try {
 			qcm=test.get(baseUrl+"questionnaires");
 			
-			System.out.println(qcm);
+			//System.out.println(qcm);
 			TestGson gsonQuestionnaire=new TestGson();
 		/*	Questionnaire h= gsonQuestionnaire.jsonToQuestionnaire(qcm);
 			System.out.println(h);*/
