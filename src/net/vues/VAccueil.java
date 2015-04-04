@@ -72,7 +72,12 @@ public class VAccueil {
 	private ComboViewer cbvQuestionnaireGroupe;
 	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
 	private Combo cbQuestionnaireGroupe;
+	private TabFolder tabGestion;
 	
+	public TabFolder getTabGestion() {
+		return tabGestion;
+	}
+
 	public Combo getCbQuestionnaireGroupe() {
 		return cbQuestionnaireGroupe;
 	}
@@ -166,7 +171,7 @@ public class VAccueil {
 		lblInformation = new Label(grpInformation, SWT.NONE);
 		lblInformation.setBounds(10, 21, 490, 15);
 		
-		TabFolder tabGestion = new TabFolder(accueil, SWT.NONE);
+		tabGestion = new TabFolder(accueil, SWT.NONE);
 		fd_grpInformation.bottom = new FormAttachment(tabGestion, -1);
 		FormData fd_tabGestion = new FormData();
 		fd_tabGestion.left = new FormAttachment(0, 10);

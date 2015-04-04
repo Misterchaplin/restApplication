@@ -3,7 +3,7 @@ package net.models;
 public class Groupe {
 	private Integer id;
 	private String libelle;
-	private Integer code;
+	private String code;
 	
 	public Integer getId() {
 		return id;
@@ -17,10 +17,10 @@ public class Groupe {
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-	public Integer getCode() {
+	public String getCode() {
 		return code;
 	}
-	public void setCode(Integer code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 	

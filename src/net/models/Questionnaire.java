@@ -1,5 +1,6 @@
 package net.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -8,14 +9,6 @@ public class Questionnaire {
 	private String libelle;
 	private Integer domaine_id;
 	private Integer questionnaire_id;
-	private Collection<Groupe> lesGroupes;
-	
-	public Collection<Groupe> getLesGroupes() {
-		return lesGroupes;
-	}
-	public void setLesGroupes(Collection<Groupe> lesGroupes) {
-		this.lesGroupes = lesGroupes;
-	}
 
 	private Date date;
 	

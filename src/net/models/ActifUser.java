@@ -1,13 +1,24 @@
 package net.models;
 
 public class ActifUser {
-	@Override
-	public String toString() {
-		return "connectedUser [connected=" + connected + ", token=" + token + "]";
-	}
+	
 	private Boolean connected;
 	private String token;
+	private Integer who;
 	
+	@Override
+	public String toString() {
+		return "ActifUser [connected=" + connected + ", token=" + token
+				+ ", who=" + who + "]";
+	}
+	
+	public Integer getWho() {
+		return who;
+	}
+	
+	public void setWho(Integer who) {
+		this.who = who;
+	}
 	public Boolean getconnected() {
 		return connected;
 	}

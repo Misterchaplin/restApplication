@@ -45,6 +45,14 @@ public class TestGson {
 		return gson.fromJson(jsonString, Groupe[].class);
 	}
 	
+	public Utilisateur jsonToUtilisateur(String jsonString){
+		return gson.fromJson(jsonString, Utilisateur.class);
+	}
+	
+	public Utilisateur[] jsonToAllUtilisateur(String jsonString){
+		return gson.fromJson(jsonString, Utilisateur[].class);
+	}
+	
 	public static void main(String args[]){
 		TestGson test=new TestGson();
 		Utilisateur user=new Utilisateur();

@@ -5,7 +5,9 @@ import java.io.IOException;
 import net.gson.TestGson;
 import net.http.TestHttp;
 import net.models.ActifUser;
+import net.models.Groupe;
 import net.models.Questionnaire;
+import net.models.Utilisateur;
 import net.vues.VAccueil;
 import net.vues.VLogin;
 
@@ -23,35 +25,16 @@ public class AccueilController implements SelectionListener {
 	}
 
 	public void init() {
-		TestHttp test = new TestHttp();
-		String baseUrl="http://127.0.0.1/rest-QCM/";
-		try {
-			qcm=test.get(baseUrl+"questionnaires/groupes/5");
-			
-			System.out.println(qcm);
-			
-			TestGson gsonQuestionnaire=new TestGson();
-			//Questionnaire h= gsonQuestionnaire.jsonToQuestionnaire(qcm);
-			//System.out.println(h);
-			Questionnaire[]  d= gsonQuestionnaire.jsonToAllQuestionnaire(qcm);
-			for (Questionnaire questionnaire : d) {
-				System.out.println(questionnaire.getLesGroupes());
-				
-			}
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		vAccueil.getTabGestion().setVisible(false);
 		
-		try {
+		/*try {
 		qcm=test.get(baseUrl+"questionnaires");
 		
 	//	System.out.println(qcm);
 		TestGson gsonQuestionnaire=new TestGson();
 	/*	Questionnaire h= gsonQuestionnaire.jsonToQuestionnaire(qcm);
 		System.out.println(h);*/
-		Questionnaire[]  d= gsonQuestionnaire.jsonToAllQuestionnaire(qcm);
+		/*Questionnaire[]  d= gsonQuestionnaire.jsonToAllQuestionnaire(qcm);
 		for (Questionnaire questionnaire : d) {
 			TableItem item = new TableItem(vAccueil.getTable(), SWT.NONE);
 			item.setText(new String[] {questionnaire.getLibelle(), "ici groupe"});
@@ -60,7 +43,7 @@ public class AccueilController implements SelectionListener {
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}
+	}*/
 		
 		
 		
