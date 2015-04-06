@@ -25,7 +25,7 @@ public class AccueilController implements SelectionListener {
 	}
 
 	public void init() {
-		vAccueil.getTabGestion().setVisible(false);
+		vAccueil.getTabGestion().setVisible(true);
 		
 		/*try {
 		qcm=test.get(baseUrl+"questionnaires");

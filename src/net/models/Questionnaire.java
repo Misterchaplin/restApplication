@@ -8,9 +8,9 @@ public class Questionnaire {
 	private Integer id;
 	private String libelle;
 	private Integer domaine_id;
-	private Integer questionnaire_id;
+//	private Integer questionnaire_id;
 
-	private Date date;
+	private String date;
 	
 	public Integer getId() {
 		return id;
@@ -31,24 +31,23 @@ public class Questionnaire {
 		this.domaine_id = domaine_id;
 	}
 	
-	public Integer getQuestionnaire_id() {
+	/*public Integer getQuestionnaire_id() {
 		return questionnaire_id;
 	}
 	public void setQuestionnaire_id(Integer questionnaire_id) {
 		this.questionnaire_id = questionnaire_id;
-	}
-	public Date getDate() {
+	}*/
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(String string) {
+		this.date = string;
 	}
 	
 	@Override
 	public String toString() {
 		return "Questionnaire [id=" + id + ", libelle=" + libelle
-				+ ", domaine_id=" + domaine_id + ", utilisateur_id="
-				+ questionnaire_id + ", date=" + date + "]";
+				+ ", domaine_id=" + domaine_id + ", date=" + date + "]";
 	}
 	
 }

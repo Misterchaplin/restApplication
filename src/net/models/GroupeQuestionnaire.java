@@ -16,6 +16,11 @@ public class GroupeQuestionnaire {
 	public void setGroupe_id(Integer groupe_id) {
 		this.groupe_id = groupe_id;
 	}
+	@Override
+	public String toString() {
+		return "GroupeQuestionnaire [questionnaire_id=" + questionnaire_id
+				+ ", groupe_id=" + groupe_id + "]";
+	}
 	
 
 }

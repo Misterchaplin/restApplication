@@ -66,6 +66,10 @@ public class VAccueil {
 	}
 
 	private Text txtCode;
+	public Text getTxtCode() {
+		return txtCode;
+	}
+
 	private Button btnAjouterGroupe;
 	private Button btnAjouterQcm;
 	private TableViewerColumn tableViewerColumn;
@@ -317,7 +321,7 @@ public class VAccueil {
 		btnAjouterGroupe.setBounds(131, 192, 75, 25);
 		btnAjouterGroupe.setText("Ajouter");
 		
-		cbvQuestionnaireGroupe = new ComboViewer(grpAjouterUnGroupe, SWT.NONE);
+		cbvQuestionnaireGroupe = new ComboViewer(grpAjouterUnGroupe, SWT.NONE | SWT.READ_ONLY);
 		cbvQuestionnaireGroupe.setContentProvider(ArrayContentProvider.getInstance());
 		cbQuestionnaireGroupe = cbvQuestionnaireGroupe.getCombo();
 		
