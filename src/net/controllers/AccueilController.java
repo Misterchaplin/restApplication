@@ -26,28 +26,7 @@ public class AccueilController implements SelectionListener {
 
 	public void init() {
 		vAccueil.getTabGestion().setVisible(true);
-		
-		/*try {
-		qcm=test.get(baseUrl+"questionnaires");
-		
-	//	System.out.println(qcm);
-		TestGson gsonQuestionnaire=new TestGson();
-	/*	Questionnaire h= gsonQuestionnaire.jsonToQuestionnaire(qcm);
-		System.out.println(h);*/
-		/*Questionnaire[]  d= gsonQuestionnaire.jsonToAllQuestionnaire(qcm);
-		for (Questionnaire questionnaire : d) {
-			TableItem item = new TableItem(vAccueil.getTable(), SWT.NONE);
-			item.setText(new String[] {questionnaire.getLibelle(), "ici groupe"});
-		}
-		
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}*/
-		
-		
-		
-		
+			
 		// onglet connexion
 		vAccueil.getItemConnexion().addSelectionListener(new SelectionListener() {
 
@@ -60,11 +39,6 @@ public class AccueilController implements SelectionListener {
 					vLogin.init();
 					loginController.init();
 					vLogin.open();
-					
-				//	vAccueil.getTvAccueil().sett
-					/*if(AppController.getActiveUser().getconnected()==true){
-						vAccueil.getItemConnexion().setEnabled(false);
-					}*/
 				
 				}
 				

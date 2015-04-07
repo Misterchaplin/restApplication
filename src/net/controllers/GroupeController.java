@@ -12,6 +12,7 @@ import net.models.Groupe;
 import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
 import net.models.Questionnaire;
+import net.technics.Http;
 import net.vues.VAccueil;
 
 import org.eclipse.swt.events.SelectionAdapter;
@@ -27,21 +28,14 @@ public class GroupeController implements SelectionListener {
 	}
 
 	public void init() {
-		
 
 		final TestHttp test = new TestHttp();
 		final String baseUrl="http://127.0.0.1/rest-QCM/";
 		
-		try {
-			qcm=test.get(baseUrl+"questionnaires");
-			TestGson gsonQuestionnaire=new TestGson();
-			Questionnaire[]  d= gsonQuestionnaire.jsonToAllQuestionnaire(qcm);
+		Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
 			
-			for (Questionnaire questionnaire : d) {
-				vAccueil.getCbvQuestionnaireGroupe().add(questionnaire.getLibelle());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		for (Questionnaire questionnaire : lesQuestionnaires) {
+			vAccueil.getCbvQuestionnaireGroupe().add(questionnaire.getLibelle());
 		}
 		
 		vAccueil.getBtnAjouterGroupe().addSelectionListener(new SelectionAdapter() {
