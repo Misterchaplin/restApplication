@@ -27,8 +27,7 @@ public class Groupe {
 	
 	@Override
 	public String toString() {
-		return "Groupe [id=" + id + ", libelle=" + libelle + ", code=" + code
-				+ "]";
+		return libelle;
 	}
 	
 	

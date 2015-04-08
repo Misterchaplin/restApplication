@@ -1,17 +1,11 @@
 package net.controllers;
 
-import java.io.IOException;
-
-import net.gson.TestGson;
-import net.http.TestHttp;
-import net.models.ActifUser;
-import net.models.Groupe;
+import net.models.CollectionQuestionnaireGroupe;
 import net.models.Questionnaire;
-import net.models.Utilisateur;
 import net.vues.VAccueil;
 import net.vues.VLogin;
 
-import org.eclipse.swt.SWT;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.TableItem;
@@ -39,9 +33,7 @@ public class AccueilController implements SelectionListener {
 					vLogin.init();
 					loginController.init();
 					vLogin.open();
-				
 				}
-				
 			}
 
 			@Override
@@ -49,7 +41,27 @@ public class AccueilController implements SelectionListener {
 				// TODO Auto-generated method stub
 
 			}
-		});		
+		});	
+		
+		vAccueil.getTable().addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				
+				StructuredSelection selection = (StructuredSelection) vAccueil.getTableViewer().getSelection();
+				CollectionQuestionnaireGroupe selectedQuestionnaire = (CollectionQuestionnaireGroupe) selection.getFirstElement();
+				System.out.println(selectedQuestionnaire.getQuestionnaire_id()+ "--" +selectedQuestionnaire.getGroupe_id());
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});	
+		
+		
+		
 	}
 
 	@Override

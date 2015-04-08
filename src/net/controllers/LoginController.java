@@ -9,8 +9,12 @@ import net.models.Groupe;
 import net.models.Questionnaire;
 import net.models.Utilisateur;
 import net.technics.Http;
+import net.technics.ProductTvProvider;
+import net.vues.VAccueil;
 import net.vues.VLogin;
 
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -49,11 +53,15 @@ public class LoginController implements SelectionListener {
 						
 					for(Groupe groupe : g) {
 						Utilisateur[]  u= Http.getUtilisateursToGroupe(groupe.getId());
-							
+							String i="1";
 						for (Utilisateur utilisateur : u) {
 							if(utilisateur.getId().equals(AppController.getActiveUser().getWho())) {
-								TableItem item = new TableItem(AccueilController.vAccueil.getTable(), SWT.NONE);
-								item.setText(new String[] {questionnaire.getLibelle(), groupe.getLibelle()});
+								/*TableItem item = new TableItem(AccueilController.vAccueil.getTable(), SWT.NONE);
+								item.setText(new String[] {questionnaire.toString(), groupe.toString()});*/
+							/*	AccueilController.vAccueil.getTableViewer().setContentProvider(new ArrayContentProvider());
+								AccueilController.vAccueil.getTableViewer().setLabelProvider(new ProductTvProvider());
+								AccueilController.vAccueil.getTableViewer().setInput(Http.getAllQuestionnaires());
+								AccueilController.vAccueil.getTableViewer().refresh();*/
 							}
 						}
 					}

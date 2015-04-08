@@ -1,9 +1,20 @@
 package net.vues;
 
+import java.util.ArrayList;
+
+import net.models.CollectionQuestionnaireGroupe;
+import net.models.Groupe;
+import net.models.Question;
+import net.models.Questionnaire;
+import net.technics.Http;
+import net.technics.ProductTvProvider;
+
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
@@ -72,12 +83,17 @@ public class VAccueil {
 
 	private Button btnAjouterGroupe;
 	private Button btnAjouterQcm;
-	private TableViewerColumn tableViewerColumn;
+	private TableViewerColumn tableViewerColumnQuestionnaire;
 	private ComboViewer cbvQuestionnaireGroupe;
 	private final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
 	private Combo cbQuestionnaireGroupe;
 	private TabFolder tabGestion;
+	private TableViewer tableViewer;
 	
+	public TableViewer getTableViewer() {
+		return tableViewer;
+	}
+
 	public TabFolder getTabGestion() {
 		return tabGestion;
 	}
@@ -192,27 +208,114 @@ public class VAccueil {
 		
 		Group grpListeDesQuestionnaires = new Group(cpAccueil, SWT.NONE);
 		grpListeDesQuestionnaires.setText("Liste des questionnaires");
-		grpListeDesQuestionnaires.setBounds(10, 29, 440, 330);
+		grpListeDesQuestionnaires.setBounds(10, 29, 470, 330);
 		
-		TableViewer tableViewer = new TableViewer(grpListeDesQuestionnaires, SWT.BORDER | SWT.FULL_SELECTION);
+		
+		tableViewer = new TableViewer(grpListeDesQuestionnaires, SWT.BORDER | SWT.FULL_SELECTION);
 		table = tableViewer.getTable();
-		table.setToolTipText("");
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
+		table.setBounds(10, 22, 450, 298);
 		
-		table.setBounds(10, 22, 420, 298);
 		
-		tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-		TableColumn tblclmnQuestionnaires = tableViewerColumn.getColumn();
-		tblclmnQuestionnaires.setWidth(206);
+		
+		/*String[] COLUMNS = new String[] { "Nom", "Adresse"};
+	    for( String element : COLUMNS ) {
+	        TableColumn col = new TableColumn( tableViewer.getTable(), SWT.CENTER );
+	        col.setText( element );
+	    }*/
+		
+		/*tableViewerColumnQuestionnaire = new TableViewerColumn(tableViewer, SWT.NONE);
 		tblclmnQuestionnaires.setText("Questionnaires");
 		
 		
-		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
-		TableColumn tblclmnGroupe = tableViewerColumn_1.getColumn();
-		tblclmnGroupe.setWidth(241);
-		tblclmnGroupe.setText("Groupe");
+		TableColumn tableViewerColumnGroupe = new TableColumn(tableViewer.getTable(), SWT.NONE);
+		tableViewerColumnGroupe.setText("Groupe");*/
 		
+		TableLayout tlayout = new TableLayout();
+	    tlayout.addColumnData( new ColumnWeightData( 50, 250, true ));
+	    tlayout.addColumnData( new ColumnWeightData( 50, 250, true ));
+	    tableViewer.getTable().setLayout( tlayout );
+		
+	    tableViewer.setContentProvider( new ArrayContentProvider());
+	    /*tableViewer.setLabelProvider(new ProductTvProvider());
+
+	    Questionnaire[] persons = Http.getAllQuestionnaires();
+	    
+	    tableViewer.setInput( persons );*/
+	    
+	    TableColumn column = new TableColumn(tableViewer.getTable(), SWT.NONE);
+        column.setText("Questionnaires");
+        column.setWidth(223);
+        TableViewerColumn firstNameCol = new TableViewerColumn(tableViewer, column);
+        firstNameCol.setLabelProvider(new ColumnLabelProvider(){
+
+            @Override
+            public String getText(Object element) {
+            	CollectionQuestionnaireGroupe p = (CollectionQuestionnaireGroupe)element;
+
+                return p.getQuestionnaire_libelle();
+            }
+
+        });
+        
+
+        column = new TableColumn(tableViewer.getTable(), SWT.NONE);
+        column.setText("Groupes");
+        column.setWidth(223);
+        TableViewerColumn lastNameCol = new TableViewerColumn(tableViewer, column);
+        lastNameCol.setLabelProvider(new ColumnLabelProvider(){
+
+            @Override
+            public String getText(Object element) {
+            	CollectionQuestionnaireGroupe p = (CollectionQuestionnaireGroupe)element;
+
+                return p.getGroupe_libelle();
+            }
+
+        });
+        
+        ArrayList<CollectionQuestionnaireGroupe> questionnairesGroupes = new ArrayList<CollectionQuestionnaireGroupe>();
+        Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
+       
+        
+        for(Questionnaire unQuestionnaire:lesQuestionnaires){
+        	Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());     	 
+        	for (Groupe unGroupe : lesGroupes) {	
+        		CollectionQuestionnaireGroupe lesqg = new CollectionQuestionnaireGroupe();
+				lesqg.setGroupe_id(unGroupe.getId());
+        		lesqg.setQuestionnaire_libelle(unQuestionnaire.getLibelle());
+				lesqg.setGroupe_libelle(unGroupe.getLibelle());
+				lesqg.setGroupe_code(unGroupe.getCode());
+				lesqg.setQuestionnaire_id(unQuestionnaire.getId());
+				lesqg.setQuestionnaire_domaine_id(unQuestionnaire.getDomaine_id());
+				lesqg.setQuestionnaire_date(unQuestionnaire.getDate());
+				questionnairesGroupes.add(lesqg);
+			}
+        }
+        
+	    
+     /*   Groupe p1 = new Groupe();
+        p1.setLibelle("George");
+        p1.setCode("s");
+
+        Groupe p2 = new Groupe();
+        p2.setLibelle("Adam");
+        p2.setCode("h");
+
+        Groupe p3 = new Groupe();
+        p3.setLibelle("Nathan");
+        p3.setCode("p");*/
+
+       /* ArrayList<Groupe> persons = new ArrayList<Groupe>();
+        persons.add(p1);
+        persons.add(p2);
+        persons.add(p3);*/
+
+        tableViewer.setInput(questionnairesGroupes);
+        
+        
+				
 		TabItem tbtmQcm = new TabItem(tabGestion, SWT.NONE);
 		tbtmQcm.setText("QCM");
 		
@@ -332,8 +435,8 @@ public class VAccueil {
 		createColumnGroupe(tbAccueil, "Groupe", 1);*/
 	}
 
-	public TableViewerColumn getTableViewerColumn() {
-		return tableViewerColumn;
+	public TableViewerColumn getTableViewerColumnQuestionnaire() {
+		return tableViewerColumnQuestionnaire;
 	}
 
 	public Button getBtnAjouterQcm() {

@@ -46,8 +46,7 @@ public class Questionnaire {
 	
 	@Override
 	public String toString() {
-		return "Questionnaire [id=" + id + ", libelle=" + libelle
-				+ ", domaine_id=" + domaine_id + ", date=" + date + "]";
+		return libelle;
 	}
 	
 }
