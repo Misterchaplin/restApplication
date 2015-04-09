@@ -35,7 +35,7 @@ public class GroupeController implements SelectionListener {
 		Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
 			
 		for (Questionnaire questionnaire : lesQuestionnaires) {
-			vAccueil.getCbvQuestionnaireGroupe().add(questionnaire.getLibelle());
+			vAccueil.getCbvQuestionnaireGroupe().add(questionnaire);
 		}
 		
 		vAccueil.getBtnAjouterGroupe().addSelectionListener(new SelectionAdapter() {

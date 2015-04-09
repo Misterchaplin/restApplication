@@ -1,19 +1,21 @@
 package net.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import net.gson.TestGson;
 import net.http.TestHttp;
 import net.models.ActifUser;
+import net.models.CollectionQuestionnaireGroupe;
 import net.models.Groupe;
 import net.models.Questionnaire;
 import net.models.Utilisateur;
 import net.technics.Http;
-import net.technics.ProductTvProvider;
 import net.vues.VAccueil;
 import net.vues.VLogin;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -45,27 +47,47 @@ public class LoginController implements SelectionListener {
 			else{
 				vLogin.getShell().close();
 				AccueilController.vAccueil.getItemConnexion().setEnabled(false);
-				AccueilController.vAccueil.getTabGestion().setVisible(true);
-		
-				Questionnaire[]  d= Http.getAllQuestionnaires();
-				for(Questionnaire questionnaire : d) {
-					Groupe[]  g= Http.getGroupesToQuestionnaire(questionnaire.getId());
-						
-					for(Groupe groupe : g) {
-						Utilisateur[]  u= Http.getUtilisateursToGroupe(groupe.getId());
-							String i="1";
-						for (Utilisateur utilisateur : u) {
-							if(utilisateur.getId().equals(AppController.getActiveUser().getWho())) {
-								/*TableItem item = new TableItem(AccueilController.vAccueil.getTable(), SWT.NONE);
-								item.setText(new String[] {questionnaire.toString(), groupe.toString()});*/
-							/*	AccueilController.vAccueil.getTableViewer().setContentProvider(new ArrayContentProvider());
-								AccueilController.vAccueil.getTableViewer().setLabelProvider(new ProductTvProvider());
-								AccueilController.vAccueil.getTableViewer().setInput(Http.getAllQuestionnaires());
-								AccueilController.vAccueil.getTableViewer().refresh();*/
-							}
+				AccueilController.vAccueil.getFirstNameCol().setLabelProvider(new ColumnLabelProvider(){
+
+		            @Override
+		            public String getText(Object element) {
+		            	CollectionQuestionnaireGroupe p = (CollectionQuestionnaireGroupe)element;
+
+		                return p.getQuestionnaire_libelle();
+		            }
+
+		        });
+				
+				AccueilController.vAccueil.getLastNameCol().setLabelProvider(new ColumnLabelProvider(){
+
+			            @Override
+			            public String getText(Object element) {
+			            	CollectionQuestionnaireGroupe p = (CollectionQuestionnaireGroupe)element;
+
+			                return p.getGroupe_libelle();
+			            }
+
+			        });
+				 ArrayList<CollectionQuestionnaireGroupe> questionnairesGroupes = new ArrayList<CollectionQuestionnaireGroupe>();
+			        Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
+			       
+			        
+			        for(Questionnaire unQuestionnaire:lesQuestionnaires){
+			        	Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());     	 
+			        	for (Groupe unGroupe : lesGroupes) {	
+			        		CollectionQuestionnaireGroupe lesqg = new CollectionQuestionnaireGroupe();
+							lesqg.setGroupe_id(unGroupe.getId());
+			        		lesqg.setQuestionnaire_libelle(unQuestionnaire.getLibelle());
+							lesqg.setGroupe_libelle(unGroupe.getLibelle());
+							lesqg.setGroupe_code(unGroupe.getCode());
+							lesqg.setQuestionnaire_id(unQuestionnaire.getId());
+							lesqg.setQuestionnaire_domaine_id(unQuestionnaire.getDomaine_id());
+							lesqg.setQuestionnaire_date(unQuestionnaire.getDate());
+							questionnairesGroupes.add(lesqg);
 						}
-					}
-				}
+			        }
+			        
+			       AccueilController.vAccueil.getTableViewer().setInput(questionnairesGroupes);
 			}
 								
 		}

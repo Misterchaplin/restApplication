@@ -7,7 +7,6 @@ import net.models.Groupe;
 import net.models.Question;
 import net.models.Questionnaire;
 import net.technics.Http;
-import net.technics.ProductTvProvider;
 
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.layout.TableColumnLayout;
@@ -89,6 +88,9 @@ public class VAccueil {
 	private Combo cbQuestionnaireGroupe;
 	private TabFolder tabGestion;
 	private TableViewer tableViewer;
+	private TableViewerColumn firstNameCol;
+	private TableViewerColumn lastNameCol;
+	private TabItem tbtmQcm;
 	
 	public TableViewer getTableViewer() {
 		return tableViewer;
@@ -217,38 +219,17 @@ public class VAccueil {
 		table.setLinesVisible(true);
 		table.setBounds(10, 22, 450, 298);
 		
-		
-		
-		/*String[] COLUMNS = new String[] { "Nom", "Adresse"};
-	    for( String element : COLUMNS ) {
-	        TableColumn col = new TableColumn( tableViewer.getTable(), SWT.CENTER );
-	        col.setText( element );
-	    }*/
-		
-		/*tableViewerColumnQuestionnaire = new TableViewerColumn(tableViewer, SWT.NONE);
-		tblclmnQuestionnaires.setText("Questionnaires");
-		
-		
-		TableColumn tableViewerColumnGroupe = new TableColumn(tableViewer.getTable(), SWT.NONE);
-		tableViewerColumnGroupe.setText("Groupe");*/
-		
 		TableLayout tlayout = new TableLayout();
 	    tlayout.addColumnData( new ColumnWeightData( 50, 250, true ));
 	    tlayout.addColumnData( new ColumnWeightData( 50, 250, true ));
 	    tableViewer.getTable().setLayout( tlayout );
-		
 	    tableViewer.setContentProvider( new ArrayContentProvider());
-	    /*tableViewer.setLabelProvider(new ProductTvProvider());
-
-	    Questionnaire[] persons = Http.getAllQuestionnaires();
-	    
-	    tableViewer.setInput( persons );*/
 	    
 	    TableColumn column = new TableColumn(tableViewer.getTable(), SWT.NONE);
         column.setText("Questionnaires");
         column.setWidth(223);
-        TableViewerColumn firstNameCol = new TableViewerColumn(tableViewer, column);
-        firstNameCol.setLabelProvider(new ColumnLabelProvider(){
+        firstNameCol = new TableViewerColumn(tableViewer, column);
+        /*firstNameCol.setLabelProvider(new ColumnLabelProvider(){
 
             @Override
             public String getText(Object element) {
@@ -257,14 +238,14 @@ public class VAccueil {
                 return p.getQuestionnaire_libelle();
             }
 
-        });
+        });*/
         
 
         column = new TableColumn(tableViewer.getTable(), SWT.NONE);
         column.setText("Groupes");
         column.setWidth(223);
-        TableViewerColumn lastNameCol = new TableViewerColumn(tableViewer, column);
-        lastNameCol.setLabelProvider(new ColumnLabelProvider(){
+        lastNameCol = new TableViewerColumn(tableViewer, column);
+       /* lastNameCol.setLabelProvider(new ColumnLabelProvider(){
 
             @Override
             public String getText(Object element) {
@@ -273,9 +254,9 @@ public class VAccueil {
                 return p.getGroupe_libelle();
             }
 
-        });
+        });*/
         
-        ArrayList<CollectionQuestionnaireGroupe> questionnairesGroupes = new ArrayList<CollectionQuestionnaireGroupe>();
+      /*  ArrayList<CollectionQuestionnaireGroupe> questionnairesGroupes = new ArrayList<CollectionQuestionnaireGroupe>();
         Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
        
         
@@ -294,29 +275,11 @@ public class VAccueil {
 			}
         }
         
-	    
-     /*   Groupe p1 = new Groupe();
-        p1.setLibelle("George");
-        p1.setCode("s");
-
-        Groupe p2 = new Groupe();
-        p2.setLibelle("Adam");
-        p2.setCode("h");
-
-        Groupe p3 = new Groupe();
-        p3.setLibelle("Nathan");
-        p3.setCode("p");*/
-
-       /* ArrayList<Groupe> persons = new ArrayList<Groupe>();
-        persons.add(p1);
-        persons.add(p2);
-        persons.add(p3);*/
-
-        tableViewer.setInput(questionnairesGroupes);
+        tableViewer.setInput(questionnairesGroupes);*/
         
         
 				
-		TabItem tbtmQcm = new TabItem(tabGestion, SWT.NONE);
+		tbtmQcm = new TabItem(tabGestion, SWT.NONE);
 		tbtmQcm.setText("QCM");
 		
 		Composite cpQcm = new Composite(tabGestion, SWT.NONE);
@@ -433,6 +396,18 @@ public class VAccueil {
 		/*createColumnNom(tbAccueil, "Libelle", 1);
 		createColumnDate(tbAccueil, "Date", 1);
 		createColumnGroupe(tbAccueil, "Groupe", 1);*/
+	}
+
+	public TabItem getTbtmQcm() {
+		return tbtmQcm;
+	}
+
+	public TableViewerColumn getFirstNameCol() {
+		return firstNameCol;
+	}
+
+	public TableViewerColumn getLastNameCol() {
+		return lastNameCol;
 	}
 
 	public TableViewerColumn getTableViewerColumnQuestionnaire() {

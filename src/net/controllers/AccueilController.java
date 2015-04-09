@@ -8,6 +8,9 @@ import net.vues.VLogin;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TableItem;
 
 public class AccueilController implements SelectionListener {
@@ -20,7 +23,9 @@ public class AccueilController implements SelectionListener {
 
 	public void init() {
 		vAccueil.getTabGestion().setVisible(true);
-			
+		/*vAccueil.getTabGestion().getTabList()[0].setEnabled(false);
+		vAccueil.getTabGestion().getTabList()[1].setEnabled(false);
+		vAccueil.getTabGestion().getTabList()[2].setEnabled(false);*/
 		// onglet connexion
 		vAccueil.getItemConnexion().addSelectionListener(new SelectionListener() {
 
