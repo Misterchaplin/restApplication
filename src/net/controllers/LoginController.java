@@ -47,7 +47,7 @@ public class LoginController implements SelectionListener {
 			else{
 				vLogin.getShell().close();
 				AccueilController.vAccueil.getItemConnexion().setEnabled(false);
-<<<<<<< HEAD
+				AccueilController.vAccueil.getItemConnexion().setText("Bienvenue: "+user.getLogin());
 				AccueilController.vAccueil.getFirstNameCol().setLabelProvider(new ColumnLabelProvider(){
 
 		            @Override
@@ -85,27 +85,6 @@ public class LoginController implements SelectionListener {
 							lesqg.setQuestionnaire_domaine_id(unQuestionnaire.getDomaine_id());
 							lesqg.setQuestionnaire_date(unQuestionnaire.getDate());
 							questionnairesGroupes.add(lesqg);
-=======
-				AccueilController.vAccueil.getTabGestion().setVisible(true);
-				AccueilController.vAccueil.getItemConnexion().setText("Bienvenue: "+ user.getLogin());
-		
-				Questionnaire[]  d= Http.getAllQuestionnaires();
-				for(Questionnaire questionnaire : d) {
-					Groupe[]  g= Http.getGroupesToQuestionnaire(questionnaire.getId());
-						
-					for(Groupe groupe : g) {
-						Utilisateur[]  u= Http.getUtilisateursToGroupe(groupe.getId());
-							String i="1";
-						for (Utilisateur utilisateur : u) {
-							if(utilisateur.getId().equals(AppController.getActiveUser().getWho())) {
-								/*TableItem item = new TableItem(AccueilController.vAccueil.getTable(), SWT.NONE);
-								item.setText(new String[] {questionnaire.toString(), groupe.toString()});*/
-							/*	AccueilController.vAccueil.getTableViewer().setContentProvider(new ArrayContentProvider());
-								AccueilController.vAccueil.getTableViewer().setLabelProvider(new ProductTvProvider());
-								AccueilController.vAccueil.getTableViewer().setInput(Http.getAllQuestionnaires());
-								AccueilController.vAccueil.getTableViewer().refresh();*/
-							}
->>>>>>> origin/master
 						}
 			        }
 			        

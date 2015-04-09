@@ -45,7 +45,6 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.wb.swt.TableViewerColumnSorter;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class VAccueil {
 
@@ -172,20 +171,15 @@ public class VAccueil {
 
 		ToolBar menuConnexion = new ToolBar(accueil, SWT.FLAT | SWT.RIGHT);
 		FormData fd_menuConnexion = new FormData();
-		fd_menuConnexion.left = new FormAttachment(100, -141);
+		fd_menuConnexion.left = new FormAttachment(100, -236);
 		fd_menuConnexion.right = new FormAttachment(100, -10);
-		fd_menuConnexion.top = new FormAttachment(0);
+		fd_menuConnexion.top = new FormAttachment(0, 10);
 		menuConnexion.setLayoutData(fd_menuConnexion);
 
 		itemLogin = new ToolItem(menuConnexion, SWT.NONE);
 		itemLogin.setEnabled(false);
 
 		itemConnexion = new ToolItem(menuConnexion, SWT.NONE);
-		itemConnexion.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
 		itemConnexion.setText("Connexion");
 		
 		grpInformation = new Group(accueil, SWT.NONE);
@@ -198,9 +192,7 @@ public class VAccueil {
 		grpInformation.setLayoutData(fd_grpInformation);
 		
 		lblInformation = new Label(grpInformation, SWT.NONE);
-		lblInformation.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 11, SWT.BOLD));
-		lblInformation.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
-		lblInformation.setBounds(10, 10, 490, 15);
+		lblInformation.setBounds(10, 21, 490, 15);
 		
 		tabGestion = new TabFolder(accueil, SWT.NONE);
 		fd_grpInformation.bottom = new FormAttachment(tabGestion, -1);
