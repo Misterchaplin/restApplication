@@ -6,6 +6,8 @@ import net.gson.TestGson;
 import net.http.TestHttp;
 import net.models.ActifUser;
 import net.models.Groupe;
+import net.models.GroupeQuestionnaire;
+import net.models.GroupeUtilisateur;
 import net.models.Questionnaire;
 import net.models.Utilisateur;
 
@@ -73,6 +75,42 @@ public class Http{
 			e.printStackTrace();
 		}
 		ActifUser data=gson.jsonToActif(query);
+		
+		return data;
+	}
+	
+	public static Groupe postGroupe(Groupe groupe){
+		try {
+			query = http.post(baseUrl+"groupes/", groupe);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Groupe data=gson.jsonToGroupe(query);
+		
+		return data;
+	}
+	
+	public static GroupeQuestionnaire postGroupeQuestionnaires(GroupeQuestionnaire groupequestionnaire){
+		try {
+			query = http.post(baseUrl+"groupequestionnaires/", groupequestionnaire);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GroupeQuestionnaire data=gson.jsonToGroupeQuestionnaire(query);
+		
+		return data;
+	}
+	
+	public static GroupeUtilisateur postGroupeUtilisateurs(GroupeUtilisateur groupeutilisateur){
+		try {
+			query = http.post(baseUrl+"groupeutilisateurs/", groupeutilisateur);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GroupeUtilisateur data=gson.jsonToGroupeUtilisateur(query);
 		
 		return data;
 	}

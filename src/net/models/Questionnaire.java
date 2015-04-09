@@ -11,6 +11,7 @@ public class Questionnaire {
 //	private Integer questionnaire_id;
 
 	private String date;
+	private boolean isSelected;
 	
 	public Integer getId() {
 		return id;

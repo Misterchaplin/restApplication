@@ -1,22 +1,11 @@
 package net.vues;
 
-import java.util.ArrayList;
-
-import net.models.CollectionQuestionnaireGroupe;
-import net.models.Groupe;
-import net.models.Question;
-import net.models.Questionnaire;
-import net.technics.Http;
-
-import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -29,21 +18,16 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.ui.internal.forms.widgets.SWTUtil;
+
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.custom.SashForm;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.wb.swt.TableViewerColumnSorter;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 
 public class VAccueil {
@@ -162,6 +146,9 @@ public class VAccueil {
 
 	/**
 	 * Create contents of the window.
+	 */
+	/**
+	 * 
 	 */
 	protected void createContents() {
 		accueil = new Shell();
@@ -391,12 +378,7 @@ public class VAccueil {
 		cbvQuestionnaireGroupe = new ComboViewer(grpAjouterUnGroupe, SWT.NONE | SWT.READ_ONLY);
 		cbvQuestionnaireGroupe.setContentProvider(ArrayContentProvider.getInstance());
 		cbQuestionnaireGroupe = cbvQuestionnaireGroupe.getCombo();
-		
 		cbQuestionnaireGroupe.setBounds(131, 101, 138, 23);
-		
-		/*createColumnNom(tbAccueil, "Libelle", 1);
-		createColumnDate(tbAccueil, "Date", 1);
-		createColumnGroupe(tbAccueil, "Groupe", 1);*/
 	}
 
 	public TabItem getTbtmQcm() {

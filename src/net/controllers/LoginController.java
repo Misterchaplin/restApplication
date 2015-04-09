@@ -1,26 +1,17 @@
 package net.controllers;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import net.gson.TestGson;
-import net.http.TestHttp;
 import net.models.ActifUser;
 import net.models.CollectionQuestionnaireGroupe;
 import net.models.Groupe;
 import net.models.Questionnaire;
 import net.models.Utilisateur;
 import net.technics.Http;
-import net.vues.VAccueil;
 import net.vues.VLogin;
 
-import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.TableItem;
 
 public class LoginController implements SelectionListener {
 	public static VLogin vLogin;
@@ -89,6 +80,7 @@ public class LoginController implements SelectionListener {
 			        }
 			        
 			       AccueilController.vAccueil.getTableViewer().setInput(questionnairesGroupes);
+			       AccueilController.vAccueil.getTableViewer().refresh();
 			}
 								
 		}
