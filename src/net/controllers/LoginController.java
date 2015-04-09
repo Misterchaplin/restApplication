@@ -46,6 +46,7 @@ public class LoginController implements SelectionListener {
 				vLogin.getShell().close();
 				AccueilController.vAccueil.getItemConnexion().setEnabled(false);
 				AccueilController.vAccueil.getTabGestion().setVisible(true);
+				AccueilController.vAccueil.getItemConnexion().setText("Bienvenue: "+ user.getLogin());
 		
 				Questionnaire[]  d= Http.getAllQuestionnaires();
 				for(Questionnaire questionnaire : d) {
