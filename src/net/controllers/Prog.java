@@ -18,7 +18,7 @@ public class Prog {
 			// connecter ne pas effacer svp...
 
 			vAccueil = new VAccueil();
-			// ceci est un test ici
+			// ceci est un test icidzazfafzaffafa
 			new AppController(vAccueil);
 			// VOverview vOverview = new VOverview();
 			// new AppController(vOverview);
