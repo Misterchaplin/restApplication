@@ -1,8 +1,5 @@
 package net.models;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 
 public class Questionnaire {
 	private Integer id;
@@ -11,7 +8,6 @@ public class Questionnaire {
 //	private Integer questionnaire_id;
 
 	private String date;
-	private boolean isSelected;
 	
 	public Integer getId() {
 		return id;

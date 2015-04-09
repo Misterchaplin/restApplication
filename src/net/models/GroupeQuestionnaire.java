@@ -1,9 +1,16 @@
 package net.models;
 
 public class GroupeQuestionnaire {
+	private Integer id;
 	private Integer questionnaire_id;
 	private Integer groupe_id;
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public Integer getQuestionnaire_id() {
 		return questionnaire_id;
 	}

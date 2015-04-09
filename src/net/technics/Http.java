@@ -33,6 +33,23 @@ public class Http{
 		return data;
 	}
 	
+	
+	/**
+	 * Ensemble des groupes
+	 * @return
+	 */
+	public static Groupe[] getAllGroupes(){
+		try {
+			query=http.get(baseUrl+"groupes");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Groupe[]  data= gson.jsonToAllGroupe(query);
+		
+		return data;
+	}
+	
 	/**
 	 * Ensemble des Groupes du questionnaire
 	 * @param id

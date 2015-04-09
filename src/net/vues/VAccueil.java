@@ -45,25 +45,8 @@ public class VAccueil {
 	private Text txtQcm2;
 	private Text txtQcm4;
 	private Table table;
-	public Table getTable() {
-		return table;
-	}
-
 	private Text txtLibelle;
-	
-	public Text getTxtQcm() {
-		return txtQcm;
-	}
-
-	public Text getTxtLibelle() {
-		return txtLibelle;
-	}
-
 	private Text txtCode;
-	public Text getTxtCode() {
-		return txtCode;
-	}
-
 	private Button btnAjouterGroupe;
 	private Button btnAjouterQcm;
 	private TableViewerColumn tableViewerColumnQuestionnaire;
@@ -75,6 +58,28 @@ public class VAccueil {
 	private TableViewerColumn firstNameCol;
 	private TableViewerColumn lastNameCol;
 	private TabItem tbtmQcm;
+	private ComboViewer cbvQcm;
+	private Combo cbQcm;
+	private Button btnCkGroupe3;
+	private Button btnCkGroupe2;
+	private Button btnCkGroupe4;
+	private Button btnCkGroupe1;
+	
+	public Table getTable() {
+		return table;
+	}
+	
+	public Text getTxtQcm() {
+		return txtQcm;
+	}
+
+	public Text getTxtLibelle() {
+		return txtLibelle;
+	}
+	
+	public Text getTxtCode() {
+		return txtCode;
+	}
 	
 	public TableViewer getTableViewer() {
 		return tableViewer;
@@ -217,54 +222,12 @@ public class VAccueil {
         column.setText("Questionnaires");
         column.setWidth(223);
         firstNameCol = new TableViewerColumn(tableViewer, column);
-        /*firstNameCol.setLabelProvider(new ColumnLabelProvider(){
-
-            @Override
-            public String getText(Object element) {
-            	CollectionQuestionnaireGroupe p = (CollectionQuestionnaireGroupe)element;
-
-                return p.getQuestionnaire_libelle();
-            }
-
-        });*/
-        
-
+   
         column = new TableColumn(tableViewer.getTable(), SWT.NONE);
         column.setText("Groupes");
         column.setWidth(223);
         lastNameCol = new TableViewerColumn(tableViewer, column);
-       /* lastNameCol.setLabelProvider(new ColumnLabelProvider(){
-
-            @Override
-            public String getText(Object element) {
-            	CollectionQuestionnaireGroupe p = (CollectionQuestionnaireGroupe)element;
-
-                return p.getGroupe_libelle();
-            }
-
-        });*/
-        
-      /*  ArrayList<CollectionQuestionnaireGroupe> questionnairesGroupes = new ArrayList<CollectionQuestionnaireGroupe>();
-        Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
-       
-        
-        for(Questionnaire unQuestionnaire:lesQuestionnaires){
-        	Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());     	 
-        	for (Groupe unGroupe : lesGroupes) {	
-        		CollectionQuestionnaireGroupe lesqg = new CollectionQuestionnaireGroupe();
-				lesqg.setGroupe_id(unGroupe.getId());
-        		lesqg.setQuestionnaire_libelle(unQuestionnaire.getLibelle());
-				lesqg.setGroupe_libelle(unGroupe.getLibelle());
-				lesqg.setGroupe_code(unGroupe.getCode());
-				lesqg.setQuestionnaire_id(unQuestionnaire.getId());
-				lesqg.setQuestionnaire_domaine_id(unQuestionnaire.getDomaine_id());
-				lesqg.setQuestionnaire_date(unQuestionnaire.getDate());
-				questionnairesGroupes.add(lesqg);
-			}
-        }
-        
-        tableViewer.setInput(questionnairesGroupes);*/
-        
+     
         
 				
 		tbtmQcm = new TabItem(tabGestion, SWT.NONE);
@@ -307,24 +270,19 @@ public class VAccueil {
 		txtQcm4 = new Text(grpReponse, SWT.BORDER);
 		txtQcm4.setBounds(232, 110, 102, 21);
 		
-		Button btnCkGroupe1 = new Button(grpReponse, SWT.CHECK);
+		btnCkGroupe1 = new Button(grpReponse, SWT.CHECK);
 		btnCkGroupe1.setText("1");
-		btnCkGroupe1.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
 		btnCkGroupe1.setBounds(133, 43, 35, 21);
 		
-		Button btnCkGroupe3 = new Button(grpReponse, SWT.CHECK);
+		btnCkGroupe3 = new Button(grpReponse, SWT.CHECK);
 		btnCkGroupe3.setText("3");
 		btnCkGroupe3.setBounds(133, 112, 35, 16);
 		
-		Button btnCkGroupe2 = new Button(grpReponse, SWT.CHECK);
+		btnCkGroupe2 = new Button(grpReponse, SWT.CHECK);
 		btnCkGroupe2.setBounds(343, 48, 37, 16);
 		btnCkGroupe2.setText("2");
 		
-		Button btnCkGroupe4 = new Button(grpReponse, SWT.CHECK);
+		btnCkGroupe4 = new Button(grpReponse, SWT.CHECK);
 		btnCkGroupe4.setLocation(344, 112);
 		btnCkGroupe4.setSize(36, 16);
 		btnCkGroupe4.setText("4");
@@ -333,8 +291,9 @@ public class VAccueil {
 		lblGroupeQcm.setBounds(244, 42, 55, 15);
 		lblGroupeQcm.setText("Groupe :");
 		
-		ComboViewer comboViewer = new ComboViewer(grpAjouterQcm, SWT.NONE);
-		Combo cbQcm = comboViewer.getCombo();
+		cbvQcm = new ComboViewer(grpAjouterQcm, SWT.NONE | SWT.READ_ONLY);
+		cbvQcm.setContentProvider(ArrayContentProvider.getInstance());
+		cbQcm = cbvQcm.getCombo();
 		cbQcm.setBounds(305, 36, 91, 23);
 		
 		btnAjouterQcm = new Button(cpQcm, SWT.NONE);
@@ -379,6 +338,50 @@ public class VAccueil {
 		cbvQuestionnaireGroupe.setContentProvider(ArrayContentProvider.getInstance());
 		cbQuestionnaireGroupe = cbvQuestionnaireGroupe.getCombo();
 		cbQuestionnaireGroupe.setBounds(131, 101, 138, 23);
+	}
+
+	public Button getBtnCkGroupe3() {
+		return btnCkGroupe3;
+	}
+
+	public Button getBtnCkGroupe2() {
+		return btnCkGroupe2;
+	}
+
+	public Button getBtnCkGroupe4() {
+		return btnCkGroupe4;
+	}
+
+	public Button getBtnCkGroupe1() {
+		return btnCkGroupe1;
+	}
+
+	public Text getTxtQcm1() {
+		return txtQcm1;
+	}
+
+	public Text getTxtQcm3() {
+		return txtQcm3;
+	}
+
+	public Text getTxtQcm2() {
+		return txtQcm2;
+	}
+
+	public Text getTxtQcm4() {
+		return txtQcm4;
+	}
+
+	public Text getTxtQuestionQcm() {
+		return txtQuestionQcm;
+	}
+
+	public Combo getCbQcm() {
+		return cbQcm;
+	}
+
+	public ComboViewer getCbvQcm() {
+		return cbvQcm;
 	}
 
 	public TabItem getTbtmQcm() {
