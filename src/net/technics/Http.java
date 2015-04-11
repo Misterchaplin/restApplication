@@ -84,6 +84,18 @@ public class Http{
 		return data;
 	}
 	
+	public static GroupeUtilisateur[] getGroupeUtilisateur(Integer id){
+		try {
+			query=http.get(baseUrl+"groupeutilisateurs/user/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GroupeUtilisateur[] data= gson.jsonToAllGroupeUtilisateur(query);
+		
+		return data;
+	}
+	
 	public static ActifUser getConnectUser(Utilisateur user){
 		try {
 			query=http.postClassic(baseUrl+"user/connect/", user);
@@ -128,6 +140,18 @@ public class Http{
 			e.printStackTrace();
 		}
 		GroupeUtilisateur data=gson.jsonToGroupeUtilisateur(query);
+		
+		return data;
+	}
+	
+	public static Questionnaire postQuestionnarie(Questionnaire questionnaire){
+		try {
+			query = http.post(baseUrl+"questionnaires/", questionnaire);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Questionnaire data=gson.jsonToQuestionnaire(query);
 		
 		return data;
 	}

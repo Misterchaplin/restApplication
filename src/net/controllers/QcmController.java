@@ -1,9 +1,16 @@
 package net.controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import net.models.Groupe;
+import net.models.GroupeQuestionnaire;
+import net.models.GroupeUtilisateur;
 import net.models.Question;
 import net.models.Questionnaire;
 import net.models.Reponse;
+import net.models.Utilisateur;
 import net.technics.Http;
 import net.vues.VAccueil;
 
@@ -43,7 +50,10 @@ public class QcmController implements SelectionListener {
 			public void widgetSelected(SelectionEvent e) {
 				Questionnaire questionnaire = new Questionnaire();
 				questionnaire.setLibelle(vAccueil.getTxtQcm().getText());
-				
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = new Date();
+				questionnaire.setDate(dateFormat.format(date)); 
+				System.out.println(questionnaire.getDate());
 				IStructuredSelection selection = (IStructuredSelection) vAccueil.getCbvQcm().getSelection();
 		        Groupe element = (Groupe)selection.getFirstElement();
 				Groupe groupe = new Groupe();
@@ -98,9 +108,40 @@ public class QcmController implements SelectionListener {
 				
 				if(check==true && (nbTrueAnswer==1 || nbTrueAnswer==2)){
 					System.out.println("Mise en place des requêtes désormais possible");
+					Questionnaire insertQuestionnaire = Http.postQuestionnarie(questionnaire);
+					
+					GroupeQuestionnaire groupeQuestionnaire = new GroupeQuestionnaire();
+					groupeQuestionnaire.setGroupe_id(groupe.getId());
+					groupeQuestionnaire.setQuestionnaire_id(insertQuestionnaire.getId());
+					GroupeQuestionnaire insertGroupeQuestionnaire = Http.postGroupeQuestionnaires(groupeQuestionnaire);
+
+					GroupeUtilisateur groupeUtilisateur = new GroupeUtilisateur();
+					groupeUtilisateur.setGroupe_id(groupe.getId());
+					groupeUtilisateur.setUtilisateur_id(AppController.getActiveUser().getWho());
+					
+					GroupeUtilisateur[] getGroupeUtilisateur = Http.getGroupeUtilisateur(groupeUtilisateur.getUtilisateur_id());
+					boolean guCheck = false;
+					for (GroupeUtilisateur gu : getGroupeUtilisateur) {
+						if((groupeUtilisateur.getGroupe_id()==gu.getGroupe_id()) && groupeUtilisateur.getUtilisateur_id()==gu.getUtilisateur_id()){
+							guCheck=true;
+						}
+					}
+					
+					if(guCheck==false){
+						GroupeUtilisateur insertGroupeUtilisateur = Http.postGroupeUtilisateurs(groupeUtilisateur);
+						vAccueil.getLblInformation().setText("Ajout réussie");
+					}
+					else{
+						vAccueil.getLblInformation().setText("Ajout réussie");
+					}
+					
+					
 				}else{
-					System.out.println("Erreur");
+					vAccueil.getLblInformation().setText("Un ou plusieurs champs sont manquants");
 				}
+				
+				
+				
 				
 				
 			}
