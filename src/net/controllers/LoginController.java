@@ -1,17 +1,22 @@
 package net.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 import net.models.ActifUser;
 import net.models.CollectionQuestionnaireGroupe;
 import net.models.Groupe;
 import net.models.Questionnaire;
 import net.models.Utilisateur;
 import net.technics.Http;
+import net.vues.VAccueil;
 import net.vues.VLogin;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.MessageBox;
 
 public class LoginController implements SelectionListener {
 	public static VLogin vLogin;
@@ -23,6 +28,7 @@ public class LoginController implements SelectionListener {
 	public void init() {
 		vLogin.getBtnConnexion().addSelectionListener(new SelectionListener() {
 						
+		@SuppressWarnings("unchecked")
 		@Override
 		public void widgetSelected(SelectionEvent arg0) {
 			Utilisateur user= new Utilisateur();
@@ -60,12 +66,12 @@ public class LoginController implements SelectionListener {
 			            }
 
 			        });
-				 ArrayList<CollectionQuestionnaireGroupe> questionnairesGroupes = new ArrayList<CollectionQuestionnaireGroupe>();
-			        Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
+				ArrayList<CollectionQuestionnaireGroupe> questionnairesGroupes = new ArrayList<CollectionQuestionnaireGroupe>();
+			    Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
 			       
-			        
-			        for(Questionnaire unQuestionnaire:lesQuestionnaires){
-			        	Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());     	 
+			    if(lesQuestionnaires!=null && lesQuestionnaires.length>0){
+			    	for(Questionnaire unQuestionnaire:lesQuestionnaires){
+			    		Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());     	 
 			        	for (Groupe unGroupe : lesGroupes) {	
 			        		CollectionQuestionnaireGroupe lesqg = new CollectionQuestionnaireGroupe();
 							lesqg.setGroupe_id(unGroupe.getId());
@@ -78,9 +84,16 @@ public class LoginController implements SelectionListener {
 							questionnairesGroupes.add(lesqg);
 						}
 			        }
-			        
-			       AccueilController.vAccueil.getTableViewer().setInput(questionnairesGroupes);
-			       AccueilController.vAccueil.getTableViewer().refresh();
+			    	AccueilController.vAccueil.getTableViewer().setInput(questionnairesGroupes);
+				    AccueilController.vAccueil.getTableViewer().refresh();
+				}
+			    else{
+			    	 MessageBox messageBox = new MessageBox(AccueilController.vAccueil.getAccueil().getShell(), SWT.ICON_WARNING | SWT.OK);
+			         
+			         messageBox.setText("Warning");
+			         messageBox.setMessage("Aucun questionnaire");
+			         messageBox.open();
+			    }
 			}
 								
 		}
