@@ -4,7 +4,9 @@ import net.models.ActifUser;
 import net.models.Groupe;
 import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
+import net.models.Question;
 import net.models.Questionnaire;
+import net.models.Reponse;
 import net.models.Utilisateur;
 
 import com.google.gson.Gson;
@@ -65,6 +67,14 @@ public class TestGson {
 	
 	public GroupeUtilisateur[] jsonToAllGroupeUtilisateur (String jsonString){
 		return gson.fromJson(jsonString, GroupeUtilisateur[].class);
+	}
+	
+	public Question jsonToQuestion(String jsonString){
+		return gson.fromJson(jsonString, Question.class);
+	}
+	
+	public Reponse jsonToReponse(String jsonString){
+		return gson.fromJson(jsonString, Reponse.class);
 	}
 	
 	public static void main(String args[]){

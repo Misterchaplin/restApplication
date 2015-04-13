@@ -8,7 +8,9 @@ import net.models.ActifUser;
 import net.models.Groupe;
 import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
+import net.models.Question;
 import net.models.Questionnaire;
+import net.models.Reponse;
 import net.models.Utilisateur;
 
 public class Http{
@@ -153,6 +155,29 @@ public class Http{
 		}
 		Questionnaire data=gson.jsonToQuestionnaire(query);
 		
+		return data;
+	}
+	
+	public static Question postQuestion(Question question){
+		try {
+			query = http.post(baseUrl+"questions/", question);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Question data=gson.jsonToQuestion(query);
+		
+		return data;
+	}
+	
+	public static Reponse postReponse(Reponse reponse){
+		try {
+			query = http.post(baseUrl+"reponses/", reponse);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Reponse data=gson.jsonToReponse(query);
 		return data;
 	}
 

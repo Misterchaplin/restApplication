@@ -4,7 +4,7 @@ public class Reponse {
 	private Integer id;
 	private String libelle;
 	private Integer question_id;
-	private Boolean good;
+	private Integer good;
 	
 	public Integer getId() {
 		return id;
@@ -24,10 +24,10 @@ public class Reponse {
 	public void setQuestion_id(Integer question_id) {
 		this.question_id = question_id;
 	}
-	public Boolean getGood() {
+	public Integer getGood() {
 		return good;
 	}
-	public void setGood(Boolean good) {
+	public void setGood(Integer good) {
 		this.good = good;
 	}
 	
