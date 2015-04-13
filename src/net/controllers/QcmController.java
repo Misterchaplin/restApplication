@@ -8,15 +8,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.gson.TestGson;
-import net.http.TestHttp;
 import net.models.Groupe;
 import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
 import net.models.Question;
 import net.models.Questionnaire;
 import net.models.Reponse;
-import net.models.Utilisateur;
 import net.technics.Http;
 import net.vues.VAccueil;
 
@@ -25,19 +22,22 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.ui.internal.forms.widgets.Paragraph;
 
 public class QcmController implements SelectionListener {
 	public static VAccueil vAccueil;
 	private String qcm;
 	protected Questionnaire session_id;
+	private List<Reponse> lesReponses = new ArrayList<Reponse>();
+	private Questionnaire leQuestionnaire=null;
+	private Groupe leGroupe=null;
+	private Question laQuestion=null;
 
 	public QcmController(VAccueil vAccueil) {
 		this.vAccueil = vAccueil;
 	}
 
 	public void init() {
-		
+		vAccueil.getBtnNouveauQuestionnaire().setVisible(false);
 		vAccueil.getCbvQcm().setLabelProvider(new LabelProvider() {
 			 @Override
 	            public String getText(Object element) {
@@ -53,25 +53,147 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnAjouterQcm().addSelectionListener(new SelectionAdapter() {
 			private int nbTrueAnswer;
 
-
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				Questionnaire questionnaire = new Questionnaire();
-				questionnaire.setLibelle(vAccueil.getTxtQcm().getText());
-				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				Date date = new Date();
-				questionnaire.setDate(dateFormat.format(date)); 
-				System.out.println(questionnaire.getDate());
+		
+				Integer stateAnswer=createReponse();
+	
+				boolean checkQuestGroupe=true;
+				if(stateAnswer!=0){
+					leQuestionnaire=createQuestionnaire();
+					leGroupe=createGroupe();
+					laQuestion=createQuestion();
+					if(leQuestionnaire.getLibelle().isEmpty() || laQuestion.getLibelle().isEmpty()){
+						checkQuestGroupe=false;
+					}
+					if(leGroupe.getId()==null){
+						checkQuestGroupe=false;
+					}
+				}
+				
+				if(checkQuestGroupe==true && (nbTrueAnswer==1 || nbTrueAnswer==2)){
+					System.out.println("Mise en place des requêtes désormais possible");
+					Questionnaire insertQuestionnaire = Http.postQuestionnarie(leQuestionnaire);
+					
+					//Association entre groupe et questionnaire
+					GroupeQuestionnaire eventGroupeQuestionnaire = addOrUpdateGroupeQuestionnaire(insertQuestionnaire);
+					
+					//Insertion d'une question appartenant à un questionnaire
+					laQuestion.setQuestionnaire_id(insertQuestionnaire.getId());
+					Question insertQuestion=addOrUpdateQuestion();
+					
+					//Insertion des reponses de la question
+					boolean insertCheckReponse=addOrUpdateReponse(insertQuestion);
+					
+					//Si tout est correct alors on associe les précédents ajout à l'utilisateur (s'il la relation n'existe pas encore)
+					if(insertCheckReponse==true){				
+						boolean guCheck=ifGroupeWithUser();
+						boolean insertGrood=false;
+						if(guCheck==false){
+							GroupeUtilisateur insertGroupeUtilisateur = Http.postGroupeUtilisateurs(createGroupeUtilisateur());
+							vAccueil.getLblInformation().setText("Ajout réussie");
+							insertGrood=true;
+							
+						}
+						else{
+							vAccueil.getLblInformation().setText("Ajout réussie");
+							insertGrood=true;
+						}
+						
+						if(insertGrood==true){
+							vAccueil.getBtnNouveauQuestionnaire().setVisible(true);
+							session_id=insertQuestionnaire;
+							System.out.println(session_id);
+							vAccueil.getTxtQuestionQcm().setText("");
+							vAccueil.getTxtQcm1().setText("");
+							vAccueil.getTxtQcm2().setText("");
+							vAccueil.getTxtQcm3().setText("");
+							vAccueil.getTxtQcm4().setText("");
+							vAccueil.getBtnCkGroupe1().setSelection(false);
+							vAccueil.getBtnCkGroupe2().setSelection(false);
+							vAccueil.getBtnCkGroupe3().setSelection(false);
+							vAccueil.getBtnCkGroupe4().setSelection(false);
+						}
+					}
+					
+				}else{
+					vAccueil.getLblInformation().setText("Un ou plusieurs champs sont manquants");
+				}
+	
+			}
+			
+			public boolean ifGroupeWithUser(){
+				GroupeUtilisateur leGroupUser=createGroupeUtilisateur();
+				GroupeUtilisateur[] getGroupeUtilisateur = Http.getGroupeUtilisateur(leGroupUser.getUtilisateur_id());
+				boolean guCheck = false;
+				for (GroupeUtilisateur gu : getGroupeUtilisateur) {
+					if((leGroupUser.getGroupe_id()==gu.getGroupe_id()) && leGroupUser.getUtilisateur_id()==gu.getUtilisateur_id()){
+						guCheck=true;
+					}
+				}
+				
+				return guCheck;
+			}
+			
+			public GroupeUtilisateur createGroupeUtilisateur(){
+				GroupeUtilisateur groupeUtilisateur = new GroupeUtilisateur();
+				groupeUtilisateur.setGroupe_id(leGroupe.getId());
+				groupeUtilisateur.setUtilisateur_id(AppController.getActiveUser().getWho());
+				return groupeUtilisateur;
+			}
+			
+			public boolean addOrUpdateReponse(Question insertQuestion){
+				boolean insertCheckReponse=true;
+				for (Reponse reponse : lesReponses) {
+					reponse.setQuestion_id(insertQuestion.getId());
+					Reponse insertReponse = Http.postReponse(reponse);
+					if(insertReponse.getId().equals(null)){
+						insertCheckReponse=false;
+					}
+				}
+				return insertCheckReponse;
+			}
+			
+			public Question addOrUpdateQuestion(){
+				Question insertQuestion = Http.postQuestion(laQuestion);
+				return insertQuestion;
+			}
+			
+			public GroupeQuestionnaire addOrUpdateGroupeQuestionnaire(Questionnaire questionnaire){
+				GroupeQuestionnaire groupeQuestionnaire = new GroupeQuestionnaire();
+				groupeQuestionnaire.setGroupe_id(leGroupe.getId());
+				groupeQuestionnaire.setQuestionnaire_id(questionnaire.getId());
+				GroupeQuestionnaire insertGroupeQuestionnaire = Http.postGroupeQuestionnaires(groupeQuestionnaire);
+				return insertGroupeQuestionnaire;
+			}
+			
+			public Groupe createGroupe(){
 				IStructuredSelection selection = (IStructuredSelection) vAccueil.getCbvQcm().getSelection();
 		        Groupe element = (Groupe)selection.getFirstElement();
 				Groupe groupe = new Groupe();
 				if(selection.size()==1){
 					groupe.setId(element.getId());
 				}
+				return groupe;
+			}
+			
+			public Questionnaire createQuestionnaire(){
+				Questionnaire questionnaire = new Questionnaire();
+				questionnaire.setLibelle(vAccueil.getTxtQcm().getText());
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = new Date();
+				questionnaire.setDate(dateFormat.format(date));
 				
+				return questionnaire;
+			}
+			
+			public Question createQuestion(){
 				Question question = new Question();
 				question.setLibelle(vAccueil.getTxtQuestionQcm().getText());
-
+				return question;
+			}
+			
+			public int createReponse(){
 				Reponse reponse1 = new Reponse();
 				reponse1.setLibelle(vAccueil.getTxtQcm1().getText());
 				reponse1.setGood((vAccueil.getBtnCkGroupe1().getSelection()) ? 1 : 0);
@@ -85,19 +207,20 @@ public class QcmController implements SelectionListener {
 				reponse4.setLibelle(vAccueil.getTxtQcm4().getText());
 				reponse4.setGood((vAccueil.getBtnCkGroupe4().getSelection()) ? 1 : 0);
 				
-				List<Reponse> lesReponses = new ArrayList<Reponse>();
+				
 				lesReponses.add(reponse1);
 				lesReponses.add(reponse2);
 				lesReponses.add(reponse3);
 				lesReponses.add(reponse4);
 				
+				nbTrueAnswer=0;
 				boolean check=true;
 				if(reponse1.getLibelle().isEmpty() || reponse2.getLibelle().isEmpty() || 
 					reponse3.getLibelle().isEmpty() || reponse4.getLibelle().isEmpty()){
 					check=false;
 				}
 				else{
-					nbTrueAnswer=0;
+					
 					if(reponse1.getGood()==1){
 						nbTrueAnswer++;
 					}
@@ -111,72 +234,8 @@ public class QcmController implements SelectionListener {
 						nbTrueAnswer++;
 					}
 				}
-
-				if(questionnaire.getLibelle().isEmpty() || question.getLibelle().isEmpty()){
-					check=false;
-				}
-				if(groupe.getId()==null){
-					check=false;
-				}
-			
-				
-				if(check==true && (nbTrueAnswer==1 || nbTrueAnswer==2)){
-					System.out.println("Mise en place des requêtes désormais possible");
-					Questionnaire insertQuestionnaire = Http.postQuestionnarie(questionnaire);
-					
-					//Association entre groupe et questionnaire
-					GroupeQuestionnaire groupeQuestionnaire = new GroupeQuestionnaire();
-					groupeQuestionnaire.setGroupe_id(groupe.getId());
-					groupeQuestionnaire.setQuestionnaire_id(insertQuestionnaire.getId());
-					GroupeQuestionnaire insertGroupeQuestionnaire = Http.postGroupeQuestionnaires(groupeQuestionnaire);
-					
-					//Insertion d'une question appartenant à un questionnaire
-					question.setQuestionnaire_id(insertQuestionnaire.getId());
-					Question insertQuestion = Http.postQuestion(question);
-					System.out.println(insertQuestion);
-					
-					//Insertion des reponses de la question
-					boolean insertCheck=true;
-					for (Reponse reponse : lesReponses) {
-						reponse.setQuestion_id(insertQuestion.getId());
-						Reponse insertReponse = Http.postReponse(reponse);
-						System.out.println(reponse);
-						if(insertReponse.getId().equals(null)){
-							insertCheck=false;
-						}
-					}
-					
-					//Si tout est correct alors on associe les précédents ajout à l'utilisateur (s'il la relation n'existe pas encore)
-					if(insertCheck==true){				
-						GroupeUtilisateur groupeUtilisateur = new GroupeUtilisateur();
-						groupeUtilisateur.setGroupe_id(groupe.getId());
-						groupeUtilisateur.setUtilisateur_id(AppController.getActiveUser().getWho());
-						
-						GroupeUtilisateur[] getGroupeUtilisateur = Http.getGroupeUtilisateur(groupeUtilisateur.getUtilisateur_id());
-						boolean guCheck = false;
-						for (GroupeUtilisateur gu : getGroupeUtilisateur) {
-							if((groupeUtilisateur.getGroupe_id()==gu.getGroupe_id()) && groupeUtilisateur.getUtilisateur_id()==gu.getUtilisateur_id()){
-								guCheck=true;
-							}
-						}
-						
-						if(guCheck==false){
-							GroupeUtilisateur insertGroupeUtilisateur = Http.postGroupeUtilisateurs(groupeUtilisateur);
-							vAccueil.getLblInformation().setText("Ajout réussie");
-							session_id=questionnaire;
-							System.out.println(session_id);
-						}
-						else{
-							vAccueil.getLblInformation().setText("Ajout réussie");
-						}
-					}
-					
-				}else{
-					vAccueil.getLblInformation().setText("Un ou plusieurs champs sont manquants");
-				}
-	
+				return nbTrueAnswer;
 			}
-	
 		
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {

@@ -64,6 +64,7 @@ public class VAccueil {
 	private Button btnCkGroupe2;
 	private Button btnCkGroupe4;
 	private Button btnCkGroupe1;
+	private Button btnNouveauQuestionnaire;
 	
 	public Table getTable() {
 		return table;
@@ -227,8 +228,7 @@ public class VAccueil {
         column.setText("Groupes");
         column.setWidth(223);
         lastNameCol = new TableViewerColumn(tableViewer, column);
-     
-        
+               
 				
 		tbtmQcm = new TabItem(tabGestion, SWT.NONE);
 		tbtmQcm.setText("QCM");
@@ -300,6 +300,11 @@ public class VAccueil {
 		btnAjouterQcm.setBounds(460, 124, 75, 25);
 		btnAjouterQcm.setText("Ajouter");
 		
+		btnNouveauQuestionnaire = new Button(cpQcm, SWT.NONE);
+		btnNouveauQuestionnaire.setText("Nouveau ?");
+		btnNouveauQuestionnaire.setBounds(460, 185, 75, 25);
+		formToolkit.adapt(btnNouveauQuestionnaire, true, true);
+		
 		TabItem tbtmGroupe = new TabItem(tabGestion, SWT.NONE);
 		tbtmGroupe.setText("Groupe");
 		
@@ -338,6 +343,10 @@ public class VAccueil {
 		cbvQuestionnaireGroupe.setContentProvider(ArrayContentProvider.getInstance());
 		cbQuestionnaireGroupe = cbvQuestionnaireGroupe.getCombo();
 		cbQuestionnaireGroupe.setBounds(131, 101, 138, 23);
+	}
+
+	public Button getBtnNouveauQuestionnaire() {
+		return btnNouveauQuestionnaire;
 	}
 
 	public Button getBtnCkGroupe3() {
