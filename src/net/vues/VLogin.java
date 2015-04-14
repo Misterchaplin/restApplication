@@ -87,7 +87,7 @@ public class VLogin {
 	 */
 	protected void createContents() {
 		shell = new Shell();
-		shell.setSize(450, 300);
+		shell.setSize(454, 316);
 		shell.setText("SWT Application");
 		
 		grpConnexion = new Group(shell, SWT.NONE);
@@ -112,16 +112,16 @@ public class VLogin {
 		btnConnexion = new Button(grpConnexion, SWT.NONE);
 
 		btnConnexion.setText("Se connecter");
-		btnConnexion.setBounds(172, 112, 109, 25);
+		btnConnexion.setBounds(167, 112, 109, 25);
 		
 		grpInformation = new Group(shell, SWT.NONE);
 		grpInformation.setLocation(10, 10);
-		grpInformation.setSize(414, 46);
+		grpInformation.setSize(414, 55);
 		grpInformation.setText("Information :");
 		
 		lblInformation = new Label(grpInformation, SWT.NONE);
 		lblInformation.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		lblInformation.setBounds(10, 21, 394, 15);
+		lblInformation.setBounds(10, 21, 394, 24);
 
 	}
 

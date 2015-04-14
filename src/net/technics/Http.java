@@ -70,6 +70,26 @@ public class Http{
 	}
 	
 	/**
+	 * Recupérer cim avec id_questionnaire et id_groupe
+	 * @param "id_questionnaire"_"idGroupe"
+	 * @return
+	 */
+	public static GroupeQuestionnaire[] getCIMGrpQst(String id){
+		try {
+			query=http.get(baseUrl+"groupequestionnaires/GrpQst/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GroupeQuestionnaire[] data= gson.jsonToAllGroupeQuestionnaire(query);
+		
+		return data;
+	}
+	
+	
+	
+	
+	/**
 	 * Ensemble des groupes appartenant à l'utilisateur
 	 * @param id
 	 * @return
@@ -179,6 +199,35 @@ public class Http{
 		}
 		Reponse data=gson.jsonToReponse(query);
 		return data;
+	}
+	/**
+	 * Supprimer cim entre questionnaire et groupe
+	 * @param id
+	 * @return
+	 */
+	public static void deleteCIMGroupeQuestionnaire(Integer id, String idGrpQuest, Integer idQuestionnaire){
+		try {
+
+			
+			// vérifie s'il y a plusieurs CIM
+			query=http.get(baseUrl+"groupequestionnaires/VerifPlusieursGroupe/"+idGrpQuest);
+			// Si oui on supprime uniquement la sélectionné
+			if(query == "oui"){
+				query=http.delete(baseUrl+"groupequestionnaires/"+id);
+			}
+			// Si il n'y en a qu'une on supprime cim + questionnaire
+			else{
+				query=http.delete(baseUrl+"groupequestionnaires/"+id);
+				query=http.delete(baseUrl+"questionnaires/"+idQuestionnaire);
+			}
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+					
 	}
 
 }

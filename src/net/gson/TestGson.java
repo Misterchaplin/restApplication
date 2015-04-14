@@ -61,6 +61,10 @@ public class TestGson {
 		return gson.fromJson(jsonString, GroupeQuestionnaire.class);
 	}
 	
+	public GroupeQuestionnaire[] jsonToAllGroupeQuestionnaire (String jsonString){
+		return gson.fromJson(jsonString, GroupeQuestionnaire[].class);
+	}
+	
 	public GroupeUtilisateur jsonToGroupeUtilisateur (String jsonString){
 		return gson.fromJson(jsonString, GroupeUtilisateur.class);
 	}

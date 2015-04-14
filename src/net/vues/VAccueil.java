@@ -65,7 +65,17 @@ public class VAccueil {
 	private Button btnCkGroupe4;
 	private Button btnCkGroupe1;
 	private Button btnNouveauQuestionnaire;
+	private Button btnSupprimerAccueil;
+	private Button btnModifierAccueil;
 	
+	public Button getBtnModifierAccueil() {
+		return btnModifierAccueil;
+	}
+
+	public Button getBtnSupprimerAccueil() {
+		return btnSupprimerAccueil;
+	}
+
 	public Table getTable() {
 		return table;
 	}
@@ -164,9 +174,9 @@ public class VAccueil {
 
 		ToolBar menuConnexion = new ToolBar(accueil, SWT.FLAT | SWT.RIGHT);
 		FormData fd_menuConnexion = new FormData();
-		fd_menuConnexion.left = new FormAttachment(100, -236);
+		fd_menuConnexion.left = new FormAttachment(100, -203);
 		fd_menuConnexion.right = new FormAttachment(100, -10);
-		fd_menuConnexion.top = new FormAttachment(0, 10);
+		fd_menuConnexion.top = new FormAttachment(0);
 		menuConnexion.setLayoutData(fd_menuConnexion);
 
 		itemLogin = new ToolItem(menuConnexion, SWT.NONE);
@@ -228,6 +238,17 @@ public class VAccueil {
         column.setText("Groupes");
         column.setWidth(223);
         lastNameCol = new TableViewerColumn(tableViewer, column);
+		btnModifierAccueil = new Button(cpAccueil, SWT.NONE);
+        btnModifierAccueil.setBounds(486, 173, 95, 28);
+        formToolkit.adapt(btnModifierAccueil, true, true);
+        btnModifierAccueil.setText("Modifier");
+        
+        btnSupprimerAccueil = new Button(cpAccueil, SWT.NONE);
+     
+        btnSupprimerAccueil.setBounds(486, 207, 95, 28);
+        formToolkit.adapt(btnSupprimerAccueil, true, true);
+        btnSupprimerAccueil.setText("Supprimer");
+     
                
 				
 		tbtmQcm = new TabItem(tabGestion, SWT.NONE);

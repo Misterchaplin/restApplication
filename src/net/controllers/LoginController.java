@@ -66,34 +66,7 @@ public class LoginController implements SelectionListener {
 			            }
 
 			        });
-				ArrayList<CollectionQuestionnaireGroupe> questionnairesGroupes = new ArrayList<CollectionQuestionnaireGroupe>();
-			    Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
-			       
-			    if(lesQuestionnaires!=null && lesQuestionnaires.length>0){
-			    	for(Questionnaire unQuestionnaire:lesQuestionnaires){
-			    		Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());     	 
-			        	for (Groupe unGroupe : lesGroupes) {	
-			        		CollectionQuestionnaireGroupe lesqg = new CollectionQuestionnaireGroupe();
-							lesqg.setGroupe_id(unGroupe.getId());
-			        		lesqg.setQuestionnaire_libelle(unQuestionnaire.getLibelle());
-							lesqg.setGroupe_libelle(unGroupe.getLibelle());
-							lesqg.setGroupe_code(unGroupe.getCode());
-							lesqg.setQuestionnaire_id(unQuestionnaire.getId());
-							lesqg.setQuestionnaire_domaine_id(unQuestionnaire.getDomaine_id());
-							lesqg.setQuestionnaire_date(unQuestionnaire.getDate());
-							questionnairesGroupes.add(lesqg);
-						}
-			        }
-			    	AccueilController.vAccueil.getTableViewer().setInput(questionnairesGroupes);
-				    AccueilController.vAccueil.getTableViewer().refresh();
-				}
-			    else{
-			    	 MessageBox messageBox = new MessageBox(AccueilController.vAccueil.getAccueil().getShell(), SWT.ICON_WARNING | SWT.OK);
-			         
-			         messageBox.setText("Warning");
-			         messageBox.setMessage("Aucun questionnaire");
-			         messageBox.open();
-			    }
+				remplirTableViewer();
 			}
 								
 		}
@@ -105,6 +78,38 @@ public class LoginController implements SelectionListener {
 		});
 	}				
 
+	public static void remplirTableViewer(){
+		ArrayList<CollectionQuestionnaireGroupe> questionnairesGroupes = new ArrayList<CollectionQuestionnaireGroupe>();
+        Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
+       
+        if(lesQuestionnaires!=null && lesQuestionnaires.length>0){
+	        for(Questionnaire unQuestionnaire:lesQuestionnaires){
+	        	Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());     	 
+	        	for (Groupe unGroupe : lesGroupes) {	
+	        		CollectionQuestionnaireGroupe lesqg = new CollectionQuestionnaireGroupe();
+					lesqg.setGroupe_id(unGroupe.getId());
+	        		lesqg.setQuestionnaire_libelle(unQuestionnaire.getLibelle());
+					lesqg.setGroupe_libelle(unGroupe.getLibelle());
+					lesqg.setGroupe_code(unGroupe.getCode());
+					lesqg.setQuestionnaire_id(unQuestionnaire.getId());
+					lesqg.setQuestionnaire_domaine_id(unQuestionnaire.getDomaine_id());
+					lesqg.setQuestionnaire_date(unQuestionnaire.getDate());
+					questionnairesGroupes.add(lesqg);
+				}
+	        }
+        }
+	    else{
+	    	 MessageBox messageBox = new MessageBox(AccueilController.vAccueil.getAccueil().getShell(), SWT.ICON_WARNING | SWT.OK);
+	         
+	         messageBox.setText("Warning");
+	         messageBox.setMessage("Aucun questionnaire");
+	         messageBox.open();
+	    }
+        
+       AccueilController.vAccueil.getTableViewer().setInput(questionnairesGroupes);
+		
+	}
+	
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0) {
 		// TODO Auto-generated method stub
