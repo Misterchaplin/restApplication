@@ -37,18 +37,7 @@ public class QcmController implements SelectionListener {
 	}
 
 	public void init() {
-		vAccueil.getBtnNouveauQuestionnaire().setVisible(false);
-		vAccueil.getCbvQcm().setLabelProvider(new LabelProvider() {
-			 @Override
-	            public String getText(Object element) {
-	            	Groupe p = (Groupe)element;
-	                return p.getLibelle();
-	            }
-	    });
 		
-
-	    Groupe[] groupes = Http.getAllGroupes();
-	    vAccueil.getCbvQcm().setInput(groupes);
 		
 		vAccueil.getBtnAjouterQcm().addSelectionListener(new SelectionAdapter() {
 			private int nbTrueAnswer;

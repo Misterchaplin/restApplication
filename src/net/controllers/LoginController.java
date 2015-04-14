@@ -9,10 +9,12 @@ import net.models.Groupe;
 import net.models.Questionnaire;
 import net.models.Utilisateur;
 import net.technics.Http;
+import net.technics.Utils;
 import net.vues.VAccueil;
 import net.vues.VLogin;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -67,6 +69,9 @@ public class LoginController implements SelectionListener {
 
 			        });
 				remplirTableViewer();
+				remplirComboQuestionnaire();
+				remplirComboGroupe();
+				
 			}
 								
 		}
@@ -113,6 +118,41 @@ public class LoginController implements SelectionListener {
         
        AccueilController.vAccueil.getTableViewer().setInput(questionnairesGroupes);
 		
+	}
+	
+	/**
+	 * Ajoute les groupes dans qcm
+	 */
+	public void remplirComboGroupe(){
+		AccueilController.vAccueil.getBtnNouveauQuestionnaire().setVisible(false);
+		AccueilController.vAccueil.getCbvQcm().setLabelProvider(new LabelProvider() {
+			 @Override
+	            public String getText(Object element) {
+	            	Groupe p = (Groupe)element;
+	                return p.getLibelle();
+	            }
+	    });
+		
+
+	    Groupe[] groupes = Utils.getGroupeToAUtilisateur();
+	    AccueilController.vAccueil.getCbvQcm().setInput(groupes);
+	}
+	
+	/**
+	 * Ajoute les questionnaires dans l'onglet groupe
+	*/
+	public void remplirComboQuestionnaire(){
+		
+		AccueilController.vAccueil.getCbvQuestionnaireGroupe().setLabelProvider(new LabelProvider() {
+			 @Override
+	            public String getText(Object element) {
+	            	Questionnaire p = (Questionnaire)element;
+	                return p.getLibelle();
+	            }
+	    });
+
+	    Questionnaire[] questionnaires = Utils.getQuestionnaireToAUtilisateur();
+	    AccueilController.vAccueil.getCbvQuestionnaireGroupe().setInput(questionnaires);
 	}
 	
 	@Override

@@ -6,6 +6,7 @@ import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
 import net.models.Questionnaire;
 import net.technics.Http;
+import net.technics.Utils;
 import net.vues.VAccueil;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -24,19 +25,7 @@ public class GroupeController implements SelectionListener {
 
 	public void init() {
 		
-		/**
-		 * Initialisation de la combobox par libelle 
-		 */
-		vAccueil.getCbvQuestionnaireGroupe().setLabelProvider(new LabelProvider() {
-			 @Override
-	            public String getText(Object element) {
-	            	Questionnaire p = (Questionnaire)element;
-	                return p.getLibelle();
-	            }
-	    });
-
-	    Questionnaire[] questionnaires = Http.getAllQuestionnaires();
-	    vAccueil.getCbvQuestionnaireGroupe().setInput(questionnaires);
+		
 		
 		vAccueil.getBtnAjouterGroupe().addSelectionListener(new SelectionAdapter() {
 			@Override

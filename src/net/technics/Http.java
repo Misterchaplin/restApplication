@@ -10,7 +10,6 @@ import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
 import net.models.Question;
 import net.models.Questionnaire;
-import net.models.Realisation;
 import net.models.Reponse;
 import net.models.Utilisateur;
 
@@ -19,6 +18,23 @@ public class Http{
 	private static TestGson gson = new TestGson();
 	private static String baseUrl="http://127.0.0.1/rest-QCM/";
 	private static String query;
+	
+	
+	/**
+	 * Ensemble des questionnaires
+	 * @return
+	 */
+	public static Utilisateur[] getAllUtilisateurs(){
+		try {
+			query=http.get(baseUrl+"utilisateur");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Utilisateur[]  data= gson.jsonToAllUtilisateur(query);
+		
+		return data;
+	}
 	
 	/**
 	 * Ensemble des questionnaires
@@ -70,23 +86,6 @@ public class Http{
 		return data;
 	}
 	
-	
-	/**
-	 * Ensemble des Questionnaires fait par un administrateur
-	 * @param id
-	 * @return
-	 */
-	public static Realisation[] getQuestionnaireToRealisation(Integer id){
-		try {
-			query=http.get(baseUrl+"realisations/utilisateur/"+id);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Realisation[] data= gson.jsonToAllRealisation(query);
-		
-		return data;
-	}
 	
 	
 	/**
