@@ -6,6 +6,7 @@ import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
 import net.models.Question;
 import net.models.Questionnaire;
+import net.models.Realisation;
 import net.models.Reponse;
 import net.models.Utilisateur;
 
@@ -73,6 +74,10 @@ public class TestGson {
 		return gson.fromJson(jsonString, GroupeUtilisateur[].class);
 	}
 	
+	public Realisation[] jsonToAllRealisation(String jsonString){
+		return gson.fromJson(jsonString, Realisation[].class);
+	}
+	
 	public Question jsonToQuestion(String jsonString){
 		return gson.fromJson(jsonString, Question.class);
 	}
@@ -80,6 +85,8 @@ public class TestGson {
 	public Reponse jsonToReponse(String jsonString){
 		return gson.fromJson(jsonString, Reponse.class);
 	}
+	
+	
 	
 	public static void main(String args[]){
 		TestGson test=new TestGson();

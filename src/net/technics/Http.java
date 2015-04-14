@@ -10,6 +10,7 @@ import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
 import net.models.Question;
 import net.models.Questionnaire;
+import net.models.Realisation;
 import net.models.Reponse;
 import net.models.Utilisateur;
 
@@ -68,6 +69,25 @@ public class Http{
 		
 		return data;
 	}
+	
+	
+	/**
+	 * Ensemble des Questionnaires fait par un administrateur
+	 * @param id
+	 * @return
+	 */
+	public static Realisation[] getQuestionnaireToRealisation(Integer id){
+		try {
+			query=http.get(baseUrl+"realisations/utilisateur/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Realisation[] data= gson.jsonToAllRealisation(query);
+		
+		return data;
+	}
+	
 	
 	/**
 	 * Recupérer cim avec id_questionnaire et id_groupe
@@ -220,7 +240,7 @@ public class Http{
 				query=http.delete(baseUrl+"groupequestionnaires/"+id);
 				query=http.delete(baseUrl+"questionnaires/"+idQuestionnaire);
 			}
-		
+		System.out.println(query);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

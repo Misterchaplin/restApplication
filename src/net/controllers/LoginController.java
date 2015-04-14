@@ -86,15 +86,20 @@ public class LoginController implements SelectionListener {
 	        for(Questionnaire unQuestionnaire:lesQuestionnaires){
 	        	Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());     	 
 	        	for (Groupe unGroupe : lesGroupes) {	
-	        		CollectionQuestionnaireGroupe lesqg = new CollectionQuestionnaireGroupe();
-					lesqg.setGroupe_id(unGroupe.getId());
-	        		lesqg.setQuestionnaire_libelle(unQuestionnaire.getLibelle());
-					lesqg.setGroupe_libelle(unGroupe.getLibelle());
-					lesqg.setGroupe_code(unGroupe.getCode());
-					lesqg.setQuestionnaire_id(unQuestionnaire.getId());
-					lesqg.setQuestionnaire_domaine_id(unQuestionnaire.getDomaine_id());
-					lesqg.setQuestionnaire_date(unQuestionnaire.getDate());
-					questionnairesGroupes.add(lesqg);
+	        		Utilisateur[] lesUsers = Http.getUtilisateursToGroupe(unGroupe.getId());
+	        		for (Utilisateur aUtilisateur : lesUsers) {
+						if(aUtilisateur.getId()==AppController.getActiveUser().getWho()){
+					   		CollectionQuestionnaireGroupe lesqg = new CollectionQuestionnaireGroupe();
+							lesqg.setGroupe_id(unGroupe.getId());
+			        		lesqg.setQuestionnaire_libelle(unQuestionnaire.getLibelle());
+							lesqg.setGroupe_libelle(unGroupe.getLibelle());
+							lesqg.setGroupe_code(unGroupe.getCode());
+							lesqg.setQuestionnaire_id(unQuestionnaire.getId());
+							lesqg.setQuestionnaire_domaine_id(unQuestionnaire.getDomaine_id());
+							lesqg.setQuestionnaire_date(unQuestionnaire.getDate());
+							questionnairesGroupes.add(lesqg);
+						}
+	        		}
 				}
 	        }
         }

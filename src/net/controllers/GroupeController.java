@@ -41,7 +41,7 @@ public class GroupeController implements SelectionListener {
 		vAccueil.getBtnAjouterGroupe().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-	/******************Ajout d'un Groupe********************/
+	
 				//on créer groupe et le remplit
 				Groupe groupe = new Groupe();
 				groupe.setLibelle(vAccueil.getTxtLibelle().getText());
