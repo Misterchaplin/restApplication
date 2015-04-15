@@ -239,7 +239,7 @@ public class Http{
 				query=http.delete(baseUrl+"groupequestionnaires/"+id);
 				query=http.delete(baseUrl+"questionnaires/"+idQuestionnaire);
 			}
-		System.out.println(query);
+			System.out.println(query);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

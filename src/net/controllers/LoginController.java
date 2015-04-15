@@ -89,22 +89,26 @@ public class LoginController implements SelectionListener {
        
         if(lesQuestionnaires!=null && lesQuestionnaires.length>0){
 	        for(Questionnaire unQuestionnaire:lesQuestionnaires){
-	        	Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());     	 
-	        	for (Groupe unGroupe : lesGroupes) {	
-	        		Utilisateur[] lesUsers = Http.getUtilisateursToGroupe(unGroupe.getId());
-	        		for (Utilisateur aUtilisateur : lesUsers) {
-						if(aUtilisateur.getId()==AppController.getActiveUser().getWho()){
-					   		CollectionQuestionnaireGroupe lesqg = new CollectionQuestionnaireGroupe();
-							lesqg.setGroupe_id(unGroupe.getId());
-			        		lesqg.setQuestionnaire_libelle(unQuestionnaire.getLibelle());
-							lesqg.setGroupe_libelle(unGroupe.getLibelle());
-							lesqg.setGroupe_code(unGroupe.getCode());
-							lesqg.setQuestionnaire_id(unQuestionnaire.getId());
-							lesqg.setQuestionnaire_domaine_id(unQuestionnaire.getDomaine_id());
-							lesqg.setQuestionnaire_date(unQuestionnaire.getDate());
-							questionnairesGroupes.add(lesqg);
-						}
-	        		}
+	        	System.out.println("C'est un questionnaire: "+unQuestionnaire);
+	        	Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId()); 
+	        	if(lesGroupes!=null && lesGroupes.length>0){
+		        	for (Groupe unGroupe : lesGroupes) {	
+		        		System.out.println("C'est un groupe: "+unGroupe);
+		        		Utilisateur[] lesUsers = Http.getUtilisateursToGroupe(unGroupe.getId());
+		        		for (Utilisateur aUtilisateur : lesUsers) {
+							if(aUtilisateur.getId()==AppController.getActiveUser().getWho()){
+						   		CollectionQuestionnaireGroupe lesqg = new CollectionQuestionnaireGroupe();
+								lesqg.setGroupe_id(unGroupe.getId());
+				        		lesqg.setQuestionnaire_libelle(unQuestionnaire.getLibelle());
+								lesqg.setGroupe_libelle(unGroupe.getLibelle());
+								lesqg.setGroupe_code(unGroupe.getCode());
+								lesqg.setQuestionnaire_id(unQuestionnaire.getId());
+								lesqg.setQuestionnaire_domaine_id(unQuestionnaire.getDomaine_id());
+								lesqg.setQuestionnaire_date(unQuestionnaire.getDate());
+								questionnairesGroupes.add(lesqg);
+							}
+		        		}
+		        	}
 				}
 	        }
         }

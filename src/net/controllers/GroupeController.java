@@ -44,7 +44,7 @@ public class GroupeController implements SelectionListener {
 					Groupe InsertGroupe=Http.postGroupe(groupe);
 					
 					//Si un questionnaire est choisi
-					if(element.getId() != null){
+					if(!element.getId().equals(null)){
 						//On instancie un groupe pour questionnaire
 						GroupeQuestionnaire groupQuest= new GroupeQuestionnaire();
 						groupQuest.setQuestionnaire_id(element.getId());

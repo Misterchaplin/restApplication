@@ -26,28 +26,77 @@ import org.eclipse.swt.events.SelectionListener;
 public class QcmController implements SelectionListener {
 	public static VAccueil vAccueil;
 	private String qcm;
-	protected Questionnaire session_id;
+	private Questionnaire session_id=null;
+	private int nbTrueAnswer;
 	private List<Reponse> lesReponses = new ArrayList<Reponse>();
 	private Questionnaire leQuestionnaire=null;
 	private Groupe leGroupe=null;
 	private Question laQuestion=null;
-
+	private boolean checkQuestGroupe=true;
+	private Questionnaire insertQuestionnaire = null;
+	
 	public QcmController(VAccueil vAccueil) {
 		this.vAccueil = vAccueil;
 	}
 
 	public void init() {
 		
-		
 		vAccueil.getBtnAjouterQcm().addSelectionListener(new SelectionAdapter() {
-			private int nbTrueAnswer;
-
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-		
-				Integer stateAnswer=createReponse();
+				checkQuestGroupe = beginInsert();
+				
+				if(checkQuestGroupe==true && (nbTrueAnswer==1 || nbTrueAnswer==2)){
+					if(session_id==null){
+						insertQuestionnaire = Http.postQuestionnarie(leQuestionnaire);
+						//Association entre groupe et questionnaire
+						GroupeQuestionnaire eventGroupeQuestionnaire = addOrUpdateGroupeQuestionnaire(insertQuestionnaire);
+						
+					}
+					if(session_id==null){
+						//Insertion d'une question appartenant à un questionnaire
+						laQuestion.setQuestionnaire_id(insertQuestionnaire.getId());
+					}else{
+						//Sinon on prend l'id du questionnaire précédent
+						laQuestion.setQuestionnaire_id(session_id.getId());
+					}
+					
+					Question insertQuestion=addOrUpdateQuestion();
+					//Insertion des reponses de la question
+					boolean insertCheckReponse=addOrUpdateReponse(insertQuestion);
+					
+					if(session_id==null){
+						//Si tout est correct alors on associe les précédents ajout à l'utilisateur (s'il la relation n'existe pas encore)
+						if(insertCheckReponse==true){				
+							boolean guCheck=ifGroupeWithUser();
+							boolean insertGrood=false;
+							if(guCheck==false){
+								GroupeUtilisateur insertGroupeUtilisateur = Http.postGroupeUtilisateurs(createGroupeUtilisateur());
+								vAccueil.getLblInformation().setText("Ajout réussie");
+								insertGrood=true;
+								
+							}
+							else{
+								vAccueil.getLblInformation().setText("Ajout réussie");
+								insertGrood=true;
+							}
+							
+							if(insertGrood==true){
+								endInsert();
+							}
+						}
+					}else{
+						endInsert();
+					}
+				}else{
+					vAccueil.getLblInformation().setText("Un ou plusieurs champs sont manquants");
+				}
 	
-				boolean checkQuestGroupe=true;
+			}
+			
+			public boolean beginInsert(){
+				Integer stateAnswer=createReponse();
+				
 				if(stateAnswer!=0){
 					leQuestionnaire=createQuestionnaire();
 					leGroupe=createGroupe();
@@ -59,56 +108,22 @@ public class QcmController implements SelectionListener {
 						checkQuestGroupe=false;
 					}
 				}
-				
-				if(checkQuestGroupe==true && (nbTrueAnswer==1 || nbTrueAnswer==2)){
-					System.out.println("Mise en place des requêtes désormais possible");
-					Questionnaire insertQuestionnaire = Http.postQuestionnarie(leQuestionnaire);
-					
-					//Association entre groupe et questionnaire
-					GroupeQuestionnaire eventGroupeQuestionnaire = addOrUpdateGroupeQuestionnaire(insertQuestionnaire);
-					
-					//Insertion d'une question appartenant à un questionnaire
-					laQuestion.setQuestionnaire_id(insertQuestionnaire.getId());
-					Question insertQuestion=addOrUpdateQuestion();
-					
-					//Insertion des reponses de la question
-					boolean insertCheckReponse=addOrUpdateReponse(insertQuestion);
-					
-					//Si tout est correct alors on associe les précédents ajout à l'utilisateur (s'il la relation n'existe pas encore)
-					if(insertCheckReponse==true){				
-						boolean guCheck=ifGroupeWithUser();
-						boolean insertGrood=false;
-						if(guCheck==false){
-							GroupeUtilisateur insertGroupeUtilisateur = Http.postGroupeUtilisateurs(createGroupeUtilisateur());
-							vAccueil.getLblInformation().setText("Ajout réussie");
-							insertGrood=true;
-							
-						}
-						else{
-							vAccueil.getLblInformation().setText("Ajout réussie");
-							insertGrood=true;
-						}
-						
-						if(insertGrood==true){
-							vAccueil.getBtnNouveauQuestionnaire().setVisible(true);
-							session_id=insertQuestionnaire;
-							System.out.println(session_id);
-							vAccueil.getTxtQuestionQcm().setText("");
-							vAccueil.getTxtQcm1().setText("");
-							vAccueil.getTxtQcm2().setText("");
-							vAccueil.getTxtQcm3().setText("");
-							vAccueil.getTxtQcm4().setText("");
-							vAccueil.getBtnCkGroupe1().setSelection(false);
-							vAccueil.getBtnCkGroupe2().setSelection(false);
-							vAccueil.getBtnCkGroupe3().setSelection(false);
-							vAccueil.getBtnCkGroupe4().setSelection(false);
-						}
-					}
-					
-				}else{
-					vAccueil.getLblInformation().setText("Un ou plusieurs champs sont manquants");
-				}
-	
+				return checkQuestGroupe;
+			}
+			
+			public void endInsert(){
+				vAccueil.getBtnNouveauQuestionnaire().setVisible(true);
+				session_id=insertQuestionnaire;
+				System.out.println(session_id);
+				vAccueil.getTxtQuestionQcm().setText("");
+				vAccueil.getTxtQcm1().setText("");
+				vAccueil.getTxtQcm2().setText("");
+				vAccueil.getTxtQcm3().setText("");
+				vAccueil.getTxtQcm4().setText("");
+				vAccueil.getBtnCkGroupe1().setSelection(false);
+				vAccueil.getBtnCkGroupe2().setSelection(false);
+				vAccueil.getBtnCkGroupe3().setSelection(false);
+				vAccueil.getBtnCkGroupe4().setSelection(false);
 			}
 			
 			public boolean ifGroupeWithUser(){
