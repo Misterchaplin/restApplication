@@ -47,6 +47,7 @@ public class Http{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(query);
 		Questionnaire[]  data= gson.jsonToAllQuestionnaire(query);
 		
 		return data;
@@ -64,7 +65,7 @@ public class Http{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Groupe[]  data= gson.jsonToAllGroupe(query);
+		Groupe[] data= gson.jsonToAllGroupe(query);
 		
 		return data;
 	}

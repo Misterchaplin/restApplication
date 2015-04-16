@@ -21,6 +21,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.MessageBox;
 
 public class LoginController implements SelectionListener {
+	private static Integer messageQuestionnaire=0;
 	public static VLogin vLogin;
 
 	public LoginController(VLogin vLogin) {
@@ -69,8 +70,11 @@ public class LoginController implements SelectionListener {
 
 			        });
 				remplirTableViewer();
-				remplirComboQuestionnaire();
-				remplirComboGroupe();
+				if(messageQuestionnaire==0){
+					remplirComboQuestionnaire();
+					remplirComboGroupe();
+				}
+				
 				
 			}
 								
@@ -89,13 +93,14 @@ public class LoginController implements SelectionListener {
        
         if(lesQuestionnaires!=null && lesQuestionnaires.length>0){
 	        for(Questionnaire unQuestionnaire:lesQuestionnaires){
-	        	System.out.println("C'est un questionnaire: "+unQuestionnaire);
+	        	//System.out.println("C'est un questionnaire: "+unQuestionnaire);
 	        	Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId()); 
 	        	if(lesGroupes!=null && lesGroupes.length>0){
 		        	for (Groupe unGroupe : lesGroupes) {	
-		        		System.out.println("C'est un groupe: "+unGroupe);
+		        		//System.out.println("C'est un groupe: "+unGroupe);
 		        		Utilisateur[] lesUsers = Http.getUtilisateursToGroupe(unGroupe.getId());
 		        		for (Utilisateur aUtilisateur : lesUsers) {
+		        			//System.out.println("C'est un utilisateur: "+aUtilisateur);
 							if(aUtilisateur.getId()==AppController.getActiveUser().getWho()){
 						   		CollectionQuestionnaireGroupe lesqg = new CollectionQuestionnaireGroupe();
 								lesqg.setGroupe_id(unGroupe.getId());
@@ -114,7 +119,7 @@ public class LoginController implements SelectionListener {
         }
 	    else{
 	    	 MessageBox messageBox = new MessageBox(AccueilController.vAccueil.getAccueil().getShell(), SWT.ICON_WARNING | SWT.OK);
-	         
+	    	 messageQuestionnaire++;
 	         messageBox.setText("Warning");
 	         messageBox.setMessage("Aucun questionnaire");
 	         messageBox.open();
@@ -154,7 +159,7 @@ public class LoginController implements SelectionListener {
 	                return p.getLibelle();
 	            }
 	    });
-
+		
 	    Questionnaire[] questionnaires = Utils.getQuestionnaireToAUtilisateur();
 	    AccueilController.vAccueil.getCbvQuestionnaireGroupe().setInput(questionnaires);
 	}

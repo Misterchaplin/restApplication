@@ -15,6 +15,7 @@ import net.models.Question;
 import net.models.Questionnaire;
 import net.models.Reponse;
 import net.technics.Http;
+import net.technics.Utils;
 import net.vues.VAccueil;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -22,6 +23,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 public class QcmController implements SelectionListener {
 	public static VAccueil vAccueil;
@@ -73,11 +75,13 @@ public class QcmController implements SelectionListener {
 							if(guCheck==false){
 								GroupeUtilisateur insertGroupeUtilisateur = Http.postGroupeUtilisateurs(createGroupeUtilisateur());
 								vAccueil.getLblInformation().setText("Ajout réussie");
+								Utils.updateTableViewer();
 								insertGrood=true;
 								
 							}
 							else{
 								vAccueil.getLblInformation().setText("Ajout réussie");
+								Utils.updateTableViewer();
 								insertGrood=true;
 							}
 							
@@ -168,6 +172,9 @@ public class QcmController implements SelectionListener {
 				groupeQuestionnaire.setGroupe_id(leGroupe.getId());
 				groupeQuestionnaire.setQuestionnaire_id(questionnaire.getId());
 				GroupeQuestionnaire insertGroupeQuestionnaire = Http.postGroupeQuestionnaires(groupeQuestionnaire);
+				if(insertGroupeQuestionnaire.equals(null)){
+					System.out.println("Erreur dans l'insertion des reponses");
+				}
 				return insertGroupeQuestionnaire;
 			}
 			

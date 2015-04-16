@@ -28,6 +28,7 @@ public class GroupeController implements SelectionListener {
 		
 		
 		vAccueil.getBtnAjouterGroupe().addSelectionListener(new SelectionAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 	
@@ -42,28 +43,36 @@ public class GroupeController implements SelectionListener {
 				
 				if(groupe.getLibelle()!= "" && groupe.getCode()!=""){
 					Groupe InsertGroupe=Http.postGroupe(groupe);
+					//Association de groupe avec utilisateur
+					GroupeUtilisateur groupeUser= new GroupeUtilisateur();
+					groupeUser.setGroupe_id(InsertGroupe.getId());
+					groupeUser.setUtilisateur_id(AppController.getActiveUser().getWho());
+					GroupeUtilisateur insertGu=Http.postGroupeUtilisateurs(groupeUser);
 					
-					//Si un questionnaire est choisi
-					if(!element.getId().equals(null)){
-						//On instancie un groupe pour questionnaire
-						GroupeQuestionnaire groupQuest= new GroupeQuestionnaire();
-						groupQuest.setQuestionnaire_id(element.getId());
-						groupQuest.setGroupe_id(InsertGroupe.getId());
-						GroupeQuestionnaire insertGroupeQuestionnaires=Http.postGroupeQuestionnaires(groupQuest);
-													
-						//Association de groupe avec utilisateur
-						GroupeUtilisateur groupeUser= new GroupeUtilisateur();
-						groupeUser.setGroupe_id(InsertGroupe.getId());
-						groupeUser.setUtilisateur_id(AppController.getActiveUser().getWho());
-						GroupeUtilisateur insertGu=Http.postGroupeUtilisateurs(groupeUser);
-						System.out.println(insertGu);
-						if(insertGu!=null){
+					if(insertGu!=null){
+						//Si un questionnaire est choisi
+						if(element instanceof Questionnaire){
+							//On instancie un groupe pour questionnaire
+							GroupeQuestionnaire groupQuest= new GroupeQuestionnaire();
+							groupQuest.setQuestionnaire_id(element.getId());
+							groupQuest.setGroupe_id(InsertGroupe.getId());
+							GroupeQuestionnaire insertGroupeQuestionnaires=Http.postGroupeQuestionnaires(groupQuest);
+							
+							if(insertGu!=null){
+								vAccueil.getLblInformation().setText("Ajout réussie");	
+							}
+							else{
+								vAccueil.getLblInformation().setText("Erreur pendant l'ajout");	
+							}
+						}
+						else{
 							vAccueil.getLblInformation().setText("Ajout réussie");
 						}
+					}else{
+						vAccueil.getLblInformation().setText("Erreur pendant l'ajout");	
 					}
-					else{
-						vAccueil.getLblInformation().setText("Ajout réussie");
-					}
+					
+					
 				}
 				else{
 					vAccueil.getLblInformation().setText("Veuillez remplir le libelle et le code.");

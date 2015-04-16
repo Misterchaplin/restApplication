@@ -2,22 +2,18 @@ package net.controllers;
 
 import net.models.CollectionQuestionnaireGroupe;
 import net.models.GroupeQuestionnaire;
-import net.models.GroupeUtilisateur;
-import net.models.Questionnaire;
 import net.vues.VAccueil;
 import net.vues.VLogin;
 import net.technics.Http;
+import net.technics.Utils;
 
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TableItem;
 
 public class AccueilController implements SelectionListener {
 	public static VAccueil vAccueil;
@@ -81,8 +77,7 @@ public class AccueilController implements SelectionListener {
 					
 					vAccueil.getLblInformation().setText("Suppression de "+selectedQuestionnaire.getQuestionnaire_libelle()+ " du groupe "+selectedQuestionnaire.getGroupe_libelle());
 					
-					AccueilController.vAccueil.getTableViewer().setInput(null);
-					LoginController.remplirTableViewer();
+					Utils.updateTableViewer();
 			    }
 			}
 
