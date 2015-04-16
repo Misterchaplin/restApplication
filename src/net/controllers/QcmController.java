@@ -24,6 +24,7 @@ import org.eclipse.swt.events.SelectionListener;
 public class QcmController implements SelectionListener {
 	public static VAccueil vAccueil;
 	private String qcm;
+	private Integer countQuestion=0;
 	private Questionnaire session_id=null;
 	private int nbTrueAnswer;
 	private List<Reponse> lesReponses = new ArrayList<Reponse>();
@@ -121,6 +122,9 @@ public class QcmController implements SelectionListener {
 				vAccueil.getBtnCkGroupe3().setSelection(false);
 				vAccueil.getBtnCkGroupe4().setSelection(false);
 				vAccueil.getLblInformation().setText("Ajout réussie");
+				countQuestion++;
+				vAccueil.getLblCurrentQuestion().setText(String.valueOf(countQuestion));
+				vAccueil.getLblLastQuestion().setText(String.valueOf(countQuestion));
 				Utils.updateTableViewer();
 				vAccueil.getCbvQuestionnaireGroupe().setInput(null);
 				Utils.remplirComboQuestionnaire();

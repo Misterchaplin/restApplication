@@ -67,6 +67,8 @@ public class VAccueil {
 	private Button btnNouveauQuestionnaire;
 	private Button btnSupprimerAccueil;
 	private Button btnModifierAccueil;
+	private Label lblCurrentQuestion;
+	private Label lblLastQuestion;
 	
 	public Button getBtnModifierAccueil() {
 		return btnModifierAccueil;
@@ -317,6 +319,26 @@ public class VAccueil {
 		cbQcm = cbvQcm.getCombo();
 		cbQcm.setBounds(305, 36, 91, 23);
 		
+		Label lblQuestion = new Label(grpAjouterQcm, SWT.NONE);
+		lblQuestion.setBounds(10, 116, 55, 15);
+		formToolkit.adapt(lblQuestion, true, true);
+		lblQuestion.setText("Question :");
+		
+		lblCurrentQuestion = new Label(grpAjouterQcm, SWT.NONE);
+		lblCurrentQuestion.setBounds(80, 116, 27, 15);
+		formToolkit.adapt(lblCurrentQuestion, true, true);
+		lblCurrentQuestion.setText("0");
+		
+		Label lblSlashQuestion = new Label(grpAjouterQcm, SWT.NONE);
+		lblSlashQuestion.setBounds(113, 116, 10, 15);
+		formToolkit.adapt(lblSlashQuestion, true, true);
+		lblSlashQuestion.setText("/");
+		
+		lblLastQuestion = new Label(grpAjouterQcm, SWT.NONE);
+		lblLastQuestion.setBounds(129, 116, 47, 15);
+		formToolkit.adapt(lblLastQuestion, true, true);
+		lblLastQuestion.setText("0");
+		
 		btnAjouterQcm = new Button(cpQcm, SWT.NONE);
 		btnAjouterQcm.setBounds(460, 124, 75, 25);
 		btnAjouterQcm.setText("Ajouter");
@@ -364,6 +386,14 @@ public class VAccueil {
 		cbvQuestionnaireGroupe.setContentProvider(ArrayContentProvider.getInstance());
 		cbQuestionnaireGroupe = cbvQuestionnaireGroupe.getCombo();
 		cbQuestionnaireGroupe.setBounds(131, 101, 138, 23);
+	}
+
+	public Label getLblCurrentQuestion() {
+		return lblCurrentQuestion;
+	}
+
+	public Label getLblLastQuestion() {
+		return lblLastQuestion;
 	}
 
 	public Button getBtnNouveauQuestionnaire() {
