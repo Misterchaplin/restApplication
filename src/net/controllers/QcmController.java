@@ -1,7 +1,5 @@
 package net.controllers;
 
-import java.io.IOException;
-import java.nio.channels.SeekableByteChannel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,11 +17,9 @@ import net.technics.Utils;
 import net.vues.VAccueil;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 public class QcmController implements SelectionListener {
 	public static VAccueil vAccueil;
@@ -74,14 +70,10 @@ public class QcmController implements SelectionListener {
 							boolean insertGrood=false;
 							if(guCheck==false){
 								GroupeUtilisateur insertGroupeUtilisateur = Http.postGroupeUtilisateurs(createGroupeUtilisateur());
-								vAccueil.getLblInformation().setText("Ajout réussie");
-								Utils.updateTableViewer();
 								insertGrood=true;
 								
 							}
 							else{
-								vAccueil.getLblInformation().setText("Ajout réussie");
-								Utils.updateTableViewer();
 								insertGrood=true;
 							}
 							
@@ -128,6 +120,10 @@ public class QcmController implements SelectionListener {
 				vAccueil.getBtnCkGroupe2().setSelection(false);
 				vAccueil.getBtnCkGroupe3().setSelection(false);
 				vAccueil.getBtnCkGroupe4().setSelection(false);
+				vAccueil.getLblInformation().setText("Ajout réussie");
+				Utils.updateTableViewer();
+				vAccueil.getCbvQuestionnaireGroupe().setInput(null);
+				Utils.remplirComboQuestionnaire();
 			}
 			
 			public boolean ifGroupeWithUser(){

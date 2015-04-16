@@ -71,13 +71,10 @@ public class LoginController implements SelectionListener {
 			        });
 				remplirTableViewer();
 				if(messageQuestionnaire==0){
-					remplirComboQuestionnaire();
-					remplirComboGroupe();
+					Utils.remplirComboQuestionnaire();
+					Utils.remplirComboGroupe();
 				}
-				
-				
-			}
-								
+			}						
 		}
 						
 		@Override
@@ -129,40 +126,6 @@ public class LoginController implements SelectionListener {
 		
 	}
 	
-	/**
-	 * Ajoute les groupes dans qcm
-	 */
-	public void remplirComboGroupe(){
-		AccueilController.vAccueil.getBtnNouveauQuestionnaire().setVisible(false);
-		AccueilController.vAccueil.getCbvQcm().setLabelProvider(new LabelProvider() {
-			 @Override
-	            public String getText(Object element) {
-	            	Groupe p = (Groupe)element;
-	                return p.getLibelle();
-	            }
-	    });
-		
-
-	    Groupe[] groupes = Utils.getGroupeToAUtilisateur();
-	    AccueilController.vAccueil.getCbvQcm().setInput(groupes);
-	}
-	
-	/**
-	 * Ajoute les questionnaires dans l'onglet groupe
-	*/
-	public void remplirComboQuestionnaire(){
-		
-		AccueilController.vAccueil.getCbvQuestionnaireGroupe().setLabelProvider(new LabelProvider() {
-			 @Override
-	            public String getText(Object element) {
-	            	Questionnaire p = (Questionnaire)element;
-	                return p.getLibelle();
-	            }
-	    });
-		
-	    Questionnaire[] questionnaires = Utils.getQuestionnaireToAUtilisateur();
-	    AccueilController.vAccueil.getCbvQuestionnaireGroupe().setInput(questionnaires);
-	}
 	
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0) {

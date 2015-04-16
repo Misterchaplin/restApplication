@@ -3,6 +3,7 @@ package net.technics;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 
@@ -68,6 +69,41 @@ public class Utils {
 	public static void updateTableViewer(){
 		AccueilController.vAccueil.getTableViewer().setInput(null);
 		LoginController.remplirTableViewer();
+	}
+	
+	/**
+	 * Ajoute les questionnaires dans l'onglet groupe
+	*/
+	public static void remplirComboQuestionnaire(){
+		
+		AccueilController.vAccueil.getCbvQuestionnaireGroupe().setLabelProvider(new LabelProvider() {
+			 @Override
+	            public String getText(Object element) {
+	            	Questionnaire p = (Questionnaire)element;
+	                return p.getLibelle();
+	            }
+	    });
+		
+	    Questionnaire[] questionnaires = Utils.getQuestionnaireToAUtilisateur();
+	    AccueilController.vAccueil.getCbvQuestionnaireGroupe().setInput(questionnaires);
+	}
+	
+	/**
+	 * Ajoute les groupes dans qcm
+	 */
+	public static void remplirComboGroupe(){
+		AccueilController.vAccueil.getBtnNouveauQuestionnaire().setVisible(false);
+		AccueilController.vAccueil.getCbvQcm().setLabelProvider(new LabelProvider() {
+			 @Override
+	            public String getText(Object element) {
+	            	Groupe p = (Groupe)element;
+	                return p.getLibelle();
+	            }
+	    });
+		
+
+	    Groupe[] groupes = Utils.getGroupeToAUtilisateur();
+	    AccueilController.vAccueil.getCbvQcm().setInput(groupes);
 	}
 		
 }

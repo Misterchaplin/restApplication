@@ -59,7 +59,9 @@ public class GroupeController implements SelectionListener {
 							GroupeQuestionnaire insertGroupeQuestionnaires=Http.postGroupeQuestionnaires(groupQuest);
 							
 							if(insertGu!=null){
-								vAccueil.getLblInformation().setText("Ajout réussie");	
+								vAccueil.getLblInformation().setText("Ajout réussie");
+								vAccueil.getCbvQcm().setInput(null);
+								Utils.remplirComboGroupe();
 							}
 							else{
 								vAccueil.getLblInformation().setText("Erreur pendant l'ajout");	
@@ -67,6 +69,8 @@ public class GroupeController implements SelectionListener {
 						}
 						else{
 							vAccueil.getLblInformation().setText("Ajout réussie");
+							vAccueil.getCbvQcm().setInput(null);
+							Utils.remplirComboGroupe();
 						}
 					}else{
 						vAccueil.getLblInformation().setText("Erreur pendant l'ajout");	
