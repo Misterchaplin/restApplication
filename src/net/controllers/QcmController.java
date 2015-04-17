@@ -134,7 +134,7 @@ public class QcmController implements SelectionListener {
 			leQuestionnaire=createQuestionnaire();
 			leGroupe=createGroupe();
 			laQuestion=createQuestion();
-			if(leQuestionnaire.getLibelle().isEmpty() || laQuestion.getLibelle().isEmpty()){
+			if(leQuestionnaire.getLibelle().isEmpty() || laQuestion.getLibelle().isEmpty()){		
 				checkQuestGroupe=false;
 			}
 			if(leGroupe.getId()==null){
