@@ -203,7 +203,7 @@ public class VAccueil {
 		grpInformation.setLayoutData(fd_grpInformation);
 		
 		lblInformation = new Label(grpInformation, SWT.NONE);
-		lblInformation.setBounds(10, 10, 490, 15);
+		lblInformation.setBounds(10, 21, 490, 15);
 		
 		tabGestion = new TabFolder(accueil, SWT.NONE);
 		fd_grpInformation.bottom = new FormAttachment(tabGestion, -1);
@@ -267,7 +267,7 @@ public class VAccueil {
 		
 		Group grpAjouterQcm = new Group(cpQcm, SWT.NONE);
 		grpAjouterQcm.setText("Ajouter QCM");
-		grpAjouterQcm.setBounds(10, 28, 435, 319);
+		grpAjouterQcm.setBounds(10, 10, 435, 337);
 		
 		Label lblNomQcm = new Label(grpAjouterQcm, SWT.NONE);
 		lblNomQcm.setBounds(10, 51, 64, 15);
@@ -326,20 +326,20 @@ public class VAccueil {
 		cbQcm.setBounds(305, 45, 91, 23);
 		
 		Label lblQuestion = new Label(grpAjouterQcm, SWT.NONE);
-		lblQuestion.setBounds(10, 10, 75, 15);
+		lblQuestion.setBounds(10, 24, 75, 15);
 		
-		lblQuestion.setText("Question N° :");
+		lblQuestion.setText("Question n\u00B0 :");
 		
 		lblCurrentQuestion = new Label(grpAjouterQcm, SWT.NONE);
-		lblCurrentQuestion.setBounds(91, 10, 10, 15);	
+		lblCurrentQuestion.setBounds(91, 24, 10, 15);	
 		lblCurrentQuestion.setText("0");
 		
 		Label lblSlashQuestion = new Label(grpAjouterQcm, SWT.NONE);
-		lblSlashQuestion.setBounds(106, 10, 10, 15);
+		lblSlashQuestion.setBounds(106, 24, 10, 15);
 		lblSlashQuestion.setText("/");
 		
 		lblLastQuestion = new Label(grpAjouterQcm, SWT.NONE);
-		lblLastQuestion.setBounds(116, 10, 21, 15);
+		lblLastQuestion.setBounds(116, 24, 21, 15);
 		lblLastQuestion.setText("0");
 		
 		lblMerciDe = new Label(grpAjouterQcm, SWT.NONE);

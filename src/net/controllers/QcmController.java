@@ -66,6 +66,9 @@ public class QcmController implements SelectionListener {
 		});
 	}
 	
+	/**
+	 * On remet tout à zéro
+	 */
 	public void initAddQcm(){
 		vAccueil.getTxtQcm().setEnabled(true);
 		vAccueil.getCbQcm().setEnabled(true);
@@ -77,8 +80,14 @@ public class QcmController implements SelectionListener {
 		vAccueil.getCbvQcm().setSelection(null, false);
 	}
 	
+	
+	/**
+	 * Fonction général d'ajout
+	 */
 	public void AddQcm(){
+		checkQuestGroupe=true;
 		checkQuestGroupe = beginInsert();
+		
 		
 		if(checkQuestGroupe==true && (nbTrueAnswer==1 || nbTrueAnswer==2)){
 			if(session_id==null){
@@ -122,6 +131,7 @@ public class QcmController implements SelectionListener {
 			}
 		}else{
 			vAccueil.getLblInformation().setText("Un ou plusieurs champs sont manquants");
+			lesReponses.clear();
 		}
 
 	}
@@ -189,11 +199,18 @@ public class QcmController implements SelectionListener {
 		return groupeUtilisateur;
 	}
 	
+	/**
+	 * Ajout ou mise à jour des réponses
+	 * @param insertQuestion
+	 * @return
+	 */
 	public boolean addOrUpdateReponse(Question insertQuestion){
 		boolean insertCheckReponse=true;
 		for (Reponse reponse : lesReponses) {
+			
 			reponse.setQuestion_id(insertQuestion.getId());
 			Reponse insertReponse = Http.postReponse(reponse);
+			System.out.println("id de la question " +insertReponse.getQuestion_id());
 			if(insertReponse.getId().equals(null)){
 				insertCheckReponse=false;
 			}

@@ -212,6 +212,7 @@ public class Http{
 	
 	public static Reponse postReponse(Reponse reponse){
 		try {
+			System.out.println("Une reponses : "+ reponse.getLibelle());
 			query = http.post(baseUrl+"reponses/", reponse);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
