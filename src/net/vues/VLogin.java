@@ -104,9 +104,11 @@ public class VLogin {
 		label_1.setBounds(53, 88, 87, 15);
 		
 		txtPassword = new Text(grpConnexion, SWT.BORDER);
+		txtPassword.setText("test");
 		txtPassword.setBounds(146, 85, 130, 21);
 		
 		txtLogin = new Text(grpConnexion, SWT.BORDER);
+		txtLogin.setText("test");
 		txtLogin.setBounds(146, 53, 130, 21);
 		
 		btnConnexion = new Button(grpConnexion, SWT.NONE);

@@ -77,6 +77,14 @@ public class TestGson {
 		return gson.fromJson(jsonString, Question.class);
 	}
 	
+	public Question[] jsonToAllQuestion(String jsonString){
+		return gson.fromJson(jsonString, Question[].class);
+	}
+	
+	public Reponse[] jsonToAllReponse(String jsonString){
+		return gson.fromJson(jsonString, Reponse[].class);
+	}
+	
 	public Reponse jsonToReponse(String jsonString){
 		return gson.fromJson(jsonString, Reponse.class);
 	}

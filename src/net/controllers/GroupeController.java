@@ -18,20 +18,29 @@ import org.eclipse.swt.events.SelectionListener;
 public class GroupeController implements SelectionListener {
 	public static VAccueil vAccueil;
 	private String qcm;
+	private Integer updateGroupe = null;
+	
+	public Integer getUpdateGroupe() {
+		return updateGroupe;
+	}
+
+	public void setUpdateGroupe(Integer updateGroupe) {
+		this.updateGroupe = updateGroupe;
+	}
 
 	public GroupeController(VAccueil vAccueil) {
 		this.vAccueil = vAccueil;
 	}
 
 	public void init() {
-		
-		
-		
+		if(updateGroupe!=null){
+			System.out.println(updateGroupe);
+		}
 		vAccueil.getBtnAjouterGroupe().addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-	
+				
 				//on cr�er groupe et le remplit
 				Groupe groupe = new Groupe();
 				groupe.setLibelle(vAccueil.getTxtLibelle().getText());

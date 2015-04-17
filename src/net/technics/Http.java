@@ -21,6 +21,58 @@ public class Http{
 	
 	
 	/**
+	 * Récupère le questionnaire suivant son id 
+	 * @param id
+	 * @return
+	 */
+	public static Questionnaire getQuestionnaire(Integer id){
+		try {
+			query=http.get(baseUrl+"questionnaires/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Questionnaire  data= gson.jsonToQuestionnaire(query);
+		
+		return data;
+	}
+	
+	
+	/**
+	 * Récupère le groupe suivant son id 
+	 * @param id
+	 * @return
+	 */
+	public static Groupe getGroupe(Integer id){
+		try {
+			query=http.get(baseUrl+"groupes/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Groupe  data= gson.jsonToGroupe(query);
+		
+		return data;
+	}
+	
+	/**
+	 * Récupère la question suivant l'id du questionnaire
+	 * @param id
+	 * @return
+	 */
+	public static Question[] getQuestionByQuestionnaire(Integer id){
+		try {
+			query=http.get(baseUrl+"questions/questionbyquestionnaire/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Question[]  data= gson.jsonToAllQuestion(query);
+		
+		return data;
+	}
+	
+	/**
 	 * Ensemble des questionnaires
 	 * @return
 	 */
@@ -47,7 +99,6 @@ public class Http{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(query);
 		Questionnaire[]  data= gson.jsonToAllQuestionnaire(query);
 		
 		return data;
@@ -71,6 +122,22 @@ public class Http{
 	}
 	
 	/**
+	 * Réponses d'une question
+	 * @return
+	 */
+	public static Reponse[] getReponsesByQuestion(Integer id){
+		try {
+			query=http.get(baseUrl+"reponses/reponsebyquestion/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Reponse[] data= gson.jsonToAllReponse(query);
+		
+		return data;
+	}
+	
+	/**
 	 * Ensemble des Groupes du questionnaire
 	 * @param id
 	 * @return
@@ -83,6 +150,24 @@ public class Http{
 			e.printStackTrace();
 		}
 		Groupe[] data= gson.jsonToAllGroupe(query);
+		
+		return data;
+	}
+	
+	
+	/**
+	 * Ensemble des Groupes du questionnaire
+	 * @param id
+	 * @return
+	 */
+	public static GroupeQuestionnaire[] getGroupesByQuestionnaire(Integer id){
+		try {
+			query=http.get(baseUrl+"groupequestionnaires/groupebyquestionnaire/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GroupeQuestionnaire[] data= gson.jsonToAllGroupeQuestionnaire(query);
 		
 		return data;
 	}
@@ -212,7 +297,6 @@ public class Http{
 	
 	public static Reponse postReponse(Reponse reponse){
 		try {
-			System.out.println("Une reponses : "+ reponse.getLibelle());
 			query = http.post(baseUrl+"reponses/", reponse);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

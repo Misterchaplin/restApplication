@@ -71,6 +71,8 @@ public class VAccueil {
 	private Label lblCurrentQuestion;
 	private Label lblLastQuestion;
 	private Label lblMerciDe;
+	private Button btnSuivant;
+	private Button btnPrecedent;
 	
 	public Label getLblMerciDe() {
 		return lblMerciDe;
@@ -348,6 +350,18 @@ public class VAccueil {
 		lblMerciDe.setText("* Merci de cliquer sur le bouton 'terminer' lorsque la création du QCM est achevé.");
 		lblMerciDe.setVisible(false);
 		
+		btnSuivant = new Button(grpAjouterQcm, SWT.NONE);
+		btnSuivant.setBounds(320, 24, 75, 15);
+		formToolkit.adapt(btnSuivant, true, true);
+		btnSuivant.setText("Suivant");
+		btnSuivant.setVisible(false);
+		
+		btnPrecedent = new Button(grpAjouterQcm, SWT.NONE);
+		btnPrecedent.setBounds(224, 24, 75, 15);
+		formToolkit.adapt(btnPrecedent, true, true);
+		btnPrecedent.setText("Pr\u00E9c\u00E9dent");
+		btnPrecedent.setVisible(false);
+		
 		btnAjouterQcm = new Button(cpQcm, SWT.NONE);
 		btnAjouterQcm.setBounds(460, 124, 85, 25);
 		btnAjouterQcm.setText("Ajouter");
@@ -395,6 +409,14 @@ public class VAccueil {
 		cbvQuestionnaireGroupe.setContentProvider(ArrayContentProvider.getInstance());
 		cbQuestionnaireGroupe = cbvQuestionnaireGroupe.getCombo();
 		cbQuestionnaireGroupe.setBounds(131, 101, 138, 23);
+	}
+
+	public Button getBtnSuivant() {
+		return btnSuivant;
+	}
+
+	public Button getBtnPrecedent() {
+		return btnPrecedent;
 	}
 
 	public Label getLblCurrentQuestion() {

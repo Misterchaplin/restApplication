@@ -19,6 +19,7 @@ public class AccueilController implements SelectionListener {
 	public static VAccueil vAccueil;
 	private String qcm;
 	protected Display display;
+	private CollectionQuestionnaireGroupe selectedQuestionnaire;
 
 	public AccueilController(VAccueil vAccueil) {
 		this.vAccueil = vAccueil;
@@ -56,14 +57,14 @@ public class AccueilController implements SelectionListener {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				
-				Shell shell = new Shell(display);
-				StructuredSelection selection = (StructuredSelection) vAccueil.getTableViewer().getSelection();
-				CollectionQuestionnaireGroupe selectedQuestionnaire = (CollectionQuestionnaireGroupe) selection.getFirstElement();
+				
+				selectedQuestionnaire=selectionTableViewer();
 				String idGrpQuest = selectedQuestionnaire.getQuestionnaire_id()+ "_" +selectedQuestionnaire.getGroupe_id();
 				Integer idQuestionnaire = selectedQuestionnaire.getQuestionnaire_id();
 				
 				GroupeQuestionnaire[] test = Http.getCIMGrpQst(idGrpQuest);
 				 
+				Shell shell = new Shell(display);
 			    MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING |SWT.YES | SWT.NO);
 			    messageBox.setMessage("Etes-vous sur de vouloir supprimer "+selectedQuestionnaire.getQuestionnaire_libelle()+" ?");
 			   
@@ -88,8 +89,51 @@ public class AccueilController implements SelectionListener {
 			}
 		});	
 		
+		vAccueil.getBtnModifierAccueil().addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				selectedQuestionnaire=selectionTableViewer();
+				
+				Shell shell = new Shell(display);
+			    MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION|SWT.YES | SWT.NO);
+			    messageBox.setMessage("Voulez-vous modifier le questionnaire : "+selectedQuestionnaire.getQuestionnaire_libelle()
+			    		+ " ?\n\nPour modifier le groupe : "+selectedQuestionnaire.getGroupe_libelle()+"\ncliquer non.");
+			   
+			    int rc = messageBox.open();
+			    if (rc == SWT.YES){
+			    	vAccueil.getTabGestion().setSelection(1);
+			    	QcmController qcmController = new QcmController(vAccueil);
+			    	qcmController.setUpdateQcmQuestionnaire(selectedQuestionnaire.getQuestionnaire_id());
+			    	qcmController.setUpdateQcmGroupe(selectedQuestionnaire.getGroupe_id());
+			    	vAccueil.getBtnAjouterQcm().setText("Modifier");
+			    	vAccueil.getBtnNouveauQuestionnaire().setVisible(true);
+					vAccueil.getLblMerciDe().setVisible(true);
+					vAccueil.getLblMerciDe().setText("Pour ajouter un nouveau questionnaire vous devez d'abord appuyer sur terminer.");
+			    	qcmController.init();
+			    }else{
+			    	vAccueil.getTabGestion().setSelection(2);
+			    	GroupeController groupeController = new GroupeController(vAccueil);
+			    	groupeController.setUpdateGroupe(selectedQuestionnaire.getGroupe_id());
+			    	groupeController.init();
+			    	
+			    }
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});	
 		
+	}
+	
+	public CollectionQuestionnaireGroupe selectionTableViewer(){
+		StructuredSelection selection = (StructuredSelection) vAccueil.getTableViewer().getSelection();
+		CollectionQuestionnaireGroupe selectedQuestionnaire = (CollectionQuestionnaireGroupe) selection.getFirstElement();
 		
+		return selectedQuestionnaire;
 	}
 
 	@Override

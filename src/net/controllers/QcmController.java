@@ -1,8 +1,10 @@
 package net.controllers;
 
+import java.rmi.UnexpectedException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -24,21 +26,97 @@ import org.eclipse.swt.events.SelectionListener;
 public class QcmController implements SelectionListener {
 	public static VAccueil vAccueil;
 	private String qcm;
+	private Integer maxPage=0;
+	private Integer page=1;
+	private Integer pageIndex=0;
 	private Integer countQuestion=0;
 	private Questionnaire session_id=null;
 	private int nbTrueAnswer;
+	private Groupe[] lesGroupes = null;
 	private List<Reponse> lesReponses = new ArrayList<Reponse>();
+	private Question[] lesQuestions = null;
+	private Reponse[] lesReponse=null;
 	private Questionnaire leQuestionnaire=null;
 	private Groupe leGroupe=null;
 	private Question laQuestion=null;
 	private boolean checkQuestGroupe=true;
 	private Questionnaire insertQuestionnaire = null;
-	
+	private Integer updateQcmGroupe=null;
+	private Integer updateQcmQuestionnaire = null;
+
+	public Integer getUpdateQcmGroupe() {
+		return updateQcmGroupe;
+	}
+
+	public void setUpdateQcmGroupe(Integer updateQcmGroupe) {
+		this.updateQcmGroupe = updateQcmGroupe;
+	}
+
+	public Integer getUpdateQcmQuestionnaire() {
+		return updateQcmQuestionnaire;
+	}
+
+	public void setUpdateQcmQuestionnaire(Integer updateQcmQuestionnaire) {
+		this.updateQcmQuestionnaire = updateQcmQuestionnaire;
+	}
+
 	public QcmController(VAccueil vAccueil) {
 		this.vAccueil = vAccueil;
 	}
 
 	public void init() {
+		
+		if(this.getUpdateQcmQuestionnaire()!= null){
+		/*	page=1;
+			pageIndex=0;
+			maxPage=0;
+			lesReponse=null;
+			lesGroupes=null;
+			lesQuestions=null;
+			leQuestionnaire=null;*/
+			initAddQcm();
+			initQuestionnaireUpdate();			
+			initGroupeUpdate();
+			initQuestionUpdate(0);
+			
+		}
+		
+		vAccueil.getBtnPrecedent().addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				if(page>1){
+					page--;
+					pageIndex--;
+					initQuestionUpdate(pageIndex);
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		vAccueil.getBtnSuivant().addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				if(page<maxPage){
+					page++;
+					pageIndex++;
+					initQuestionUpdate(pageIndex);
+				}
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		
 		vAccueil.getBtnAjouterQcm().addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -57,13 +135,72 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnNouveauQuestionnaire().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String libelleQuest = vAccueil.getTxtQcm().getText();
+				//String libelleQuest = vAccueil.getTxtQcm().getText();
+				vAccueil.getLblMerciDe().setVisible(false);
 				initAddQcm();
-				AddQcm();
-				vAccueil.getLblInformation().setText("Le questionnaire "+libelleQuest+" a été crée avec succés ! ");
-				
+				//AddQcm();
+				if(updateQcmGroupe!=null){
+					//vAccueil.getLblInformation().setText("Le questionnaire "+libelleQuest+" a été crée avec succés ! ");
+					updateQcmGroupe=null;
+					updateQcmQuestionnaire=null;
+				}
+				vAccueil.getLblInformation().setText("Vous pouvez cr�er un nouveau formulaire.");
 			}
 		});
+	}
+	
+	public void initReponse(Integer idQuestion){
+
+		lesReponse = Http.getReponsesByQuestion(idQuestion);
+		for (Reponse reponse : lesReponse) {
+			System.out.println("Une r�ponse : "+reponse.getLibelle() + " Check : "+reponse.getGood());
+		}
+		vAccueil.getTxtQcm1().setText(lesReponse[0].getLibelle());
+		vAccueil.getTxtQcm2().setText(lesReponse[1].getLibelle());
+		vAccueil.getTxtQcm3().setText(lesReponse[2].getLibelle());
+		vAccueil.getTxtQcm4().setText(lesReponse[3].getLibelle());
+		
+		vAccueil.getBtnCkGroupe1().setSelection((lesReponse[0].getGood()) != 0? true : false);
+		vAccueil.getBtnCkGroupe2().setSelection((lesReponse[1].getGood()) != 0? true : false);
+		vAccueil.getBtnCkGroupe3().setSelection((lesReponse[2].getGood()) != 0? true : false);
+		vAccueil.getBtnCkGroupe4().setSelection((lesReponse[3].getGood()) != 0? true : false);
+	}
+	
+	
+	public void initQuestionUpdate(Integer index){
+		lesQuestions=null;
+		lesQuestions = Http.getQuestionByQuestionnaire(leQuestionnaire.getId());
+		if(lesQuestions.length>1){
+			maxPage=lesQuestions.length;
+			vAccueil.getBtnPrecedent().setVisible(true);
+			vAccueil.getBtnSuivant().setVisible(true);
+		}
+		vAccueil.getLblCurrentQuestion().setText(String.valueOf(page));
+		vAccueil.getLblLastQuestion().setText(String.valueOf(lesQuestions.length));
+		vAccueil.getTxtQuestionQcm().setText(lesQuestions[index].getLibelle());
+		initReponse(lesQuestions[index].getId());
+	}
+	
+	public void initQuestionnaireUpdate(){
+		leQuestionnaire = Http.getQuestionnaire(getUpdateQcmQuestionnaire());
+		vAccueil.getTxtQcm().setText(leQuestionnaire.getLibelle());
+	}
+	
+	public void initGroupeUpdate(){
+		lesGroupes = Http.getAllGroupes();
+		leGroupe=Http.getGroupe(getUpdateQcmGroupe());
+		Integer count=0;
+		vAccueil.getCbvQcm().setInput(lesGroupes);
+		
+		for (Groupe groupe : lesGroupes) {
+			
+			if(groupe.getId().equals(leGroupe.getId())){
+				vAccueil.getCbQcm().select(count);
+			}
+			else{
+				count++;
+			}
+		}
 	}
 	
 	/**
@@ -73,11 +210,23 @@ public class QcmController implements SelectionListener {
 		vAccueil.getTxtQcm().setEnabled(true);
 		vAccueil.getCbQcm().setEnabled(true);
 		vAccueil.getTxtQcm().setText("");
+		vAccueil.getTxtQuestionQcm().setText("");
+		vAccueil.getTxtQcm1().setText("");
+		vAccueil.getTxtQcm2().setText("");
+		vAccueil.getTxtQcm3().setText("");
+		vAccueil.getTxtQcm4().setText("");
+		vAccueil.getBtnCkGroupe1().setSelection(false);
+		vAccueil.getBtnCkGroupe2().setSelection(false);
+		vAccueil.getBtnCkGroupe3().setSelection(false);
+		vAccueil.getBtnCkGroupe4().setSelection(false);
 		session_id=null;
 		countQuestion=0;
 		vAccueil.getLblCurrentQuestion().setText(String.valueOf(countQuestion));
 		vAccueil.getLblLastQuestion().setText(String.valueOf(countQuestion));
 		vAccueil.getCbvQcm().setSelection(null, false);
+		vAccueil.getBtnAjouterQcm().setText("Ajouter");
+		vAccueil.getBtnPrecedent().setVisible(false);
+		vAccueil.getBtnSuivant().setVisible(false);
 	}
 	
 	
@@ -210,7 +359,7 @@ public class QcmController implements SelectionListener {
 			
 			reponse.setQuestion_id(insertQuestion.getId());
 			Reponse insertReponse = Http.postReponse(reponse);
-			System.out.println("id de la question " +insertReponse.getQuestion_id());
+			//System.out.println("id de la question " +insertReponse.getQuestion_id());
 			if(insertReponse.getId().equals(null)){
 				insertCheckReponse=false;
 			}
