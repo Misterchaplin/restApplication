@@ -32,12 +32,12 @@ public class GroupeController implements SelectionListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 	
-				//on créer groupe et le remplit
+				//on crï¿½er groupe et le remplit
 				Groupe groupe = new Groupe();
 				groupe.setLibelle(vAccueil.getTxtLibelle().getText());
 				groupe.setCode(vAccueil.getTxtCode().getText());
 				
-				//Récupération du questionnaire séléctionné
+				//Rï¿½cupï¿½ration du questionnaire sï¿½lï¿½ctionnï¿½
 				IStructuredSelection selection = (IStructuredSelection) vAccueil.getCbvQuestionnaireGroupe().getSelection();
 	            Questionnaire element = (Questionnaire)selection.getFirstElement();
 				
@@ -59,8 +59,11 @@ public class GroupeController implements SelectionListener {
 							GroupeQuestionnaire insertGroupeQuestionnaires=Http.postGroupeQuestionnaires(groupQuest);
 							
 							if(insertGu!=null){
-								vAccueil.getLblInformation().setText("Ajout réussie");
+								vAccueil.getLblInformation().setText("Ajout rï¿½ussie");
 								vAccueil.getCbvQcm().setInput(null);
+								vAccueil.getTxtLibelle().setText("");
+								vAccueil.getTxtCode().setText("");
+								vAccueil.getCbvQuestionnaireGroupe().setSelection(null, false);
 								Utils.remplirComboGroupe();
 							}
 							else{
@@ -68,8 +71,11 @@ public class GroupeController implements SelectionListener {
 							}
 						}
 						else{
-							vAccueil.getLblInformation().setText("Ajout réussie");
+							vAccueil.getLblInformation().setText("Ajout rï¿½ussie");
 							vAccueil.getCbvQcm().setInput(null);
+							vAccueil.getTxtLibelle().setText("");
+							vAccueil.getTxtCode().setText("");
+							vAccueil.getCbvQuestionnaireGroupe().setSelection(null, false);
 							Utils.remplirComboGroupe();
 						}
 					}else{

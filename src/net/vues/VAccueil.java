@@ -29,6 +29,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class VAccueil {
 
@@ -69,7 +70,12 @@ public class VAccueil {
 	private Button btnModifierAccueil;
 	private Label lblCurrentQuestion;
 	private Label lblLastQuestion;
+	private Label lblMerciDe;
 	
+	public Label getLblMerciDe() {
+		return lblMerciDe;
+	}
+
 	public Button getBtnModifierAccueil() {
 		return btnModifierAccueil;
 	}
@@ -197,7 +203,7 @@ public class VAccueil {
 		grpInformation.setLayoutData(fd_grpInformation);
 		
 		lblInformation = new Label(grpInformation, SWT.NONE);
-		lblInformation.setBounds(10, 21, 490, 15);
+		lblInformation.setBounds(10, 10, 490, 15);
 		
 		tabGestion = new TabFolder(accueil, SWT.NONE);
 		fd_grpInformation.bottom = new FormAttachment(tabGestion, -1);
@@ -264,22 +270,22 @@ public class VAccueil {
 		grpAjouterQcm.setBounds(10, 28, 435, 319);
 		
 		Label lblNomQcm = new Label(grpAjouterQcm, SWT.NONE);
-		lblNomQcm.setBounds(10, 42, 64, 15);
+		lblNomQcm.setBounds(10, 51, 64, 15);
 		lblNomQcm.setText("Nom QCM :");
 		
 		txtQcm = new Text(grpAjouterQcm, SWT.BORDER);
-		txtQcm.setBounds(80, 36, 136, 21);
+		txtQcm.setBounds(80, 45, 136, 21);
 		
 		Label lblQuestionQcm = new Label(grpAjouterQcm, SWT.NONE);
-		lblQuestionQcm.setBounds(10, 84, 55, 15);
+		lblQuestionQcm.setBounds(10, 92, 64, 15);
 		lblQuestionQcm.setText("Question :");
 		
 		txtQuestionQcm = new Text(grpAjouterQcm, SWT.BORDER);
-		txtQuestionQcm.setBounds(80, 78, 316, 21);
+		txtQuestionQcm.setBounds(80, 89, 316, 21);
 		
 		Group grpReponse = new Group(grpAjouterQcm, SWT.NONE);
 		grpReponse.setText("Reponse");
-		grpReponse.setBounds(6, 137, 390, 168);
+		grpReponse.setBounds(10, 124, 390, 168);
 		
 		txtQcm1 = new Text(grpReponse, SWT.BORDER);
 		txtQcm1.setBounds(10, 43, 117, 21);
@@ -311,41 +317,44 @@ public class VAccueil {
 		btnCkGroupe4.setText("4");
 		
 		Label lblGroupeQcm = new Label(grpAjouterQcm, SWT.NONE);
-		lblGroupeQcm.setBounds(244, 42, 55, 15);
+		lblGroupeQcm.setBounds(244, 51, 55, 15);
 		lblGroupeQcm.setText("Groupe :");
 		
 		cbvQcm = new ComboViewer(grpAjouterQcm, SWT.NONE | SWT.READ_ONLY);
 		cbvQcm.setContentProvider(ArrayContentProvider.getInstance());
 		cbQcm = cbvQcm.getCombo();
-		cbQcm.setBounds(305, 36, 91, 23);
+		cbQcm.setBounds(305, 45, 91, 23);
 		
 		Label lblQuestion = new Label(grpAjouterQcm, SWT.NONE);
-		lblQuestion.setBounds(10, 116, 55, 15);
-		formToolkit.adapt(lblQuestion, true, true);
-		lblQuestion.setText("Question :");
+		lblQuestion.setBounds(10, 10, 75, 15);
+		
+		lblQuestion.setText("Question N° :");
 		
 		lblCurrentQuestion = new Label(grpAjouterQcm, SWT.NONE);
-		lblCurrentQuestion.setBounds(80, 116, 27, 15);
-		formToolkit.adapt(lblCurrentQuestion, true, true);
+		lblCurrentQuestion.setBounds(91, 10, 10, 15);	
 		lblCurrentQuestion.setText("0");
 		
 		Label lblSlashQuestion = new Label(grpAjouterQcm, SWT.NONE);
-		lblSlashQuestion.setBounds(113, 116, 10, 15);
-		formToolkit.adapt(lblSlashQuestion, true, true);
+		lblSlashQuestion.setBounds(106, 10, 10, 15);
 		lblSlashQuestion.setText("/");
 		
 		lblLastQuestion = new Label(grpAjouterQcm, SWT.NONE);
-		lblLastQuestion.setBounds(129, 116, 47, 15);
-		formToolkit.adapt(lblLastQuestion, true, true);
+		lblLastQuestion.setBounds(116, 10, 21, 15);
 		lblLastQuestion.setText("0");
 		
+		lblMerciDe = new Label(grpAjouterQcm, SWT.NONE);
+		lblMerciDe.setBounds(10, 290, 448, 14);
+		lblMerciDe.setFont(SWTResourceManager.getFont(".Helvetica Neue DeskInterface", 8, SWT.NORMAL));
+		lblMerciDe.setText("* Merci de cliquer sur le bouton 'terminer' lorsque la création du QCM est achevé.");
+		lblMerciDe.setVisible(false);
+		
 		btnAjouterQcm = new Button(cpQcm, SWT.NONE);
-		btnAjouterQcm.setBounds(460, 124, 75, 25);
+		btnAjouterQcm.setBounds(460, 124, 85, 25);
 		btnAjouterQcm.setText("Ajouter");
 		
 		btnNouveauQuestionnaire = new Button(cpQcm, SWT.NONE);
-		btnNouveauQuestionnaire.setText("Nouveau ?");
-		btnNouveauQuestionnaire.setBounds(460, 185, 75, 25);
+		btnNouveauQuestionnaire.setText("Terminer");
+		btnNouveauQuestionnaire.setBounds(460, 185, 85, 25);
 		formToolkit.adapt(btnNouveauQuestionnaire, true, true);
 		
 		TabItem tbtmGroupe = new TabItem(tabGestion, SWT.NONE);

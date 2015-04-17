@@ -57,8 +57,11 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnNouveauQuestionnaire().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				String libelleQuest = vAccueil.getTxtQcm().getText();
 				initAddQcm();
 				AddQcm();
+				vAccueil.getLblInformation().setText("Le questionnaire "+libelleQuest+" a Ã©tÃ© crÃ©e avec succÃ©s ! ");
+				
 			}
 		});
 	}
@@ -71,6 +74,7 @@ public class QcmController implements SelectionListener {
 		countQuestion=0;
 		vAccueil.getLblCurrentQuestion().setText(String.valueOf(countQuestion));
 		vAccueil.getLblLastQuestion().setText(String.valueOf(countQuestion));
+		vAccueil.getCbvQcm().setSelection(null, false);
 	}
 	
 	public void AddQcm(){
@@ -84,10 +88,10 @@ public class QcmController implements SelectionListener {
 				
 			}
 			if(session_id==null){
-				//Insertion d'une question appartenant à un questionnaire
+				//Insertion d'une question appartenant ï¿½ un questionnaire
 				laQuestion.setQuestionnaire_id(insertQuestionnaire.getId());
 			}else{
-				//Sinon on prend l'id du questionnaire précédent
+				//Sinon on prend l'id du questionnaire prï¿½cï¿½dent
 				laQuestion.setQuestionnaire_id(session_id.getId());
 			}
 			
@@ -96,7 +100,7 @@ public class QcmController implements SelectionListener {
 			boolean insertCheckReponse=addOrUpdateReponse(insertQuestion);
 			
 			if(session_id==null){
-				//Si tout est correct alors on associe les précédents ajout à l'utilisateur (s'il la relation n'existe pas encore)
+				//Si tout est correct alors on associe les prï¿½cï¿½dents ajout ï¿½ l'utilisateur (s'il la relation n'existe pas encore)
 				if(insertCheckReponse==true){				
 					boolean guCheck=ifGroupeWithUser();
 					boolean insertGrood=false;
@@ -141,6 +145,7 @@ public class QcmController implements SelectionListener {
 	}
 	
 	public void endInsert(){
+		vAccueil.getLblMerciDe().setVisible(true);
 		vAccueil.getBtnNouveauQuestionnaire().setVisible(true);
 		session_id=insertQuestionnaire;
 		lesReponses.clear();
@@ -155,7 +160,7 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnCkGroupe2().setSelection(false);
 		vAccueil.getBtnCkGroupe3().setSelection(false);
 		vAccueil.getBtnCkGroupe4().setSelection(false);
-		vAccueil.getLblInformation().setText("Ajout réussie");
+		vAccueil.getLblInformation().setText("Ajout rï¿½ussie");
 		countQuestion++;
 		vAccueil.getLblCurrentQuestion().setText(String.valueOf(countQuestion));
 		vAccueil.getLblLastQuestion().setText(String.valueOf(countQuestion));
