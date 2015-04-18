@@ -57,29 +57,35 @@ public class AccueilController implements SelectionListener {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				
-				
-				selectedQuestionnaire=selectionTableViewer();
-				String idGrpQuest = selectedQuestionnaire.getQuestionnaire_id()+ "_" +selectedQuestionnaire.getGroupe_id();
-				Integer idQuestionnaire = selectedQuestionnaire.getQuestionnaire_id();
-				
-				GroupeQuestionnaire[] test = Http.getCIMGrpQst(idGrpQuest);
-				 
-				Shell shell = new Shell(display);
-			    MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING |SWT.YES | SWT.NO);
-			    messageBox.setMessage("Etes-vous sur de vouloir supprimer "+selectedQuestionnaire.getQuestionnaire_libelle()+" ?");
-			   
-			    int rc = messageBox.open();
-			    
-			    if (rc == SWT.YES){
-			    	
-			    	for (GroupeQuestionnaire gq : test) {
-						Http.deleteCIMGroupeQuestionnaire(gq.getId(),idGrpQuest,idQuestionnaire);
-					}
+				try {
+					selectedQuestionnaire=selectionTableViewer();
+					String idGrpQuest = selectedQuestionnaire.getQuestionnaire_id()+ "_" +selectedQuestionnaire.getGroupe_id();
+					Integer idQuestionnaire = selectedQuestionnaire.getQuestionnaire_id();
 					
-					vAccueil.getLblInformation().setText("Suppression de "+selectedQuestionnaire.getQuestionnaire_libelle()+ " du groupe "+selectedQuestionnaire.getGroupe_libelle());
+					GroupeQuestionnaire[] test = Http.getCIMGrpQst(idGrpQuest);
+					 
+					Shell shell = new Shell(display);
+				    MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING |SWT.YES | SWT.NO);
+				    messageBox.setMessage("Etes-vous sur de vouloir supprimer "+selectedQuestionnaire.getQuestionnaire_libelle()+" ?");
+				   
+				    int rc = messageBox.open();
+				    
+				    if (rc == SWT.YES){
+				    	
+				    	for (GroupeQuestionnaire gq : test) {
+							Http.deleteCIMGroupeQuestionnaire(gq.getId(),idGrpQuest,idQuestionnaire);
+						}
+						
+						vAccueil.getLblInformation().setText("Suppression de "+selectedQuestionnaire.getQuestionnaire_libelle()+ " du groupe "+selectedQuestionnaire.getGroupe_libelle());
+						
+						Utils.updateTableViewer();
+				    }
 					
-					Utils.updateTableViewer();
-			    }
+				} catch (NullPointerException npe1) {
+					vAccueil.getLblInformation().setText("Veuillez saisir un questionnaire !");
+				}
+				
+				
 			}
 
 			@Override
@@ -87,37 +93,44 @@ public class AccueilController implements SelectionListener {
 				// TODO Auto-generated method stub
 
 			}
+			
 		});	
 		
 		vAccueil.getBtnModifierAccueil().addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				selectedQuestionnaire=selectionTableViewer();
+				try {
+					selectedQuestionnaire=selectionTableViewer();
+					
+					Shell shell = new Shell(display);
+				    MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION|SWT.YES | SWT.NO);
+				    messageBox.setMessage("Voulez-vous modifier le questionnaire : "+selectedQuestionnaire.getQuestionnaire_libelle()
+				    		+ " ?\n\nPour modifier le groupe : "+selectedQuestionnaire.getGroupe_libelle()+"\ncliquer non.");
+				   
+				    int rc = messageBox.open();
+				    if (rc == SWT.YES){
+				    	vAccueil.getTabGestion().setSelection(1);
+				    	QcmController qcmController = new QcmController(vAccueil);
+				    	qcmController.setUpdateQcmQuestionnaire(selectedQuestionnaire.getQuestionnaire_id());
+				    	qcmController.setUpdateQcmGroupe(selectedQuestionnaire.getGroupe_id());
+				    	vAccueil.getBtnAjouterQcm().setText("Modifier");
+				    	vAccueil.getBtnNouveauQuestionnaire().setVisible(true);
+						vAccueil.getLblMerciDe().setVisible(true);
+						vAccueil.getLblMerciDe().setText("Pour ajouter un nouveau questionnaire vous devez d'abord appuyer sur terminer.");
+				    	qcmController.init();
+				    }else{
+				    	vAccueil.getTabGestion().setSelection(2);
+				    	GroupeController groupeController = new GroupeController(vAccueil);
+				    	groupeController.setUpdateGroupe(selectedQuestionnaire.getGroupe_id());
+				    	groupeController.init();
+				    	
+				    }
 				
-				Shell shell = new Shell(display);
-			    MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION|SWT.YES | SWT.NO);
-			    messageBox.setMessage("Voulez-vous modifier le questionnaire : "+selectedQuestionnaire.getQuestionnaire_libelle()
-			    		+ " ?\n\nPour modifier le groupe : "+selectedQuestionnaire.getGroupe_libelle()+"\ncliquer non.");
-			   
-			    int rc = messageBox.open();
-			    if (rc == SWT.YES){
-			    	vAccueil.getTabGestion().setSelection(1);
-			    	QcmController qcmController = new QcmController(vAccueil);
-			    	qcmController.setUpdateQcmQuestionnaire(selectedQuestionnaire.getQuestionnaire_id());
-			    	qcmController.setUpdateQcmGroupe(selectedQuestionnaire.getGroupe_id());
-			    	vAccueil.getBtnAjouterQcm().setText("Modifier");
-			    	vAccueil.getBtnNouveauQuestionnaire().setVisible(true);
-					vAccueil.getLblMerciDe().setVisible(true);
-					vAccueil.getLblMerciDe().setText("Pour ajouter un nouveau questionnaire vous devez d'abord appuyer sur terminer.");
-			    	qcmController.init();
-			    }else{
-			    	vAccueil.getTabGestion().setSelection(2);
-			    	GroupeController groupeController = new GroupeController(vAccueil);
-			    	groupeController.setUpdateGroupe(selectedQuestionnaire.getGroupe_id());
-			    	groupeController.init();
-			    	
-			    }
+				} catch (NullPointerException npe2) {
+					vAccueil.getLblInformation().setText("Veuillez saisir un questionnaire !");
+				}
+				
 			}
 
 			@Override

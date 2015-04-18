@@ -144,7 +144,7 @@ public class QcmController implements SelectionListener {
 					updateQcmGroupe=null;
 					updateQcmQuestionnaire=null;
 				}
-				vAccueil.getLblInformation().setText("Vous pouvez créer un nouveau formulaire.");
+				vAccueil.getLblInformation().setText("Vous pouvez crï¿½er un nouveau formulaire.");
 			}
 		});
 	}
@@ -153,7 +153,7 @@ public class QcmController implements SelectionListener {
 
 		lesReponse = Http.getReponsesByQuestion(idQuestion);
 		for (Reponse reponse : lesReponse) {
-			System.out.println("Une réponse : "+reponse.getLibelle() + " Check : "+reponse.getGood());
+			System.out.println("Une rï¿½ponse : "+reponse.getLibelle() + " Check : "+reponse.getGood());
 		}
 		vAccueil.getTxtQcm1().setText(lesReponse[0].getLibelle());
 		vAccueil.getTxtQcm2().setText(lesReponse[1].getLibelle());
@@ -204,7 +204,7 @@ public class QcmController implements SelectionListener {
 	}
 	
 	/**
-	 * On remet tout à zéro
+	 * On remet tout ï¿½ zï¿½ro
 	 */
 	public void initAddQcm(){
 		vAccueil.getTxtQcm().setEnabled(true);
@@ -231,7 +231,7 @@ public class QcmController implements SelectionListener {
 	
 	
 	/**
-	 * Fonction général d'ajout
+	 * Fonction gï¿½nï¿½ral d'ajout
 	 */
 	public void AddQcm(){
 		checkQuestGroupe=true;
@@ -319,7 +319,7 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnCkGroupe2().setSelection(false);
 		vAccueil.getBtnCkGroupe3().setSelection(false);
 		vAccueil.getBtnCkGroupe4().setSelection(false);
-		vAccueil.getLblInformation().setText("Ajout rï¿½ussie");
+		vAccueil.getLblInformation().setText("Ajout rÃ©ussie");
 		countQuestion++;
 		vAccueil.getLblCurrentQuestion().setText(String.valueOf(countQuestion));
 		vAccueil.getLblLastQuestion().setText(String.valueOf(countQuestion));
@@ -349,7 +349,7 @@ public class QcmController implements SelectionListener {
 	}
 	
 	/**
-	 * Ajout ou mise à jour des réponses
+	 * Ajout ou mise Ã  jour des rÃ©ponses
 	 * @param insertQuestion
 	 * @return
 	 */
