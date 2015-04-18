@@ -30,7 +30,7 @@ public class QcmController implements SelectionListener {
 	private Integer page=1;
 	private Integer pageIndex=0;
 	private Integer countQuestion=0;
-	private Questionnaire session_id=null;
+	//private Questionnaire session_id=null;
 	private int nbTrueAnswer;
 	private Groupe[] lesGroupes = null;
 	private List<Reponse> lesReponses = new ArrayList<Reponse>();
@@ -67,13 +67,7 @@ public class QcmController implements SelectionListener {
 	public void init() {
 		
 		if(this.getUpdateQcmQuestionnaire()!= null){
-		/*	page=1;
-			pageIndex=0;
-			maxPage=0;
-			lesReponse=null;
-			lesGroupes=null;
-			lesQuestions=null;
-			leQuestionnaire=null;*/
+			
 			initAddQcm();
 			initQuestionnaireUpdate();			
 			initGroupeUpdate();
@@ -121,7 +115,9 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnAjouterQcm().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				//System.out.println("Avant add: "+session_id);
 				AddQcm();
+				//System.out.println("Apres add: "+session_id);
 			}
 			
 		
@@ -136,6 +132,7 @@ public class QcmController implements SelectionListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				//String libelleQuest = vAccueil.getTxtQcm().getText();
+				vAccueil.getBtnAjouterQuestion().setVisible(false);
 				vAccueil.getLblMerciDe().setVisible(false);
 				initAddQcm();
 				//AddQcm();
@@ -144,7 +141,16 @@ public class QcmController implements SelectionListener {
 					updateQcmGroupe=null;
 					updateQcmQuestionnaire=null;
 				}
-				vAccueil.getLblInformation().setText("Vous pouvez crï¿½er un nouveau formulaire.");
+				vAccueil.getLblInformation().setText("Vous pouvez créer un nouveau formulaire.");
+			}
+		});
+		
+		vAccueil.getBtnAjouterQuestion().addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if(updateQcmQuestionnaire!=null){
+					addQuestionToUpdate();
+				}	
 			}
 		});
 	}
@@ -152,9 +158,9 @@ public class QcmController implements SelectionListener {
 	public void initReponse(Integer idQuestion){
 
 		lesReponse = Http.getReponsesByQuestion(idQuestion);
-		for (Reponse reponse : lesReponse) {
+		/*for (Reponse reponse : lesReponse) {
 			System.out.println("Une rï¿½ponse : "+reponse.getLibelle() + " Check : "+reponse.getGood());
-		}
+		}*/
 		vAccueil.getTxtQcm1().setText(lesReponse[0].getLibelle());
 		vAccueil.getTxtQcm2().setText(lesReponse[1].getLibelle());
 		vAccueil.getTxtQcm3().setText(lesReponse[2].getLibelle());
@@ -219,7 +225,8 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnCkGroupe2().setSelection(false);
 		vAccueil.getBtnCkGroupe3().setSelection(false);
 		vAccueil.getBtnCkGroupe4().setSelection(false);
-		session_id=null;
+		//session_id=null;
+		AppController.setSession_Id(null);
 		countQuestion=0;
 		vAccueil.getLblCurrentQuestion().setText(String.valueOf(countQuestion));
 		vAccueil.getLblLastQuestion().setText(String.valueOf(countQuestion));
@@ -227,6 +234,38 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnAjouterQcm().setText("Ajouter");
 		vAccueil.getBtnPrecedent().setVisible(false);
 		vAccueil.getBtnSuivant().setVisible(false);
+	
+	}
+	
+	/**
+	 * Initialise certaine données pour ajouter un question au questionnaire
+	 * dont au préalable on a cliqué sur modifier
+	 */
+	public void addQuestionToUpdate(){
+		leQuestionnaire.setId(updateQcmQuestionnaire);
+		//session_id=leQuestionnaire;
+		AppController.setSession_Id(leQuestionnaire);
+		System.out.println(AppController.getSession_Id());
+		lesQuestions = Http.getQuestionByQuestionnaire(leQuestionnaire.getId());
+		maxPage=lesQuestions.length;
+		maxPage++;
+		vAccueil.getLblLastQuestion().setText(String.valueOf(maxPage));
+		vAccueil.getLblCurrentQuestion().setText(String.valueOf(maxPage));
+		
+		vAccueil.getTxtQuestionQcm().setText("");
+		vAccueil.getTxtQcm().setEnabled(false);
+		vAccueil.getCbQcm().setEnabled(false);
+		vAccueil.getTxtQcm1().setText("");
+		vAccueil.getTxtQcm2().setText("");
+		vAccueil.getTxtQcm3().setText("");
+		vAccueil.getTxtQcm4().setText("");
+		vAccueil.getBtnCkGroupe1().setSelection(false);
+		vAccueil.getBtnCkGroupe2().setSelection(false);
+		vAccueil.getBtnCkGroupe3().setSelection(false);
+		vAccueil.getBtnCkGroupe4().setSelection(false);
+		vAccueil.getBtnPrecedent().setVisible(false);
+		vAccueil.getBtnSuivant().setVisible(false);
+		System.out.println(AppController.getSession_Id());
 	}
 	
 	
@@ -239,25 +278,26 @@ public class QcmController implements SelectionListener {
 		
 		
 		if(checkQuestGroupe==true && (nbTrueAnswer==1 || nbTrueAnswer==2)){
-			if(session_id==null){
+			if(AppController.getSession_Id()==null){
+				//System.out.println("ici : "+ session_id.getId());
 				insertQuestionnaire = Http.postQuestionnarie(leQuestionnaire);
 				//Association entre groupe et questionnaire
 				GroupeQuestionnaire eventGroupeQuestionnaire = addOrUpdateGroupeQuestionnaire(insertQuestionnaire);
 				
 			}
-			if(session_id==null){
+			if(AppController.getSession_Id()==null){
 				//Insertion d'une question appartenant ï¿½ un questionnaire
 				laQuestion.setQuestionnaire_id(insertQuestionnaire.getId());
 			}else{
 				//Sinon on prend l'id du questionnaire prï¿½cï¿½dent
-				laQuestion.setQuestionnaire_id(session_id.getId());
+				laQuestion.setQuestionnaire_id(AppController.getSession_Id().getId());
 			}
 			
 			Question insertQuestion=addOrUpdateQuestion();
 			//Insertion des reponses de la question
 			boolean insertCheckReponse=addOrUpdateReponse(insertQuestion);
 			
-			if(session_id==null){
+			if(AppController.getSession_Id()==null){
 				//Si tout est correct alors on associe les prï¿½cï¿½dents ajout ï¿½ l'utilisateur (s'il la relation n'existe pas encore)
 				if(insertCheckReponse==true){				
 					boolean guCheck=ifGroupeWithUser();
@@ -306,7 +346,7 @@ public class QcmController implements SelectionListener {
 	public void endInsert(){
 		vAccueil.getLblMerciDe().setVisible(true);
 		vAccueil.getBtnNouveauQuestionnaire().setVisible(true);
-		session_id=insertQuestionnaire;
+		AppController.setSession_Id(insertQuestionnaire);
 		lesReponses.clear();
 		vAccueil.getTxtQuestionQcm().setText("");
 		vAccueil.getTxtQcm().setEnabled(false);

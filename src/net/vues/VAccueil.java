@@ -73,6 +73,7 @@ public class VAccueil {
 	private Label lblMerciDe;
 	private Button btnSuivant;
 	private Button btnPrecedent;
+	private Button btnAjouterQuestion;
 	
 	public Label getLblMerciDe() {
 		return lblMerciDe;
@@ -363,13 +364,19 @@ public class VAccueil {
 		btnPrecedent.setVisible(false);
 		
 		btnAjouterQcm = new Button(cpQcm, SWT.NONE);
-		btnAjouterQcm.setBounds(460, 124, 85, 25);
+		btnAjouterQcm.setBounds(451, 124, 94, 25);
 		btnAjouterQcm.setText("Ajouter");
 		
 		btnNouveauQuestionnaire = new Button(cpQcm, SWT.NONE);
 		btnNouveauQuestionnaire.setText("Terminer");
-		btnNouveauQuestionnaire.setBounds(460, 185, 85, 25);
+		btnNouveauQuestionnaire.setBounds(451, 185, 94, 25);
 		formToolkit.adapt(btnNouveauQuestionnaire, true, true);
+		
+		btnAjouterQuestion = new Button(cpQcm, SWT.NONE);
+		btnAjouterQuestion.setBounds(451, 155, 94, 25);
+		formToolkit.adapt(btnAjouterQuestion, true, true);
+		btnAjouterQuestion.setText("Ajouter Question");
+		btnAjouterQuestion.setVisible(false);
 		
 		TabItem tbtmGroupe = new TabItem(tabGestion, SWT.NONE);
 		tbtmGroupe.setText("Groupe");
@@ -409,6 +416,10 @@ public class VAccueil {
 		cbvQuestionnaireGroupe.setContentProvider(ArrayContentProvider.getInstance());
 		cbQuestionnaireGroupe = cbvQuestionnaireGroupe.getCombo();
 		cbQuestionnaireGroupe.setBounds(131, 101, 138, 23);
+	}
+
+	public Button getBtnAjouterQuestion() {
+		return btnAjouterQuestion;
 	}
 
 	public Button getBtnSuivant() {
