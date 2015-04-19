@@ -19,6 +19,8 @@ public class GroupeController implements SelectionListener {
 	public static VAccueil vAccueil;
 	private String qcm;
 	private Integer updateGroupe = null;
+	private Groupe leGroupe=null;
+	private Questionnaire[] lesQuestionnaires = null;
 	
 	public Integer getUpdateGroupe() {
 		return updateGroupe;
@@ -35,6 +37,10 @@ public class GroupeController implements SelectionListener {
 	public void init() {
 		if(updateGroupe!=null){
 			System.out.println(updateGroupe);
+					
+			initGroupeUpdate();
+			
+			
 		}
 		vAccueil.getBtnAjouterGroupe().addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings("unused")
@@ -68,7 +74,7 @@ public class GroupeController implements SelectionListener {
 							GroupeQuestionnaire insertGroupeQuestionnaires=Http.postGroupeQuestionnaires(groupQuest);
 							
 							if(insertGu!=null){
-								vAccueil.getLblInformation().setText("Ajout r�ussie");
+								vAccueil.getLblInformation().setText("Ajout réussie");
 								vAccueil.getCbvQcm().setInput(null);
 								vAccueil.getTxtLibelle().setText("");
 								vAccueil.getTxtCode().setText("");
@@ -80,7 +86,7 @@ public class GroupeController implements SelectionListener {
 							}
 						}
 						else{
-							vAccueil.getLblInformation().setText("Ajout r�ussie");
+							vAccueil.getLblInformation().setText("Ajout réussie");
 							vAccueil.getCbvQcm().setInput(null);
 							vAccueil.getTxtLibelle().setText("");
 							vAccueil.getTxtCode().setText("");
@@ -98,6 +104,28 @@ public class GroupeController implements SelectionListener {
 				}
 			}
 		});
+	}
+	
+	
+	public void initGroupeUpdate(){
+		leGroupe = Http.getGroupe(getUpdateGroupe());
+		vAccueil.getTxtCode().setText(leGroupe.getCode());
+		vAccueil.getTxtLibelle().setText(leGroupe.getLibelle());
+		lesQuestionnaires = Http.getAllQuestionnaires();
+		vAccueil.getCbvQuestionnaireGroupe().setInput(lesQuestionnaires);
+		vAccueil.getBtnAjouterGroupe().setVisible(false);
+		vAccueil.getBtnModifierGroupe().setVisible(true);
+		vAccueil.getBtnModifierGroupe().addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				vAccueil.getLblInformation().setText("Groupe modifié avec succés");
+			}
+		});
+		
+		
+		
+		
 	}
 
 	@Override

@@ -141,7 +141,7 @@ public class QcmController implements SelectionListener {
 					updateQcmGroupe=null;
 					updateQcmQuestionnaire=null;
 				}
-				vAccueil.getLblInformation().setText("Vous pouvez créer un nouveau formulaire.");
+				vAccueil.getLblInformation().setText("Vous pouvez crï¿½er un nouveau formulaire.");
 			}
 		});
 		
@@ -238,8 +238,8 @@ public class QcmController implements SelectionListener {
 	}
 	
 	/**
-	 * Initialise certaine données pour ajouter un question au questionnaire
-	 * dont au préalable on a cliqué sur modifier
+	 * Initialise certaine donnï¿½es pour ajouter un question au questionnaire
+	 * dont au prï¿½alable on a cliquï¿½ sur modifier
 	 */
 	public void addQuestionToUpdate(){
 		leQuestionnaire.setId(updateQcmQuestionnaire);

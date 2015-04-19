@@ -74,7 +74,12 @@ public class VAccueil {
 	private Button btnSuivant;
 	private Button btnPrecedent;
 	private Button btnAjouterQuestion;
+	private Button btnModifierGroupe;
 	
+	public Button getBtnModifierGroupe() {
+		return btnModifierGroupe;
+	}
+
 	public Label getLblMerciDe() {
 		return lblMerciDe;
 	}
@@ -416,6 +421,13 @@ public class VAccueil {
 		cbvQuestionnaireGroupe.setContentProvider(ArrayContentProvider.getInstance());
 		cbQuestionnaireGroupe = cbvQuestionnaireGroupe.getCombo();
 		cbQuestionnaireGroupe.setBounds(131, 101, 138, 23);
+		
+		btnModifierGroupe = new Button(grpAjouterUnGroupe, SWT.NONE);
+		btnModifierGroupe.setVisible(false);
+		
+		btnModifierGroupe.setBounds(200, 194, 80, 21);
+		formToolkit.adapt(btnModifierGroupe, true, true);
+		btnModifierGroupe.setText("Modifier");
 	}
 
 	public Button getBtnAjouterQuestion() {
