@@ -1,6 +1,7 @@
 package net.controllers;
 
 import net.models.ActifUser;
+import net.models.Groupe;
 import net.models.Questionnaire;
 import net.vues.VAccueil;
 
@@ -16,6 +17,15 @@ public class AppController {
 	}
 	
 	private static Questionnaire session_Id=null;
+	private static Groupe sessionGroupe_Id=null;
+	
+	public static Groupe getSessionGroupe_Id() {
+		return sessionGroupe_Id;
+	}
+
+	public static void setSessionGroupe_Id(Groupe sessionGroupe_Id) {
+		AppController.sessionGroupe_Id = sessionGroupe_Id;
+	}
 
 	public static Questionnaire getSession_Id() {
 		return session_Id;

@@ -25,9 +25,10 @@ public class GroupeQuestionnaire {
 	}
 	@Override
 	public String toString() {
-		return "GroupeQuestionnaire [questionnaire_id=" + questionnaire_id
-				+ ", groupe_id=" + groupe_id + "]";
+		return "GroupeQuestionnaire [id=" + id + ", questionnaire_id="
+				+ questionnaire_id + ", groupe_id=" + groupe_id + "]";
 	}
+	
 	
 
 }
