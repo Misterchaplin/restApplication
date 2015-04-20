@@ -377,6 +377,18 @@ public class Http{
 		return data;
 	}
 	
+	
+	public static Groupe putGroupe(Groupe groupe){
+		try {
+			query = http.put(baseUrl+"groupes/"+groupe.getId(), groupe);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Groupe data=gson.jsonToGroupe(query);
+		return data;
+	}
+	
 	/**
 	 * Supprimer cim entre questionnaire et groupe
 	 * @param id

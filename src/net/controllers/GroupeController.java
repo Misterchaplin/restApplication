@@ -147,6 +147,11 @@ public class GroupeController implements SelectionListener {
 			public void widgetSelected(SelectionEvent e) {
 				
 				vAccueil.getLblInformation().setText("Groupe modifié avec succés");
+				Groupe group = Http.getGroupe(getUpdateGroupe());
+				System.out.println(group.getId());
+				group.setLibelle(group.getLibelle()+" modifié");
+				System.out.println(group.getLibelle());
+				System.out.println(Http.putGroupe(group));
 			}
 		});
 		

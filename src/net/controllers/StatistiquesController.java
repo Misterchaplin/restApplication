@@ -5,6 +5,7 @@ import net.models.Groupe;
 import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
 import net.models.Questionnaire;
+import net.models.Utilisateur;
 import net.technics.Http;
 import net.technics.Utils;
 import net.vues.VAccueil;
@@ -36,7 +37,15 @@ public class StatistiquesController implements SelectionListener {
 	            IStructuredSelection selection2 = (IStructuredSelection) vAccueil.getCbvStatistiquesGroupe().getSelection();
 	            Groupe groupe = (Groupe)selection2.getFirstElement();
 	            
-				vAccueil.getLblInformation().setText(questionnaire.toString());
+	            // Tous les utilisateurs du groupe
+				Utilisateur[] lesUsers = Http.getUtilisateursToGroupe(groupe.getId());
+				for (Utilisateur utilisateur : lesUsers) {
+					System.out.println(utilisateur.getLogin());
+				}
+				
+				
+				//System.out.println(lesUsers);
+		        //AccueilController.vAccueil.getTableViewer_1().setInput(lesUsers);
 			}
 		});
 	}
