@@ -116,7 +116,7 @@ public class QcmController implements SelectionListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(vAccueil.getBtnAjouterQcm().getText()=="Modifier"){
-					AddQcm();
+					UpdateQcm();
 				}else{
 					AddQcm();
 				}
@@ -152,6 +152,7 @@ public class QcmController implements SelectionListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(updateQcmQuestionnaire!=null){
+					vAccueil.getBtnAjouterQcm().setText("Ajouter");
 					addQuestionToUpdate();
 				}	
 			}
@@ -277,11 +278,6 @@ public class QcmController implements SelectionListener {
 	 */
 	public void AddQcm(){
 		checkQuestGroupe=true;
-		if(AppController.getSession_Id()==null){
-			leQuestionnaire=Http.getQuestionnaire(AppController.getSession_Id().getId());
-			AppController.setSession_Id(leQuestionnaire);
-		}
-		
 		checkQuestGroupe = beginInsert();
 		
 		
@@ -291,13 +287,14 @@ public class QcmController implements SelectionListener {
 				//Association entre groupe et questionnaire
 				GroupeQuestionnaire eventGroupeQuestionnaire = addGroupeQuestionnaire(insertQuestionnaire);	
 			}
-			else{
-				System.out.println(leQuestionnaire.getId());
+			/*else{
+				leQuestionnaire.setId(AppController.getSession_Id().getId());
 				Questionnaire updateQuestionnaire = Http.putQuestionnarie(leQuestionnaire);
-				System.out.println("questinnaire "+leQuestionnaire);
-				System.out.println("MAJ questionnaire "+updateQuestionnaire);
-				//GroupeQuestionnaire eventGroupeQuestionnaire = addGroupeQuestionnaire(updateQuesitonnaire);
-			}
+				if(updateQuestionnaire!=null){
+					GroupeQuestionnaire eventGroupeQuestionnaire = updateGroupeQuestionnaire(updateQuestionnaire);
+					//System.out.println(eventGroupeQuestionnaire);
+				}
+			}*/
 			
 			
 			if(AppController.getSession_Id()==null){
@@ -342,29 +339,24 @@ public class QcmController implements SelectionListener {
 	
 	
 
-	/*public void UpdateQcm(){
+	public void UpdateQcm(){
 		checkQuestGroupe=true;
 		checkQuestGroupe = beginInsert();
-		
-		
+				
 		if(checkQuestGroupe==true && (nbTrueAnswer==1 || nbTrueAnswer==2)){
-			
+			leQuestionnaire.setId(AppController.getSession_Id().getId());
 			Questionnaire updateQuestionnaire = Http.putQuestionnarie(leQuestionnaire);
-			System.out.println("questinnaire "+leQuestionnaire);
-			System.out.println("MAJ questionnaire "+updateQuestionnaire);
-			//GroupeQuestionnaire eventGroupeQuestionnaire = addGroupeQuestionnaire(updateQuesitonnaire);
-			
-			/*if(AppController.getSession_Id()==null){
-				//Insertion d'une question appartenant ï¿½ un questionnaire
-				laQuestion.setQuestionnaire_id(insertQuestionnaire.getId());
-			}else{
-				//Sinon on prend l'id du questionnaire prï¿½cï¿½dent
-				laQuestion.setQuestionnaire_id(AppController.getSession_Id().getId());
+			if(updateQuestionnaire!=null){
+				GroupeQuestionnaire eventGroupeQuestionnaire = updateGroupeQuestionnaire(updateQuestionnaire);
+				//System.out.println(eventGroupeQuestionnaire);
 			}
 			
-			Question insertQuestion=addQuestion();
+			laQuestion.setQuestionnaire_id(AppController.getSession_Id().getId());
+			
+			
+			Question updateQuestion=updateQuestion();
 			//Insertion des reponses de la question
-			boolean insertCheckReponse=addReponse(insertQuestion);
+			boolean insertCheckReponse=addReponse(updateQuestion);
 			
 			if(AppController.getSession_Id()==null){
 				//Si tout est correct alors on associe les prï¿½cï¿½dents ajout ï¿½ l'utilisateur (s'il la relation n'existe pas encore)
@@ -392,7 +384,7 @@ public class QcmController implements SelectionListener {
 			lesReponses.clear();
 		}
 
-	}*/
+	}
 	
 	public boolean beginInsert(){
 		Integer stateAnswer=createReponse();
@@ -510,7 +502,13 @@ public class QcmController implements SelectionListener {
 	 * @return L'id de l'élément modifié
 	 */
 	public Question updateQuestion(){
-		Question UpdateQuestion = Http.postQuestion(laQuestion);
+		System.out.println(page);
+		System.out.println(pageIndex);
+		//Récupérer la question à mettre à jour
+		
+		System.out.println("id "+ laQuestion.getId());
+		System.out.println("lib "+ laQuestion.getLibelle());
+		Question UpdateQuestion = Http.putQuestion(laQuestion);
 		return UpdateQuestion;
 	}
 	
@@ -526,14 +524,24 @@ public class QcmController implements SelectionListener {
 	}
 	
 	public GroupeQuestionnaire updateGroupeQuestionnaire(Questionnaire questionnaire){
-		GroupeQuestionnaire groupeQuestionnaire = new GroupeQuestionnaire();
+		GroupeQuestionnaire updateGroupeQuestionnaire=null;
+		GroupeQuestionnaire groupeQuestionnaire = new GroupeQuestionnaire();  
 		groupeQuestionnaire.setGroupe_id(leGroupe.getId());
 		groupeQuestionnaire.setQuestionnaire_id(questionnaire.getId());
-		GroupeQuestionnaire insertGroupeQuestionnaire = Http.putGroupeQuestionnaires(groupeQuestionnaire);
-		if(insertGroupeQuestionnaire.equals(null)){
-			System.out.println("Erreur dans la mise à jour des groupes questionnaire");
+		updateGroupeQuestionnaire = Http.postGroupeQuestionnaires(groupeQuestionnaire);
+		
+		GroupeQuestionnaire[] gq=Http.getGroupesByQuestionnaire(groupeQuestionnaire.getQuestionnaire_id());
+		Integer count=0;
+		for (GroupeQuestionnaire groupeQuestionnaire2 : gq) {
+			if(groupeQuestionnaire2.getGroupe_id().equals(AppController.getSessionGroupe_Id().getId())){
+				groupeQuestionnaire.setId(groupeQuestionnaire2.getId());
+				count++;
+			}
 		}
-		return insertGroupeQuestionnaire;
+		if(count>1){
+			updateGroupeQuestionnaire = Http.delGroupeQuestionnare(groupeQuestionnaire);
+		}
+		return updateGroupeQuestionnaire;
 	}
 	
 	public Groupe createGroupe(){

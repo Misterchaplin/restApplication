@@ -163,6 +163,7 @@ public class Http{
 	public static GroupeQuestionnaire[] getGroupesByQuestionnaire(Integer id){
 		try {
 			query=http.get(baseUrl+"groupequestionnaires/groupebyquestionnaire/"+id);
+			System.out.println(query);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -283,7 +284,8 @@ public class Http{
 	 */
 	public static GroupeQuestionnaire putGroupeQuestionnaires(GroupeQuestionnaire groupequestionnaire){
 		try {
-			query = http.put(baseUrl+"groupequestionnaires/", groupequestionnaire);
+			query = http.put(baseUrl+"groupequestionnaires/"+groupequestionnaire.getId(), groupequestionnaire);
+			System.out.println(query);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -344,7 +346,8 @@ public class Http{
 	
 	public static Question putQuestion(Question question){
 		try {
-			query = http.put(baseUrl+"questions/", question);
+			System.out.println(question.getId());
+			query = http.put(baseUrl+"questions/"+question.getId(), question);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -416,6 +419,24 @@ public class Http{
 
 
 					
+	}
+	
+	
+	/**
+	 * Supprimer cim entre questionnaire et groupe
+	 * @param id
+	 * @return
+	 */
+	public static GroupeQuestionnaire delGroupeQuestionnare(GroupeQuestionnaire gq){
+		try {
+			query=http.delete(baseUrl+"groupequestionnaires/"+gq.getId());
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GroupeQuestionnaire data=gson.jsonToGroupeQuestionnaire(query);
+		return data;
 	}
 
 }

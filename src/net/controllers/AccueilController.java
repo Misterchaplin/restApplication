@@ -115,6 +115,7 @@ public class AccueilController implements SelectionListener {
 				    	qcmController.setUpdateQcmQuestionnaire(selectedQuestionnaire.getQuestionnaire_id());
 				    	qcmController.setUpdateQcmGroupe(selectedQuestionnaire.getGroupe_id());
 				    	AppController.setSession_Id(Http.getQuestionnaire(selectedQuestionnaire.getQuestionnaire_id()));
+				    	AppController.setSessionGroupe_Id(Http.getGroupe(selectedQuestionnaire.getGroupe_id()));
 				    	vAccueil.getBtnAjouterQuestion().setVisible(true);
 				    	vAccueil.getBtnAjouterQcm().setText("Modifier");
 				    	vAccueil.getBtnNouveauQuestionnaire().setVisible(true);
