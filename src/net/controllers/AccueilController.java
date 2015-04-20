@@ -124,6 +124,7 @@ public class AccueilController implements SelectionListener {
 				    	vAccueil.getTabGestion().setSelection(2);
 				    	GroupeController groupeController = new GroupeController(vAccueil);
 				    	groupeController.setUpdateGroupe(selectedQuestionnaire.getGroupe_id());
+				    	groupeController.setUpdateQcmQuestionnaire(selectedQuestionnaire.getQuestionnaire_id());
 				    	groupeController.init();
 				    	
 				    }

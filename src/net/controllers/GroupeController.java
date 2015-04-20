@@ -21,7 +21,17 @@ public class GroupeController implements SelectionListener {
 	private Integer updateGroupe = null;
 	private Groupe leGroupe=null;
 	private Questionnaire[] lesQuestionnaires = null;
+	private Questionnaire leQuestionnaire=null;
+	private Integer updateGroupeQuestionnaire = null;
 	
+	public Integer getUpdateQcmQuestionnaire() {
+		return updateGroupeQuestionnaire;
+	}
+
+	public void setUpdateQcmQuestionnaire(Integer updateQcmQuestionnaire) {
+		this.updateGroupeQuestionnaire = updateQcmQuestionnaire;
+	}
+
 	public Integer getUpdateGroupe() {
 		return updateGroupe;
 	}
@@ -36,11 +46,9 @@ public class GroupeController implements SelectionListener {
 
 	public void init() {
 		if(updateGroupe!=null){
-			System.out.println(updateGroupe);
-					
+	
 			initGroupeUpdate();
-			
-			
+					
 		}
 		vAccueil.getBtnAjouterGroupe().addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings("unused")
@@ -109,12 +117,31 @@ public class GroupeController implements SelectionListener {
 	
 	public void initGroupeUpdate(){
 		leGroupe = Http.getGroupe(getUpdateGroupe());
+		leQuestionnaire = Http.getQuestionnaire(getUpdateQcmQuestionnaire());
 		vAccueil.getTxtCode().setText(leGroupe.getCode());
 		vAccueil.getTxtLibelle().setText(leGroupe.getLibelle());
 		lesQuestionnaires = Http.getAllQuestionnaires();
 		vAccueil.getCbvQuestionnaireGroupe().setInput(lesQuestionnaires);
 		vAccueil.getBtnAjouterGroupe().setVisible(false);
 		vAccueil.getBtnModifierGroupe().setVisible(true);
+		
+		//lesQuestionnaires lesGroupes = Http.getAllGroupes();
+		// leQuestionnaire leGroupe=Http.getGroupe(getUpdateQcmGroupe());
+		Integer count=0;
+		vAccueil.getCbvQuestionnaireGroupe().setInput(lesQuestionnaires);
+		
+		for (Questionnaire questionnaire : lesQuestionnaires) {
+			
+			if(questionnaire.getId().equals(leQuestionnaire.getId())){
+				vAccueil.getCbQuestionnaireGroupe().select(count);
+			}
+			else{
+				count++;
+			}
+		}
+		
+		
+		
 		vAccueil.getBtnModifierGroupe().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
