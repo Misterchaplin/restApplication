@@ -259,6 +259,23 @@ public class Http{
 		return data;
 	}
 	
+	/**
+	 * Envoie instance de groupe questionnaire pour mise à jour
+	 * @param groupequestionnaire
+	 * @return
+	 */
+	public static GroupeQuestionnaire putGroupeQuestionnaires(GroupeQuestionnaire groupequestionnaire){
+		try {
+			query = http.put(baseUrl+"groupequestionnaires/", groupequestionnaire);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GroupeQuestionnaire data=gson.jsonToGroupeQuestionnaire(query);
+		
+		return data;
+	}
+	
 	public static GroupeUtilisateur postGroupeUtilisateurs(GroupeUtilisateur groupeutilisateur){
 		try {
 			query = http.post(baseUrl+"groupeutilisateurs/", groupeutilisateur);
@@ -283,9 +300,34 @@ public class Http{
 		return data;
 	}
 	
+	public static Questionnaire putQuestionnarie(Questionnaire questionnaire){
+		try {
+			query = http.put(baseUrl+"questionnaires/"+questionnaire.getId(), questionnaire);
+			System.out.println(query);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Questionnaire data=gson.jsonToQuestionnaire(query);
+		
+		return data;
+	}
+	
 	public static Question postQuestion(Question question){
 		try {
 			query = http.post(baseUrl+"questions/", question);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Question data=gson.jsonToQuestion(query);
+		
+		return data;
+	}
+	
+	public static Question putQuestion(Question question){
+		try {
+			query = http.put(baseUrl+"questions/", question);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -305,6 +347,19 @@ public class Http{
 		Reponse data=gson.jsonToReponse(query);
 		return data;
 	}
+	
+	
+	public static Reponse putReponse(Reponse reponse){
+		try {
+			query = http.put(baseUrl+"reponses/", reponse);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Reponse data=gson.jsonToReponse(query);
+		return data;
+	}
+	
 	/**
 	 * Supprimer cim entre questionnaire et groupe
 	 * @param id
