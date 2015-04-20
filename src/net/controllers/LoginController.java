@@ -73,7 +73,10 @@ public class LoginController implements SelectionListener {
 				if(messageQuestionnaire==0){
 					Utils.remplirComboQuestionnaire();
 					Utils.remplirComboGroupe();
+					Utils.remplirComboQuestionnaireStat();
+					Utils.remplirComboGroupeStat();
 				}
+				
 			}						
 		}
 						

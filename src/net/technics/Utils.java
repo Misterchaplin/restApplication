@@ -105,5 +105,41 @@ public class Utils {
 	    Groupe[] groupes = Utils.getGroupeToAUtilisateur();
 	    AccueilController.vAccueil.getCbvQcm().setInput(groupes);
 	}
+	
+	
+	/**
+	 * Ajoute les questionnaires dans l'onglet Statistiques
+	*/
+	public static void remplirComboQuestionnaireStat(){
+		
+		AccueilController.vAccueil.getCbvStatistiquesQuestionnaire().setLabelProvider(new LabelProvider() {
+			 @Override
+	            public String getText(Object element) {
+	            	Questionnaire p = (Questionnaire)element;
+	                return p.getLibelle();
+	            }
+	    });
+		
+	    Questionnaire[] questionnaires = Utils.getQuestionnaireToAUtilisateur();
+	    AccueilController.vAccueil.getCbvStatistiquesQuestionnaire().setInput(questionnaires);
+	}
+	
+	
+	/**
+	 * Ajoute les groupes dans l'onglet Statistiques
+	 */
+	public static void remplirComboGroupeStat(){
+		AccueilController.vAccueil.getCbvStatistiquesGroupe().setLabelProvider(new LabelProvider() {
+			 @Override
+	            public String getText(Object element) {
+	            	Groupe p = (Groupe)element;
+	                return p.getLibelle();
+	            }
+	    });
+		
+
+	    Groupe[] groupes = Utils.getGroupeToAUtilisateur();
+	    AccueilController.vAccueil.getCbvStatistiquesGroupe().setInput(groupes);
+	}
 		
 }

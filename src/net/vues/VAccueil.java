@@ -3,6 +3,7 @@ package net.vues;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -18,7 +19,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
-
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TabFolder;
@@ -60,6 +60,8 @@ public class VAccueil {
 	private TableViewerColumn lastNameCol;
 	private TabItem tbtmQcm;
 	private ComboViewer cbvQcm;
+	private ComboViewer cbvStatistiquesGroupe;
+	private ComboViewer cbvStatistiquesQuestionnaire;
 	private Combo cbQcm;
 	private Button btnCkGroupe3;
 	private Button btnCkGroupe2;
@@ -75,7 +77,36 @@ public class VAccueil {
 	private Button btnPrecedent;
 	private Button btnAjouterQuestion;
 	private Button btnModifierGroupe;
+	private TabItem tbtmStatistiques;
+	private Composite cpStatistiques;
+	private Label lblStatQuestionnaire;
+	private Combo cbStatistiquesQuestionnaire;
+	private Table table_1;
+	private Combo cbStatistiquesGroupe;
+	private Button btnStatValider;
 	
+	public Button getBtnStatValider() {
+		return btnStatValider;
+	}
+
+
+	public ComboViewer getCbvStatistiquesQuestionnaire() {
+		return cbvStatistiquesQuestionnaire;
+	}
+
+	
+	public ComboViewer getCbvStatistiquesGroupe() {
+		return cbvStatistiquesGroupe;
+	}
+	
+	public Combo getCbStatistiquesQuestionnaire() {
+		return cbStatistiquesQuestionnaire;
+	}
+
+	public Combo getCbStatistiquesGroupe() {
+		return cbStatistiquesGroupe;
+	}
+
 	public Button getBtnModifierGroupe() {
 		return btnModifierGroupe;
 	}
@@ -211,7 +242,7 @@ public class VAccueil {
 		grpInformation.setLayoutData(fd_grpInformation);
 		
 		lblInformation = new Label(grpInformation, SWT.NONE);
-		lblInformation.setBounds(10, 21, 490, 15);
+		lblInformation.setBounds(10, 10, 490, 15);
 		
 		tabGestion = new TabFolder(accueil, SWT.NONE);
 		fd_grpInformation.bottom = new FormAttachment(tabGestion, -1);
@@ -428,6 +459,66 @@ public class VAccueil {
 		btnModifierGroupe.setBounds(200, 194, 80, 21);
 		formToolkit.adapt(btnModifierGroupe, true, true);
 		btnModifierGroupe.setText("Modifier");
+		
+		tbtmStatistiques = new TabItem(tabGestion, SWT.NONE);
+		tbtmStatistiques.setText("Statistiques");
+		
+		cpStatistiques = new Composite(tabGestion, SWT.NONE);
+		tbtmStatistiques.setControl(cpStatistiques);
+
+		
+		Group grpStatistiques = new Group(cpStatistiques, SWT.NONE);
+		grpStatistiques.setText("Affichier les statisiques");
+		grpStatistiques.setBounds(10, 33, 471, 307);
+		
+		cbvStatistiquesGroupe = new ComboViewer(grpStatistiques, SWT.NONE | SWT.READ_ONLY);
+		cbvStatistiquesGroupe.setContentProvider(ArrayContentProvider.getInstance());
+		cbStatistiquesGroupe = cbvStatistiquesGroupe.getCombo();
+		cbStatistiquesGroupe.setBounds(10, 38, 91, 22);
+
+		
+		Label lblStatGroup = new Label(grpStatistiques, SWT.NONE);
+		lblStatGroup.setBounds(10, 23, 91, 14);
+
+		lblStatGroup.setText("Choisir Groupe:");
+		
+		lblStatQuestionnaire = new Label(grpStatistiques, SWT.NONE);
+		lblStatQuestionnaire.setBounds(117, 23, 101, 14);
+		lblStatQuestionnaire.setText("Questionnaire :");
+		
+		cbvStatistiquesQuestionnaire = new ComboViewer(grpStatistiques, SWT.NONE | SWT.READ_ONLY);
+		cbvStatistiquesQuestionnaire.setContentProvider(ArrayContentProvider.getInstance());
+		cbStatistiquesQuestionnaire = cbvStatistiquesQuestionnaire.getCombo();
+		cbStatistiquesQuestionnaire.setBounds(115, 38, 91, 22);
+		
+		
+		btnStatValider = new Button(grpStatistiques, SWT.NONE);
+		btnStatValider.setBounds(212, 38, 75, 22);
+		btnStatValider.setText("Valider");
+		
+		TableViewer tableViewer_1 = new TableViewer(grpStatistiques, SWT.BORDER | SWT.FULL_SELECTION);
+		table_1 = tableViewer_1.getTable();
+		table_1.setHeaderVisible(true);
+		table_1.setLinesVisible(true);
+		table_1.setBounds(10, 76, 437, 191);
+		
+		TableLayout tlayout2 = new TableLayout();
+	    tlayout2.addColumnData( new ColumnWeightData( 50, 250, true ));
+	    tlayout2.addColumnData( new ColumnWeightData( 50, 250, true ));
+	    tableViewer_1.getTable().setLayout( tlayout2 );
+	    tableViewer_1.setContentProvider( new ArrayContentProvider());
+	    
+	    TableColumn column2 = new TableColumn(tableViewer_1.getTable(), SWT.NONE);
+        column2.setText("Utilisateurs");
+        column2.setWidth(223);
+        TableViewerColumn firstNameCol2 = new TableViewerColumn(tableViewer_1, column2);
+        
+        column2 = new TableColumn(tableViewer_1.getTable(), SWT.NONE);
+        column2.setText("Pourcentage de bonnes réponses");
+        column2.setWidth(223);
+        TableViewerColumn lastNameCol2 = new TableViewerColumn(tableViewer_1, column2);
+		
+
 	}
 
 	public Button getBtnAjouterQuestion() {

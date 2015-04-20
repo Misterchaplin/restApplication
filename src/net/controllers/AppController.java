@@ -29,10 +29,12 @@ public class AppController {
 		AccueilController accueilController = new AccueilController(vAccueil);
 		GroupeController groupeController = new GroupeController(vAccueil);
 		QcmController qcmController  = new QcmController(vAccueil);
+		StatistiquesController statistiquesController = new StatistiquesController(vAccueil);
 		vAccueil.init();
 		accueilController.init();
 		groupeController.init();
 		qcmController.init();
+		statistiquesController.init();
 	}
 	
 }
