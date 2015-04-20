@@ -21,7 +21,7 @@ public class Http{
 	
 	
 	/**
-	 * Récupère le questionnaire suivant son id 
+	 * Rï¿½cupï¿½re le questionnaire suivant son id 
 	 * @param id
 	 * @return
 	 */
@@ -39,7 +39,7 @@ public class Http{
 	
 	
 	/**
-	 * Récupère le groupe suivant son id 
+	 * Rï¿½cupï¿½re le groupe suivant son id 
 	 * @param id
 	 * @return
 	 */
@@ -56,7 +56,7 @@ public class Http{
 	}
 	
 	/**
-	 * Récupère la question suivant l'id du questionnaire
+	 * Rï¿½cupï¿½re la question suivant l'id du questionnaire
 	 * @param id
 	 * @return
 	 */
@@ -122,7 +122,7 @@ public class Http{
 	}
 	
 	/**
-	 * Réponses d'une question
+	 * Rï¿½ponses d'une question
 	 * @return
 	 */
 	public static Reponse[] getReponsesByQuestion(Integer id){
@@ -175,7 +175,7 @@ public class Http{
 	
 	
 	/**
-	 * Recupérer cim avec id_questionnaire et id_groupe
+	 * Recupï¿½rer cim avec id_questionnaire et id_groupe
 	 * @param "id_questionnaire"_"idGroupe"
 	 * @return
 	 */
@@ -195,13 +195,30 @@ public class Http{
 	
 	
 	/**
-	 * Ensemble des groupes appartenant à l'utilisateur
+	 * Ensemble des groupes appartenant ï¿½ l'utilisateur
 	 * @param id
 	 * @return
 	 */
 	public static Utilisateur[] getUtilisateursToGroupe(Integer id){
 		try {
 			query=http.get(baseUrl+"groupes/utilisateur/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Utilisateur[] data= gson.jsonToAllUtilisateur(query);
+		
+		return data;
+	}
+	
+	/**
+	 * Ensemble des questionnaires appartenant ï¿½ l'utilisateur
+	 * @param id
+	 * @return
+	 */
+	public static Utilisateur[] getUtilisateursToQuestionnaire(Integer id){
+		try {
+			query=http.get(baseUrl+"questionnaires/utilisateur/"+id);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -260,7 +277,7 @@ public class Http{
 	}
 	
 	/**
-	 * Envoie instance de groupe questionnaire pour mise à jour
+	 * Envoie instance de groupe questionnaire pour mise ï¿½ jour
 	 * @param groupequestionnaire
 	 * @return
 	 */
@@ -369,9 +386,9 @@ public class Http{
 		try {
 
 			
-			// vérifie s'il y a plusieurs CIM
+			// vï¿½rifie s'il y a plusieurs CIM
 			query=http.get(baseUrl+"groupequestionnaires/VerifPlusieursGroupe/"+idGrpQuest);
-			// Si oui on supprime uniquement la sélectionné
+			// Si oui on supprime uniquement la sï¿½lectionnï¿½
 			if(query == "oui"){
 				query=http.delete(baseUrl+"groupequestionnaires/"+id);
 			}

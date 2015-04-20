@@ -84,7 +84,13 @@ public class VAccueil {
 	private Table table_1;
 	private Combo cbStatistiquesGroupe;
 	private Button btnStatValider;
+	private TableViewer tableViewer_1;
 	
+	public TableViewer getTableViewer_1() {
+		return tableViewer_1;
+	}
+
+
 	public Button getBtnStatValider() {
 		return btnStatValider;
 	}
@@ -496,7 +502,7 @@ public class VAccueil {
 		btnStatValider.setBounds(212, 38, 75, 22);
 		btnStatValider.setText("Valider");
 		
-		TableViewer tableViewer_1 = new TableViewer(grpStatistiques, SWT.BORDER | SWT.FULL_SELECTION);
+		tableViewer_1 = new TableViewer(grpStatistiques, SWT.BORDER | SWT.FULL_SELECTION);
 		table_1 = tableViewer_1.getTable();
 		table_1.setHeaderVisible(true);
 		table_1.setLinesVisible(true);
