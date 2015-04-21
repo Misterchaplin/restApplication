@@ -89,6 +89,9 @@ public class TestGson {
 		return gson.fromJson(jsonString, Reponse.class);
 	}
 	
+	public String jsonToString(String jsonString){
+		return gson.toJson(jsonString);
+	}
 	
 	
 	public static void main(String args[]){

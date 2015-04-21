@@ -163,7 +163,6 @@ public class Http{
 	public static GroupeQuestionnaire[] getGroupesByQuestionnaire(Integer id){
 		try {
 			query=http.get(baseUrl+"groupequestionnaires/groupebyquestionnaire/"+id);
-			System.out.println(query);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -285,7 +284,6 @@ public class Http{
 	public static GroupeQuestionnaire putGroupeQuestionnaires(GroupeQuestionnaire groupequestionnaire){
 		try {
 			query = http.put(baseUrl+"groupequestionnaires/"+groupequestionnaire.getId(), groupequestionnaire);
-			System.out.println(query);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -322,7 +320,6 @@ public class Http{
 	public static Questionnaire putQuestionnarie(Questionnaire questionnaire){
 		try {
 			query = http.put(baseUrl+"questionnaires/"+questionnaire.getId(), questionnaire);
-			System.out.println(query);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -370,7 +367,7 @@ public class Http{
 	
 	public static Reponse putReponse(Reponse reponse){
 		try {
-			query = http.put(baseUrl+"reponses/", reponse);
+			query = http.put(baseUrl+"reponses/"+reponse.getId(), reponse);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -398,12 +395,13 @@ public class Http{
 	 */
 	public static void deleteCIMGroupeQuestionnaire(Integer id, String idGrpQuest, Integer idQuestionnaire){
 		try {
-
-			
 			// v�rifie s'il y a plusieurs CIM
 			query=http.get(baseUrl+"groupequestionnaires/VerifPlusieursGroupe/"+idGrpQuest);
+			GroupeQuestionnaire[] querygq=gson.jsonToAllGroupeQuestionnaire(query);
+			
 			// Si oui on supprime uniquement la s�lectionn�
-			if(query == "oui"){
+			System.out.println(querygq.length);
+			if(querygq.length>1){
 				query=http.delete(baseUrl+"groupequestionnaires/"+id);
 			}
 			// Si il n'y en a qu'une on supprime cim + questionnaire

@@ -112,8 +112,8 @@ public class AccueilController implements SelectionListener {
 				    if (rc == SWT.YES){
 				    	vAccueil.getTabGestion().setSelection(1);
 				    	QcmController qcmController = new QcmController(vAccueil);
-				    	qcmController.setUpdateQcmQuestionnaire(selectedQuestionnaire.getQuestionnaire_id());
-				    	qcmController.setUpdateQcmGroupe(selectedQuestionnaire.getGroupe_id());
+				    	/*qcmController.setUpdateQcmQuestionnaire(selectedQuestionnaire.getQuestionnaire_id());
+				    	qcmController.setUpdateQcmGroupe(selectedQuestionnaire.getGroupe_id());*/
 				    	AppController.setSession_Id(Http.getQuestionnaire(selectedQuestionnaire.getQuestionnaire_id()));
 				    	AppController.setSessionGroupe_Id(Http.getGroupe(selectedQuestionnaire.getGroupe_id()));
 				    	vAccueil.getBtnAjouterQuestion().setVisible(true);
@@ -121,7 +121,7 @@ public class AccueilController implements SelectionListener {
 				    	vAccueil.getBtnNouveauQuestionnaire().setVisible(true);
 						vAccueil.getLblMerciDe().setVisible(true);
 						vAccueil.getLblMerciDe().setText("Pour ajouter un nouveau questionnaire vous devez d'abord appuyer sur terminer.");
-				    	qcmController.init();
+						qcmController.initUpdate();
 				    }else{
 				    	vAccueil.getTabGestion().setSelection(2);
 				    	GroupeController groupeController = new GroupeController(vAccueil);
