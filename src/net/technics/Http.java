@@ -346,7 +346,6 @@ public class Http{
 	
 	public static Question putQuestion(Question question){
 		try {
-			System.out.println(question.getId());
 			query = http.put(baseUrl+"questions/"+question.getId(), question);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

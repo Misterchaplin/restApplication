@@ -100,6 +100,7 @@ public class QcmController implements SelectionListener {
 				if(page<maxPage){
 					page++;
 					pageIndex++;
+					System.out.println("lindex "+pageIndex);
 					initQuestionUpdate(pageIndex);
 				}
 			}
@@ -502,12 +503,19 @@ public class QcmController implements SelectionListener {
 	 * @return L'id de l'élément modifié
 	 */
 	public Question updateQuestion(){
-		System.out.println(page);
-		System.out.println(pageIndex);
+		page=Integer.valueOf(vAccueil.getLblCurrentQuestion().getText());
+		//L'index commencant à 0 et non à 1 on décremante
+		page--;
 		//Récupérer la question à mettre à jour
-		
-		System.out.println("id "+ laQuestion.getId());
-		System.out.println("lib "+ laQuestion.getLibelle());
+		lesQuestions=Http.getQuestionByQuestionnaire(leQuestionnaire.getId());
+		Integer nbRound=0;
+		for (Question aQuestion : lesQuestions) {
+			if(page==nbRound){
+				laQuestion.setId(aQuestion.getId());
+			}
+			nbRound++;
+		}
+		System.out.println(laQuestion.getId()+" "+laQuestion.getLibelle());
 		Question UpdateQuestion = Http.putQuestion(laQuestion);
 		return UpdateQuestion;
 	}
