@@ -57,7 +57,7 @@ public class Http{
 	}
 	
 	/**
-	 * Récupère les quesitonnaire suivant l'id du groupe
+	 * Rï¿½cupï¿½re les quesitonnaire suivant l'id du groupe
 	 * @param id
 	 * @return
 	 */
@@ -209,6 +209,18 @@ public class Http{
 		return data;
 	}
 	
+	public static GroupeQuestionnaire getOneCIMGrpQst(String id){
+		try {
+			query=http.get(baseUrl+"groupequestionnaires/GrpQst/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GroupeQuestionnaire data= gson.jsonToGroupeQuestionnaire(query);
+		
+		return data;
+	}
+	
 	
 	
 	
@@ -261,7 +273,7 @@ public class Http{
 	/**
 	 * Retourne le score de l'utilisateur pour un questionnaire
 	 * @param param contient l'id utilisateur et questionnaire
-	 * @return Instance de la réalisation
+	 * @return Instance de la rï¿½alisation
 	 */
 	public static Realisation[] getScore(String param){
 		try {
@@ -420,6 +432,17 @@ public class Http{
 			e.printStackTrace();
 		}
 		Groupe data=gson.jsonToGroupe(query);
+		return data;
+	}
+	
+	public static GroupeQuestionnaire putGroupeQuestionnaire(GroupeQuestionnaire groupe){
+		try {
+			query = http.put(baseUrl+"groupequestionnaires/"+groupe.getId(), groupe);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GroupeQuestionnaire data=gson.jsonToGroupeQuestionnaire(query);
 		return data;
 	}
 	

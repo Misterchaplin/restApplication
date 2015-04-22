@@ -146,12 +146,39 @@ public class GroupeController implements SelectionListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				vAccueil.getLblInformation().setText("Groupe modifié avec succés");
+				
 				Groupe group = Http.getGroupe(getUpdateGroupe());
-				System.out.println(group.getId());
-				group.setLibelle(group.getLibelle()+" modifié");
-				System.out.println(group.getLibelle());
-				System.out.println(Http.putGroupe(group));
+				String libelle = vAccueil.getTxtLibelle().getText();
+				String code = vAccueil.getTxtCode().getText();
+				
+				//System.out.println(group.getId());
+				group.setLibelle(libelle);
+				group.setCode(code);
+				IStructuredSelection selection = (IStructuredSelection) vAccueil.getCbvQuestionnaireGroupe().getSelection();
+		        Questionnaire element = (Questionnaire)selection.getFirstElement();
+		        String idGrpQuest = leQuestionnaire.getId()+ "_" +group.getId();
+		        
+		        GroupeQuestionnaire[] test = Http.getCIMGrpQst(idGrpQuest);
+		        
+		        for (GroupeQuestionnaire gq : test) {
+					System.out.println(gq);
+					gq.setQuestionnaire_id(element.getId());
+					System.out.println(gq);
+					// c'est ici qu'il y a une erreur :/
+					System.out.println(Http.putGroupeQuestionnaire(gq));
+					
+				}
+		        
+		       // System.out.println(test);
+		       // System.out.println(element.getId());
+		        
+		        
+		        
+		       // a retirer de commentaire pour metre à jour libelle et code
+			//System.out.println(Http.putGroupe(group));
+		     
+				
+				vAccueil.getLblInformation().setText("Groupe modifié avec succés");
 			}
 		});
 		

@@ -107,25 +107,25 @@ public class TestHttp {
 	    return result;
 	}
 	
-	public static void main(String args[]){
+	/*public static void main(String args[]){
 		TestHttp test=new TestHttp();
 		String baseUrl="http://localhost/rest-qcm/";
 		
 		String reponse;
 		try {
-			/*Utilisateur user = new Utilisateur();
+			Utilisateur user = new Utilisateur();
 			user.setLogin("admin@admin.fr");
 			user.setPassword("0000");
-			System.out.println(test.postClassic(baseUrl+"utilisateurs/connect", user));*/
-			/*reponse=test.get(baseUrl+"domaines");
-			System.out.println(reponse);*/
+			System.out.println(test.postClassic(baseUrl+"utilisateurs/connect", user));
+			reponse=test.get(baseUrl+"domaines");
+			System.out.println(reponse);
 			
-			/*Domaine domaine=new Domaine();
+			Domaine domaine=new Domaine();
 			domaine.setLibelle("Informatique");
 			System.out.println(test.post(baseUrl+"domaines", domaine));
 			
 			ArrayList<Domaine> domaines = test.gson.fromJson(reponse, new TypeToken<List<Domaine>>(){}.getType());
-			System.out.println(domaines);*/
+			System.out.println(domaines);
 			
 			Groupe dom=test.gson.fromJson(test.get(baseUrl+"groupes/44"), Groupe.class);
 			System.out.println("Dom "+dom.getId()+" "+dom.getLibelle()+" "+dom.getCode());
@@ -134,13 +134,13 @@ public class TestHttp {
 			System.out.println("Dom "+dom.getId()+" "+dom.getLibelle()+" "+dom.getCode());
 			System.out.println(test.put(baseUrl+"groupes/"+dom.getId(), dom));
 			
-			/*domaines = test.gson.fromJson(reponse, new TypeToken<List<Domaine>>(){}.getType());
+			domaines = test.gson.fromJson(reponse, new TypeToken<List<Domaine>>(){}.getType());
 			System.out.println(domaines);
 			
-			test.delete(baseUrl+"domaines/3");*/
+			test.delete(baseUrl+"domaines/3");
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }
