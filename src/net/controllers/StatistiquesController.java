@@ -4,7 +4,9 @@ import net.http.TestHttp;
 import net.models.Groupe;
 import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
+import net.models.Question;
 import net.models.Questionnaire;
+import net.models.Realisation;
 import net.models.Utilisateur;
 import net.technics.Http;
 import net.technics.Utils;
@@ -36,12 +38,8 @@ public class StatistiquesController implements SelectionListener {
 			public void widgetSelected(SelectionEvent e) {
 				IStructuredSelection selection2 = (IStructuredSelection) vAccueil.getCbvStatistiquesGroupe().getSelection();
 	         	Groupe groupe = (Groupe)selection2.getFirstElement();
-	         	//try {
-					Utils.remplirComboQuestionnaireStat(groupe);
-				//} catch (NullPointerException e2) {
-				//	vAccueil.getLblInformation().setText("Pas de questionnaire pour ce groupe");
-				//}
-	         
+	         	Utils.remplirComboQuestionnaireStat(groupe);
+				
 			}
 		});
 		
@@ -50,14 +48,22 @@ public class StatistiquesController implements SelectionListener {
 			public void widgetSelected(SelectionEvent e) {
 				IStructuredSelection selection = (IStructuredSelection) vAccueil.getCbvStatistiquesQuestionnaire().getSelection();
 	            Questionnaire questionnaire = (Questionnaire)selection.getFirstElement();
-	            
-	            IStructuredSelection selection2 = (IStructuredSelection) vAccueil.getCbvStatistiquesGroupe().getSelection();
-	            Groupe groupe = (Groupe)selection2.getFirstElement();
-	            
+	            Question[] laQuestion =Http.getQuestionByQuestionnaire(questionnaire.getId());
+	            Integer nbQuestion = laQuestion.length;
+	            System.out.println(nbQuestion);
 	            // Tous les utilisateurs du groupe
-				Utilisateur[] lesUsers = Http.getUtilisateursToGroupe(groupe.getId());
+				Utilisateur[] lesUsers = Http.getUtilisateursToQuestionnaire(questionnaire.getId());
 				for (Utilisateur utilisateur : lesUsers) {
 					System.out.println(utilisateur.getLogin());
+					String param=questionnaire.getId()+"_"+utilisateur.getId();
+					System.out.println("param : "+param);
+					Realisation[] score=Http.getScore(param);
+					for (Realisation unScore : score) {
+						System.out.println("Le score : "+ unScore.getScore());
+						Float pourcentageReponse = (float) (100*unScore.getScore()/nbQuestion);
+						System.out.println("pourcentage : "+pourcentageReponse);
+					}
+					
 				}
 				
 				

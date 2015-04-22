@@ -10,6 +10,7 @@ import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
 import net.models.Question;
 import net.models.Questionnaire;
+import net.models.Realisation;
 import net.models.Reponse;
 import net.models.Utilisateur;
 
@@ -253,6 +254,23 @@ public class Http{
 			e.printStackTrace();
 		}
 		GroupeUtilisateur[] data= gson.jsonToAllGroupeUtilisateur(query);
+		
+		return data;
+	}
+	
+	/**
+	 * Retourne le score de l'utilisateur pour un questionnaire
+	 * @param param contient l'id utilisateur et questionnaire
+	 * @return Instance de la réalisation
+	 */
+	public static Realisation[] getScore(String param){
+		try {
+			query=http.get(baseUrl+"realisations/score/"+param);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Realisation[] data= gson.jsonToAllRealisation(query);
 		
 		return data;
 	}

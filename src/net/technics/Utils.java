@@ -1,19 +1,11 @@
 package net.technics;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.swing.DefaultListModel;
-
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.MessageBox;
-
 import net.controllers.AccueilController;
 import net.controllers.AppController;
 import net.controllers.LoginController;
-import net.controllers.QcmController;
 import net.controllers.StatistiquesController;
 import net.models.Groupe;
 import net.models.Questionnaire;
@@ -46,6 +38,11 @@ public class Utils {
 		return tabQuestionnaie;
 	}
 	
+	public static Utilisateur[] getUtilisateurToAQuestionnaire(Questionnaire quest){
+		Utilisateur[] lesUsers = Http.getUtilisateursToQuestionnaire(quest.getId());
+		 
+		return lesUsers;
+	}
 	
 	public static Questionnaire[] getQuestionnaireToGroupe(Groupe groupe){
 		Questionnaire[] lesQuestionnaires = Http.getQuestionnaireToGroupe(groupe.getId());

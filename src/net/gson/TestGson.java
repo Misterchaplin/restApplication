@@ -6,6 +6,7 @@ import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
 import net.models.Question;
 import net.models.Questionnaire;
+import net.models.Realisation;
 import net.models.Reponse;
 import net.models.Utilisateur;
 
@@ -87,6 +88,14 @@ public class TestGson {
 	
 	public Reponse jsonToReponse(String jsonString){
 		return gson.fromJson(jsonString, Reponse.class);
+	}
+	
+	public Realisation jsonToRealisation(String jsonString){
+		return gson.fromJson(jsonString, Realisation.class);
+	}
+	
+	public Realisation[] jsonToAllRealisation(String jsonString){
+		return gson.fromJson(jsonString, Realisation[].class);
 	}
 	
 	public String jsonToString(String jsonString){
