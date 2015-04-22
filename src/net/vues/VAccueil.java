@@ -81,13 +81,30 @@ public class VAccueil {
 	private Composite cpStatistiques;
 	private Label lblStatQuestionnaire;
 	private Combo cbStatistiquesQuestionnaire;
-	private Table table_1;
+	private Table tableStat;
 	private Combo cbStatistiquesGroupe;
 	private Button btnStatValider;
-	private TableViewer tableViewer_1;
+	private TableViewer tableViewerStat;
+	private TableColumn columnStat;
+	private TableViewerColumn userStat;
+	public TableViewerColumn getUserStat() {
+		return userStat;
+	}
+
+
+	public TableViewerColumn getQuestStat() {
+		return questStat;
+	}
+
+	private TableViewerColumn questStat;
 	
+	public TableColumn getColumnStat() {
+		return columnStat;
+	}
+
+
 	public TableViewer getTableViewer_1() {
-		return tableViewer_1;
+		return tableViewerStat;
 	}
 
 
@@ -503,30 +520,35 @@ public class VAccueil {
 		btnStatValider.setBounds(212, 38, 75, 22);
 		btnStatValider.setText("Valider");
 		
-		tableViewer_1 = new TableViewer(grpStatistiques, SWT.BORDER | SWT.FULL_SELECTION);
-		table_1 = tableViewer_1.getTable();
-		table_1.setHeaderVisible(true);
-		table_1.setLinesVisible(true);
-		table_1.setBounds(10, 76, 437, 191);
+		tableViewerStat = new TableViewer(grpStatistiques, SWT.BORDER | SWT.FULL_SELECTION);
+		tableStat = tableViewerStat.getTable();
+		tableStat.setHeaderVisible(true);
+		tableStat.setLinesVisible(true);
+		tableStat.setBounds(10, 76, 437, 191);
 		
 		TableLayout tlayout2 = new TableLayout();
 	    tlayout2.addColumnData( new ColumnWeightData( 50, 250, true ));
 	    tlayout2.addColumnData( new ColumnWeightData( 50, 250, true ));
-	    tableViewer_1.getTable().setLayout( tlayout2 );
-	    tableViewer_1.setContentProvider( new ArrayContentProvider());
-	    
-	    TableColumn column2 = new TableColumn(tableViewer_1.getTable(), SWT.NONE);
-        column2.setText("Utilisateurs");
-        column2.setWidth(223);
-        TableViewerColumn firstNameCol2 = new TableViewerColumn(tableViewer_1, column2);
+	    tableViewerStat.getTable().setLayout( tlayout2 );
+	    tableViewerStat.setContentProvider( new ArrayContentProvider());
+	 
+	    columnStat = new TableColumn(tableViewerStat.getTable(), SWT.NONE);
+        columnStat.setText("Utilisateurs");
+        columnStat.setWidth(217);
+        userStat = new TableViewerColumn(tableViewerStat, columnStat);
         
-        column2 = new TableColumn(tableViewer_1.getTable(), SWT.NONE);
-        column2.setText("Pourcentage de bonnes rÃ©ponses");
-        column2.setWidth(223);
-        TableViewerColumn lastNameCol2 = new TableViewerColumn(tableViewer_1, column2);
+        columnStat = new TableColumn(tableViewerStat.getTable(), SWT.NONE);
+        columnStat.setText("Pourcentage de bonnes réponses");
+        columnStat.setWidth(216);
+        questStat = new TableViewerColumn(tableViewerStat, columnStat);
 		
 
 	}
+
+	public TableViewer getTableViewerStat() {
+		return tableViewerStat;
+	}
+
 
 	public Button getBtnAjouterQuestion() {
 		return btnAjouterQuestion;

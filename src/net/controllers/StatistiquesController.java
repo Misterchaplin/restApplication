@@ -1,6 +1,11 @@
 package net.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.http.TestHttp;
+import net.models.CollectionQuestionnaireGroupe;
+import net.models.CollectionUtilisateurScore;
 import net.models.Groupe;
 import net.models.GroupeQuestionnaire;
 import net.models.GroupeUtilisateur;
@@ -13,6 +18,7 @@ import net.technics.Utils;
 import net.vues.VAccueil;
 
 import org.apache.http.client.HttpResponseException;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -43,32 +49,61 @@ public class StatistiquesController implements SelectionListener {
 			}
 		});
 		
+		
+		
 		vAccueil.getBtnStatValider().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				StatistiquesController.vAccueil.getUserStat().setLabelProvider(new ColumnLabelProvider(){
+
+		            @Override
+		            public String getText(Object element) {
+		            	CollectionUtilisateurScore p = (CollectionUtilisateurScore)element;
+
+		                return p.getNom()+" "+p.getPrenom();
+		            }
+
+		        });
+				StatistiquesController.vAccueil.getQuestStat().setLabelProvider(new ColumnLabelProvider(){
+
+		            @Override
+		            public String getText(Object element) {
+		            	CollectionUtilisateurScore p = (CollectionUtilisateurScore)element;
+
+		                return String.valueOf(p.getScore()+"%");
+		            }
+
+		        });
 				IStructuredSelection selection = (IStructuredSelection) vAccueil.getCbvStatistiquesQuestionnaire().getSelection();
 	            Questionnaire questionnaire = (Questionnaire)selection.getFirstElement();
 	            Question[] laQuestion =Http.getQuestionByQuestionnaire(questionnaire.getId());
 	            Integer nbQuestion = laQuestion.length;
 	            System.out.println(nbQuestion);
 	            // Tous les utilisateurs du groupe
-				Utilisateur[] lesUsers = Http.getUtilisateursToQuestionnaire(questionnaire.getId());
-				for (Utilisateur utilisateur : lesUsers) {
-					System.out.println(utilisateur.getLogin());
-					String param=questionnaire.getId()+"_"+utilisateur.getId();
-					System.out.println("param : "+param);
-					Realisation[] score=Http.getScore(param);
-					for (Realisation unScore : score) {
-						System.out.println("Le score : "+ unScore.getScore());
-						Float pourcentageReponse = (float) (100*unScore.getScore()/nbQuestion);
-						System.out.println("pourcentage : "+pourcentageReponse);
+	            try {
+					Utilisateur[] lesUsers = Http.getUtilisateursToQuestionnaire(questionnaire.getId());
+					
+					List<CollectionUtilisateurScore> collUserScore = new ArrayList<CollectionUtilisateurScore>();
+					for (Utilisateur utilisateur : lesUsers) {
+						CollectionUtilisateurScore cus=new CollectionUtilisateurScore();
+						cus.setLogin(utilisateur.getLogin());
+						cus.setNom(utilisateur.getNom());
+						cus.setPrenom(utilisateur.getPrenom());
+						String param=questionnaire.getId()+"_"+utilisateur.getId();
+						Realisation[] score=Http.getScore(param);
+						
+						for (Realisation unScore : score) {
+							Integer pourcentageReponse = (int) (100*unScore.getScore()/nbQuestion);
+							cus.setScore(pourcentageReponse);
+							cus.setDate(unScore.getDate());
+							collUserScore.add(cus);
+						}	
 					}
 					
+					 StatistiquesController.vAccueil.getTableViewerStat().setInput(collUserScore);
+	            } catch (NullPointerException e2) {
+					vAccueil.getLblInformation().setText("Pas encore de statistique pour cet utilisateur");
 				}
-				
-				
-				//System.out.println(lesUsers);
-		        //AccueilController.vAccueil.getTableViewer_1().setInput(lesUsers);
 			}
 		});
 	}
