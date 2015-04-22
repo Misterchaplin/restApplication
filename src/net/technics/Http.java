@@ -56,6 +56,23 @@ public class Http{
 	}
 	
 	/**
+	 * Récupère les quesitonnaire suivant l'id du groupe
+	 * @param id
+	 * @return
+	 */
+	public static Questionnaire[] getQuestionnaireToGroupe(Integer id){
+		try {
+			query=http.get(baseUrl+"groupes/questionnaire/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Questionnaire[] data= gson.jsonToAllQuestionnaire(query);
+		
+		return data;
+	}
+	
+	/**
 	 * Rï¿½cupï¿½re la question suivant l'id du questionnaire
 	 * @param id
 	 * @return
@@ -73,7 +90,7 @@ public class Http{
 	}
 	
 	/**
-	 * Ensemble des questionnaires
+	 * Ensemble des utilisateurs
 	 * @return
 	 */
 	public static Utilisateur[] getAllUtilisateurs(){
@@ -156,7 +173,7 @@ public class Http{
 	
 	
 	/**
-	 * Ensemble des Groupes du questionnaire
+	 * Ensemble des GroupeQuestionnaire du questionnaire
 	 * @param id
 	 * @return
 	 */
@@ -413,9 +430,7 @@ public class Http{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
-					
+			
 	}
 	
 	

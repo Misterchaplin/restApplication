@@ -480,6 +480,7 @@ public class VAccueil {
 		cbvStatistiquesGroupe = new ComboViewer(grpStatistiques, SWT.NONE | SWT.READ_ONLY);
 		cbvStatistiquesGroupe.setContentProvider(ArrayContentProvider.getInstance());
 		cbStatistiquesGroupe = cbvStatistiquesGroupe.getCombo();
+		
 		cbStatistiquesGroupe.setBounds(10, 38, 91, 22);
 
 		

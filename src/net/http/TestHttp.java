@@ -21,6 +21,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
 import net.models.Domaine;
+import net.models.Groupe;
 import net.models.Utilisateur;
 
 import com.google.gson.Gson;
@@ -106,7 +107,7 @@ public class TestHttp {
 	    return result;
 	}
 	
-	/*public static void main(String args[]){
+	public static void main(String args[]){
 		TestHttp test=new TestHttp();
 		String baseUrl="http://localhost/rest-qcm/";
 		
@@ -124,19 +125,22 @@ public class TestHttp {
 			System.out.println(test.post(baseUrl+"domaines", domaine));
 			
 			ArrayList<Domaine> domaines = test.gson.fromJson(reponse, new TypeToken<List<Domaine>>(){}.getType());
+			System.out.println(domaines);*/
+			
+			Groupe dom=test.gson.fromJson(test.get(baseUrl+"groupes/44"), Groupe.class);
+			System.out.println("Dom "+dom.getId()+" "+dom.getLibelle()+" "+dom.getCode());
+			dom.setLibelle(dom.getLibelle()+"modifie");
+			dom.setCode(dom.getCode()+"modifie");
+			System.out.println("Dom "+dom.getId()+" "+dom.getLibelle()+" "+dom.getCode());
+			System.out.println(test.put(baseUrl+"groupes/"+dom.getId(), dom));
+			
+			/*domaines = test.gson.fromJson(reponse, new TypeToken<List<Domaine>>(){}.getType());
 			System.out.println(domaines);
 			
-			Domaine dom=test.gson.fromJson(test.get(baseUrl+"domaines/2"), Domaine.class);
-			dom.setLibelle(dom.getLibelle()+" modifié");
-			System.out.println(test.put(baseUrl+"domaines/"+dom.getId(), dom));
-			
-			domaines = test.gson.fromJson(reponse, new TypeToken<List<Domaine>>(){}.getType());
-			System.out.println(domaines);
-			
-			test.delete(baseUrl+"domaines/3");
+			test.delete(baseUrl+"domaines/3");*/
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 }

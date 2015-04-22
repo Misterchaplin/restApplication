@@ -10,6 +10,7 @@ import net.technics.Http;
 import net.technics.Utils;
 import net.vues.VAccueil;
 
+import org.apache.http.client.HttpResponseException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -28,6 +29,22 @@ public class StatistiquesController implements SelectionListener {
 	
 	
 	public void init(){
+		
+		
+		vAccueil.getCbStatistiquesGroupe().addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				IStructuredSelection selection2 = (IStructuredSelection) vAccueil.getCbvStatistiquesGroupe().getSelection();
+	         	Groupe groupe = (Groupe)selection2.getFirstElement();
+	         	//try {
+					Utils.remplirComboQuestionnaireStat(groupe);
+				//} catch (NullPointerException e2) {
+				//	vAccueil.getLblInformation().setText("Pas de questionnaire pour ce groupe");
+				//}
+	         
+			}
+		});
+		
 		vAccueil.getBtnStatValider().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

@@ -1,7 +1,10 @@
 package net.technics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.DefaultListModel;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
@@ -10,6 +13,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import net.controllers.AccueilController;
 import net.controllers.AppController;
 import net.controllers.LoginController;
+import net.controllers.QcmController;
+import net.controllers.StatistiquesController;
 import net.models.Groupe;
 import net.models.Questionnaire;
 import net.models.Utilisateur;
@@ -39,6 +44,53 @@ public class Utils {
 		 
 		Questionnaire[] tabQuestionnaie = myQestionnaires.toArray(new Questionnaire[myQestionnaires.size()]);
 		return tabQuestionnaie;
+	}
+	
+	
+	public static Questionnaire[] getQuestionnaireToGroupe(Groupe groupe){
+		Questionnaire[] lesQuestionnaires = Http.getQuestionnaireToGroupe(groupe.getId());
+		 
+		return lesQuestionnaires;
+	}
+	
+	public static Groupe[] getGroupeContainsQuestionnaireToAUtilisateur(){
+		List<Groupe> myGroupes = new ArrayList<Groupe>();
+		List<Groupe> myEndGroupes = new ArrayList<Groupe>();
+		Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
+		 
+		 if(lesQuestionnaires!=null && lesQuestionnaires.length>0){
+			 for(Questionnaire unQuestionnaire:lesQuestionnaires){
+		        Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());     	 
+		        for (Groupe unGroupe : lesGroupes) {	
+		        	Utilisateur[] lesUsers = Http.getUtilisateursToGroupe(unGroupe.getId());
+		        	for (Utilisateur aUtilisateur : lesUsers) {
+			        	if(aUtilisateur.getId().equals(AppController.getActiveUser().getWho())){
+			        		if(!in_array(myGroupes, unGroupe.getLibelle())){
+			        			myGroupes.add(unGroupe);
+			        		}
+			        	}
+					}
+		        }
+			 }
+		}
+		
+		Groupe[] tabGroupe = myGroupes.toArray(new Groupe[myGroupes.size()]);
+		return tabGroupe;
+	}
+	
+	/**
+	 * Retourne si needle est contenu dans la list haytack
+	 * @param haystack
+	 * @param needle
+	 * @return true si est présente
+	 */
+	public static boolean in_array(List<Groupe> haystack, String needle) {
+	    for(int i=0;i<haystack.size();i++) {
+	        if(haystack.get(i).toString().equals(needle)) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 	
 	
@@ -108,9 +160,9 @@ public class Utils {
 	
 	
 	/**
-	 * Ajoute les questionnaires dans l'onglet Statistiques
+	 * Ajoute les questionnaires dans l'onglet Statistiques en référence au groupe choisi
 	*/
-	public static void remplirComboQuestionnaireStat(){
+	public static void remplirComboQuestionnaireStat(Groupe groupe){
 		
 		AccueilController.vAccueil.getCbvStatistiquesQuestionnaire().setLabelProvider(new LabelProvider() {
 			 @Override
@@ -120,8 +172,12 @@ public class Utils {
 	            }
 	    });
 		
-	    Questionnaire[] questionnaires = Utils.getQuestionnaireToAUtilisateur();
-	    AccueilController.vAccueil.getCbvStatistiquesQuestionnaire().setInput(questionnaires);
+		Questionnaire[] questionnaires = Utils.getQuestionnaireToGroupe(groupe);
+		try {
+			AccueilController.vAccueil.getCbvStatistiquesQuestionnaire().setInput(questionnaires);
+		} catch (NullPointerException e) {
+			StatistiquesController.vAccueil.getLblInformation().setText("Pas de questionnaire pour ce groupe");
+		}
 	}
 	
 	
@@ -138,7 +194,7 @@ public class Utils {
 	    });
 		
 
-	    Groupe[] groupes = Utils.getGroupeToAUtilisateur();
+	    Groupe[] groupes = Utils.getGroupeContainsQuestionnaireToAUtilisateur();
 	    AccueilController.vAccueil.getCbvStatistiquesGroupe().setInput(groupes);
 	}
 		
