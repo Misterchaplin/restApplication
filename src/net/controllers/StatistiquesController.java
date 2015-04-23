@@ -45,7 +45,7 @@ public class StatistiquesController implements SelectionListener {
 				IStructuredSelection selection2 = (IStructuredSelection) vAccueil.getCbvStatistiquesGroupe().getSelection();
 	         	Groupe groupe = (Groupe)selection2.getFirstElement();
 	         	Utils.remplirComboQuestionnaireStat(groupe);
-				
+				System.out.println(groupe);
 			}
 		});
 		
@@ -75,10 +75,9 @@ public class StatistiquesController implements SelectionListener {
 
 		        });
 				IStructuredSelection selection = (IStructuredSelection) vAccueil.getCbvStatistiquesQuestionnaire().getSelection();
-	            Questionnaire questionnaire = (Questionnaire)selection.getFirstElement();
+				Questionnaire questionnaire = (Questionnaire)selection.getFirstElement();
 	            Question[] laQuestion =Http.getQuestionByQuestionnaire(questionnaire.getId());
 	            Integer nbQuestion = laQuestion.length;
-	            System.out.println(nbQuestion);
 	            // Tous les utilisateurs du groupe
 	            try {
 					Utilisateur[] lesUsers = Http.getUtilisateursToQuestionnaire(questionnaire.getId());
@@ -102,7 +101,7 @@ public class StatistiquesController implements SelectionListener {
 					
 					 StatistiquesController.vAccueil.getTableViewerStat().setInput(collUserScore);
 	            } catch (NullPointerException e2) {
-					vAccueil.getLblInformation().setText("Pas encore de statistique pour cet utilisateur");
+					vAccueil.getLblInformation().setText("Pas encore de statistique pour ce questionnaire");
 				}
 			}
 		});

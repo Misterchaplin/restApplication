@@ -435,14 +435,14 @@ public class Http{
 		return data;
 	}
 	
-	public static GroupeQuestionnaire putGroupeQuestionnaire(GroupeQuestionnaire groupe){
+	public static GroupeQuestionnaire[] putGroupeQuestionnaire(GroupeQuestionnaire groupe){
 		try {
 			query = http.put(baseUrl+"groupequestionnaires/"+groupe.getId(), groupe);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GroupeQuestionnaire data=gson.jsonToGroupeQuestionnaire(query);
+		GroupeQuestionnaire[] data=gson.jsonToAllGroupeQuestionnaire(query);
 		return data;
 	}
 	

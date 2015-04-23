@@ -165,8 +165,10 @@ public class GroupeController implements SelectionListener {
 					gq.setQuestionnaire_id(element.getId());
 					System.out.println(gq);
 					// c'est ici qu'il y a une erreur :/
-					System.out.println(Http.putGroupeQuestionnaire(gq));
-					
+					GroupeQuestionnaire[] data = Http.putGroupeQuestionnaire(gq);
+					for (GroupeQuestionnaire groupeQuestionnaire : data) {
+						System.out.println(groupeQuestionnaire);
+					}
 				}
 		        
 		       // System.out.println(test);
