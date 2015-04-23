@@ -122,7 +122,8 @@ public class AccueilController implements SelectionListener {
 						vAccueil.getLblMerciDe().setVisible(true);
 						vAccueil.getLblMerciDe().setText("Pour ajouter un nouveau questionnaire vous devez d'abord appuyer sur terminer.");
 						qcmController.initUpdate();
-				    }else{
+				    }
+				    if (rc == SWT.NO){
 				    	vAccueil.getTabGestion().setSelection(2);
 				    	GroupeController groupeController = new GroupeController(vAccueil);
 				    	groupeController.setUpdateGroupe(selectedQuestionnaire.getGroupe_id());

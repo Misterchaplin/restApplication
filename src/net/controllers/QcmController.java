@@ -65,8 +65,6 @@ public class QcmController implements SelectionListener {
 	}
 
 	public void init() {
-		
-		
 		vAccueil.getBtnPrecedent().addSelectionListener(new SelectionListener() {
 			
 			@Override
@@ -92,7 +90,6 @@ public class QcmController implements SelectionListener {
 				if(page<maxPage){
 					page++;
 					pageIndex++;
-				//	System.out.println("lindex "+pageIndex);
 					initQuestionUpdate(pageIndex);
 				}
 			}
@@ -126,6 +123,7 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnNouveauQuestionnaire().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				
 				//String libelleQuest = vAccueil.getTxtQcm().getText();
 				vAccueil.getBtnAjouterQuestion().setVisible(false);
 				vAccueil.getLblMerciDe().setVisible(false);
@@ -144,9 +142,9 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnAjouterQuestion().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(updateQcmQuestionnaire!=null){
+				if(AppController.getSession_Id()!=null){
 					vAccueil.getBtnAjouterQcm().setText("Ajouter");
-					addQuestionToUpdate();
+					addQuestionToUpdate(AppController.getSession_Id().getId());
 				}	
 			}
 		});
@@ -159,7 +157,7 @@ public class QcmController implements SelectionListener {
 			initGroupeUpdate();
 			initQuestionUpdate(0);
 			vAccueil.getBtnAjouterQcm().setText("Modifier");
-			
+			init();
 		}
 	}
 	
@@ -249,10 +247,12 @@ public class QcmController implements SelectionListener {
 	 * Initialise certaine donn�es pour ajouter un question au questionnaire
 	 * dont au pr�alable on a cliqu� sur modifier
 	 */
-	public void addQuestionToUpdate(){
-		leQuestionnaire.setId(updateQcmQuestionnaire);
+	public void addQuestionToUpdate(Integer id){
+		System.out.println("la");
+		//System.out.println(AppController.getSession_Id().getId());
+		leQuestionnaire.setId(id);
 		//session_id=leQuestionnaire;
-		AppController.setSession_Id(leQuestionnaire);
+		//AppController.setSession_Id(leQuestionnaire);
 		//System.out.println(AppController.getSession_Id());
 		lesQuestions = Http.getQuestionByQuestionnaire(leQuestionnaire.getId());
 		maxPage=lesQuestions.length;

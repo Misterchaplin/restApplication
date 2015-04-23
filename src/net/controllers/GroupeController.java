@@ -161,9 +161,9 @@ public class GroupeController implements SelectionListener {
 		        GroupeQuestionnaire[] test = Http.getCIMGrpQst(idGrpQuest);
 		        
 		        for (GroupeQuestionnaire gq : test) {
-					System.out.println(gq);
+					System.out.println("1 "+gq);
 					gq.setQuestionnaire_id(element.getId());
-					System.out.println(gq);
+					System.out.println("2 "+gq);
 					// c'est ici qu'il y a une erreur :/
 					GroupeQuestionnaire[] data = Http.putGroupeQuestionnaire(gq);
 					for (GroupeQuestionnaire groupeQuestionnaire : data) {

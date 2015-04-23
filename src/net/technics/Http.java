@@ -437,7 +437,9 @@ public class Http{
 	
 	public static GroupeQuestionnaire[] putGroupeQuestionnaire(GroupeQuestionnaire groupe){
 		try {
+			System.out.println("in put");
 			query = http.put(baseUrl+"groupequestionnaires/"+groupe.getId(), groupe);
+			System.out.println("after resquete "+query);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
