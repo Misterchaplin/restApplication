@@ -162,22 +162,28 @@ public class GroupeController implements SelectionListener {
 		        
 		        for (GroupeQuestionnaire gq : test) {
 					System.out.println("1 "+gq);
-					gq.setQuestionnaire_id(element.getId());
-					System.out.println("2 "+gq);
+					System.out.println(Http.delGroupeQuestionnare(gq));
+					//gq.setQuestionnaire_id(element.getId());
+					//System.out.println("2 "+gq);
 					// c'est ici qu'il y a une erreur :/
-					GroupeQuestionnaire[] data = Http.putGroupeQuestionnaire(gq);
-					for (GroupeQuestionnaire groupeQuestionnaire : data) {
-						System.out.println(groupeQuestionnaire);
-					}
+					//GroupeQuestionnaire[] data = Http.putGroupeQuestionnaire(gq);
+					//for (GroupeQuestionnaire groupeQuestionnaire : data) {
+						//System.out.println(groupeQuestionnaire);
+					//}
 				}
-		        
-		       // System.out.println(test);
+		        GroupeQuestionnaire newGroup = new GroupeQuestionnaire();
+		        newGroup.setQuestionnaire_id(element.getId());
+		        newGroup.setGroupe_id(group.getId());
+		        Http.postGroupeQuestionnaires(newGroup);
+		        System.out.println(Http.putGroupe(group));
+		        System.out.println(group);
+		        System.out.println(newGroup);
 		       // System.out.println(element.getId());
 		        
 		        
 		        
 		       // a retirer de commentaire pour metre à jour libelle et code
-			//System.out.println(Http.putGroupe(group));
+		        
 		     
 				
 				vAccueil.getLblInformation().setText("Groupe modifié avec succés");
