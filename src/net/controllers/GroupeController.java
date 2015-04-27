@@ -178,6 +178,16 @@ public class GroupeController implements SelectionListener {
 		        System.out.println(Http.putGroupe(group));
 		        System.out.println(group);
 		        System.out.println(newGroup);
+		        GroupeQuestionnaire groupSansQuest = new GroupeQuestionnaire();
+		        groupSansQuest.setQuestionnaire_id(leQuestionnaire.getId());
+		        groupSansQuest.setGroupe_id(48);
+		        Http.postGroupeQuestionnaires(groupSansQuest);
+		        Utils.updateTableViewer();
+		        Utils.remplirComboGroupeStat();
+		        
+		        
+		        
+		        
 		       // System.out.println(element.getId());
 		        
 		        
