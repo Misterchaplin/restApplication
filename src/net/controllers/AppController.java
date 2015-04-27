@@ -1,5 +1,11 @@
 package net.controllers;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+
 import net.models.ActifUser;
 import net.models.Groupe;
 import net.models.Questionnaire;
@@ -45,6 +51,8 @@ public class AppController {
 		groupeController.init();
 		qcmController.init();
 		statistiquesController.init();
+		accueilController.vAccueil.getTabGestion().setEnabled(false);
+		
 	}
 	
 }

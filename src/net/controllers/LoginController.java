@@ -29,6 +29,7 @@ public class LoginController implements SelectionListener {
 	}
 
 	public void init() {
+		
 		vLogin.getBtnConnexion().addSelectionListener(new SelectionListener() {
 						
 		@SuppressWarnings("unchecked")
@@ -46,6 +47,7 @@ public class LoginController implements SelectionListener {
 			}
 			else{
 				vLogin.getShell().close();
+				AccueilController.vAccueil.getTabGestion().setEnabled(true);
 				AccueilController.vAccueil.getItemConnexion().setEnabled(false);
 				AccueilController.vAccueil.getItemConnexion().setText("Bienvenue: "+user.getLogin());
 				AccueilController.vAccueil.getFirstNameCol().setLabelProvider(new ColumnLabelProvider(){
