@@ -205,7 +205,7 @@ public class QcmController implements SelectionListener {
 		vAccueil.getCbvQcm().setInput(lesGroupes);
 		
 		for (Groupe groupe : lesGroupes) {
-			
+
 			if(groupe.getId().equals(leGroupe.getId())){
 				vAccueil.getCbQcm().select(count);
 			}

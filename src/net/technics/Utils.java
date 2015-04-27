@@ -97,7 +97,7 @@ public class Utils {
 		 
 		 if(lesGroupes!=null && lesGroupes.length>0){
 			 for(Groupe unGroupe:lesGroupes){
-				//System.out.println("Ceci est un groupe "+unGroupe);
+				System.out.println("Ceci est un groupe "+unGroupe);
 		        Utilisateur[] lesUsers = Http.getUtilisateursToGroupe(unGroupe.getId());
 		        for (Utilisateur aUtilisateur : lesUsers) {
 		        	//System.out.println("Ceci est un utilisateur "+aUtilisateur);

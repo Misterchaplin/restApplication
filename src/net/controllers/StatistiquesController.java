@@ -76,32 +76,35 @@ public class StatistiquesController implements SelectionListener {
 		        });
 				IStructuredSelection selection = (IStructuredSelection) vAccueil.getCbvStatistiquesQuestionnaire().getSelection();
 				Questionnaire questionnaire = (Questionnaire)selection.getFirstElement();
-	            Question[] laQuestion =Http.getQuestionByQuestionnaire(questionnaire.getId());
-	            Integer nbQuestion = laQuestion.length;
-	            // Tous les utilisateurs du groupe
-	            try {
-					Utilisateur[] lesUsers = Http.getUtilisateursToQuestionnaire(questionnaire.getId());
-					
-					List<CollectionUtilisateurScore> collUserScore = new ArrayList<CollectionUtilisateurScore>();
-					for (Utilisateur utilisateur : lesUsers) {
-						CollectionUtilisateurScore cus=new CollectionUtilisateurScore();
-						cus.setLogin(utilisateur.getLogin());
-						cus.setNom(utilisateur.getNom());
-						cus.setPrenom(utilisateur.getPrenom());
-						String param=questionnaire.getId()+"_"+utilisateur.getId();
-						Realisation[] score=Http.getScore(param);
+				
+				if(questionnaire!=null){
+		            Question[] laQuestion =Http.getQuestionByQuestionnaire(questionnaire.getId());
+		            Integer nbQuestion = laQuestion.length;
+		            // Tous les utilisateurs du groupe
+		            try {
+						Utilisateur[] lesUsers = Http.getUtilisateursToQuestionnaire(questionnaire.getId());
 						
-						for (Realisation unScore : score) {
-							Integer pourcentageReponse = (int) (100*unScore.getScore()/nbQuestion);
-							cus.setScore(pourcentageReponse);
-							cus.setDate(unScore.getDate());
-							collUserScore.add(cus);
-						}	
+						List<CollectionUtilisateurScore> collUserScore = new ArrayList<CollectionUtilisateurScore>();
+						for (Utilisateur utilisateur : lesUsers) {
+							CollectionUtilisateurScore cus=new CollectionUtilisateurScore();
+							cus.setLogin(utilisateur.getLogin());
+							cus.setNom(utilisateur.getNom());
+							cus.setPrenom(utilisateur.getPrenom());
+							String param=questionnaire.getId()+"_"+utilisateur.getId();
+							Realisation[] score=Http.getScore(param);
+							
+							for (Realisation unScore : score) {
+								Integer pourcentageReponse = (int) (100*unScore.getScore()/nbQuestion);
+								cus.setScore(pourcentageReponse);
+								cus.setDate(unScore.getDate());
+								collUserScore.add(cus);
+							}	
+						}
+						
+						 StatistiquesController.vAccueil.getTableViewerStat().setInput(collUserScore);
+		            } catch (NullPointerException e2) {
+						vAccueil.getLblInformation().setText("Pas encore de statistique pour ce questionnaire");
 					}
-					
-					 StatistiquesController.vAccueil.getTableViewerStat().setInput(collUserScore);
-	            } catch (NullPointerException e2) {
-					vAccueil.getLblInformation().setText("Pas encore de statistique pour ce questionnaire");
 				}
 			}
 		});
