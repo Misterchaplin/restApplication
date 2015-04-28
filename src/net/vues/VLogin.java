@@ -123,7 +123,7 @@ public class VLogin {
 		
 		lblInformation = new Label(grpInformation, SWT.NONE);
 		lblInformation.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		lblInformation.setBounds(10, 10, 394, 24);
+		lblInformation.setBounds(10, 21, 394, 24);
 
 	}
 

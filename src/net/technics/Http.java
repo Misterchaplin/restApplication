@@ -242,6 +242,23 @@ public class Http{
 	}
 	
 	/**
+	 * Ensemble des groupes appartenant � l'utilisateur
+	 * @param id
+	 * @return
+	 */
+	public static Utilisateur getUtilisateurs(Integer id){
+		try {
+			query=http.get(baseUrl+"users/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Utilisateur data= gson.jsonToUtilisateur(query);
+		
+		return data;
+	}
+	
+	/**
 	 * Ensemble des questionnaires appartenant � l'utilisateur
 	 * @param id
 	 * @return
@@ -254,6 +271,23 @@ public class Http{
 			e.printStackTrace();
 		}
 		Utilisateur[] data= gson.jsonToAllUtilisateur(query);
+		
+		return data;
+	}
+	
+	/**
+	 * Ensemble des questionnaires appartenant � l'utilisateur
+	 * @param id
+	 * @return
+	 */
+	public static Realisation[] getRealisationWithQuestionnaire(Integer id){
+		try {
+			query=http.get(baseUrl+"realisations/realisationwithquestionnaire/"+id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Realisation[] data= gson.jsonToAllRealisation(query);
 		
 		return data;
 	}

@@ -82,25 +82,20 @@ public class StatistiquesController implements SelectionListener {
 		            Integer nbQuestion = laQuestion.length;
 		            // Tous les utilisateurs du groupe
 		            try {
-						Utilisateur[] lesUsers = Http.getUtilisateursToQuestionnaire(questionnaire.getId());
-						
-						List<CollectionUtilisateurScore> collUserScore = new ArrayList<CollectionUtilisateurScore>();
-						for (Utilisateur utilisateur : lesUsers) {
+		            	List<CollectionUtilisateurScore> collUserScore = new ArrayList<CollectionUtilisateurScore>();
+						Realisation[] lesRealisations = Http.getRealisationWithQuestionnaire(questionnaire.getId());
+						for (Realisation realisation : lesRealisations) {
+							System.out.println(realisation);
+							Utilisateur leUser=Http.getUtilisateurs(realisation.getUtilisateur_id());
 							CollectionUtilisateurScore cus=new CollectionUtilisateurScore();
-							cus.setLogin(utilisateur.getLogin());
-							cus.setNom(utilisateur.getNom());
-							cus.setPrenom(utilisateur.getPrenom());
-							String param=questionnaire.getId()+"_"+utilisateur.getId();
-							Realisation[] score=Http.getScore(param);
-							
-							for (Realisation unScore : score) {
-								Integer pourcentageReponse = (int) (100*unScore.getScore()/nbQuestion);
-								cus.setScore(pourcentageReponse);
-								cus.setDate(unScore.getDate());
-								collUserScore.add(cus);
-							}	
+							cus.setLogin(leUser.getLogin());
+							cus.setNom(leUser.getNom());
+							cus.setPrenom(leUser.getPrenom());
+							Integer pourcentageReponse = (int) (100*realisation.getScore()/nbQuestion);
+							cus.setScore(pourcentageReponse);
+							cus.setDate(realisation.getDate());
+							collUserScore.add(cus);
 						}
-						
 						 StatistiquesController.vAccueil.getTableViewerStat().setInput(collUserScore);
 		            } catch (NullPointerException e2) {
 						vAccueil.getLblInformation().setText("Pas encore de statistique pour ce questionnaire");

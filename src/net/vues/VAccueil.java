@@ -265,7 +265,7 @@ public class VAccueil {
 		grpInformation.setLayoutData(fd_grpInformation);
 		
 		lblInformation = new Label(grpInformation, SWT.NONE);
-		lblInformation.setBounds(10, 10, 490, 15);
+		lblInformation.setBounds(10, 21, 490, 15);
 		
 		tabGestion = new TabFolder(accueil, SWT.NONE);
 		fd_grpInformation.bottom = new FormAttachment(tabGestion, -1);
