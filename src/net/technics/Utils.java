@@ -2,7 +2,11 @@ package net.technics;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+
 import net.controllers.AccueilController;
 import net.controllers.AppController;
 import net.controllers.LoginController;
@@ -18,21 +22,27 @@ public class Utils {
 		Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
 		 
 		 if(lesQuestionnaires!=null && lesQuestionnaires.length>0){
+			 System.out.println("entré");
 			 for(Questionnaire unQuestionnaire:lesQuestionnaires){
-		        Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());     	 
-		        for (Groupe unGroupe : lesGroupes) {	
-		        	Utilisateur[] lesUsers = Http.getUtilisateursToGroupe(unGroupe.getId());
-		        	for (Utilisateur aUtilisateur : lesUsers) {
-			        	if(aUtilisateur.getId().equals(AppController.getActiveUser().getWho())){
-			        		if(!myQestionnaires.contains(unQuestionnaire)){
-			        			myQestionnaires.add(unQuestionnaire);
-			        		}
-			        		
-			        	}
-					}
+		        Groupe[] lesGroupes = Http.getGroupesToQuestionnaire(unQuestionnaire.getId());  
+		        if(lesGroupes!=null && lesGroupes.length>0){
+			        for (Groupe unGroupe : lesGroupes) {	
+			        	Utilisateur[] lesUsers = Http.getUtilisateursToGroupe(unGroupe.getId());
+			        	for (Utilisateur aUtilisateur : lesUsers) {
+				        	if(aUtilisateur.getId().equals(AppController.getActiveUser().getWho())){
+				        		if(!myQestionnaires.contains(unQuestionnaire)){
+				        			myQestionnaires.add(unQuestionnaire);
+				        		}
+				        		
+				        	}
+						}
+			        }
 		        }
 			 }
 		}
+		else{
+			
+		 }
 		 
 		Questionnaire[] tabQuestionnaie = myQestionnaires.toArray(new Questionnaire[myQestionnaires.size()]);
 		return tabQuestionnaie;

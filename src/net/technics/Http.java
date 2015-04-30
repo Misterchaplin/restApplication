@@ -97,6 +97,7 @@ public class Http{
 	public static Utilisateur[] getAllUtilisateurs(){
 		try {
 			query=http.get(baseUrl+"utilisateur");
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
