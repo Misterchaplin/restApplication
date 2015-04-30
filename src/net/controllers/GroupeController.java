@@ -147,13 +147,14 @@ public class GroupeController implements SelectionListener {
 			public void widgetSelected(SelectionEvent e) {
 				
 				
-				Groupe group = Http.getGroupe(getUpdateGroupe());
+				Groupe group = Http.getGroupe(getUpdateGroupe());// Groupe modifié 
 				String libelle = vAccueil.getTxtLibelle().getText();
 				String code = vAccueil.getTxtCode().getText();
 				
 				//System.out.println(group.getId());
 				group.setLibelle(libelle);
 				group.setCode(code);
+				// Récuperation de l'element sélectionné dans la combo
 				IStructuredSelection selection = (IStructuredSelection) vAccueil.getCbvQuestionnaireGroupe().getSelection();
 		        Questionnaire element = (Questionnaire)selection.getFirstElement();
 		        String idGrpQuest = leQuestionnaire.getId()+ "_" +group.getId();
@@ -162,7 +163,25 @@ public class GroupeController implements SelectionListener {
 		        
 		        for (GroupeQuestionnaire gq : test) {
 					System.out.println("1 "+gq);
-					System.out.println(Http.delGroupeQuestionnare(gq));
+					System.out.println(element.getId());
+					System.out.println(gq.getQuestionnaire_id());
+					
+						
+						if (gq.getQuestionnaire_id() != element.getId()){
+							System.out.println(Http.delGroupeQuestionnare(gq));
+							GroupeQuestionnaire newGroup = new GroupeQuestionnaire();
+					        newGroup.setQuestionnaire_id(element.getId());
+					        newGroup.setGroupe_id(group.getId());
+					        Http.postGroupeQuestionnaires(newGroup);
+					        
+
+					        GroupeQuestionnaire groupSansQuest = new GroupeQuestionnaire();
+					        groupSansQuest.setQuestionnaire_id(leQuestionnaire.getId());
+					        groupSansQuest.setGroupe_id(48);
+					        Http.postGroupeQuestionnaires(groupSansQuest);
+						}
+						System.out.println(Http.putGroupe(group));
+					
 					//gq.setQuestionnaire_id(element.getId());
 					//System.out.println("2 "+gq);
 					// c'est ici qu'il y a une erreur :/
@@ -171,17 +190,16 @@ public class GroupeController implements SelectionListener {
 						//System.out.println(groupeQuestionnaire);
 					//}
 				}
-		        GroupeQuestionnaire newGroup = new GroupeQuestionnaire();
-		        newGroup.setQuestionnaire_id(element.getId());
-		        newGroup.setGroupe_id(group.getId());
-		        Http.postGroupeQuestionnaires(newGroup);
-		        System.out.println(Http.putGroupe(group));
-		        System.out.println(group);
-		        System.out.println(newGroup);
-		        GroupeQuestionnaire groupSansQuest = new GroupeQuestionnaire();
-		        groupSansQuest.setQuestionnaire_id(leQuestionnaire.getId());
-		        groupSansQuest.setGroupe_id(48);
-		        Http.postGroupeQuestionnaires(groupSansQuest);
+		        
+		        
+		        vAccueil.getTxtLibelle().setText("");
+		        vAccueil.getTxtCode().setText("");
+		        vAccueil.getCbvQuestionnaireGroupe().setInput(null);
+		        vAccueil.getBtnAjouterGroupe().setVisible(true);
+		        vAccueil.getBtnModifierGroupe().setVisible(false);
+		        
+		        Utils.remplirComboGroupe();
+		        Utils.remplirComboQuestionnaire();
 		        Utils.updateTableViewer();
 		        Utils.remplirComboGroupeStat();
 		        
@@ -192,7 +210,7 @@ public class GroupeController implements SelectionListener {
 		        
 		        
 		        
-		       // a retirer de commentaire pour metre à jour libelle et code
+		      
 		        
 		     
 				
