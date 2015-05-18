@@ -9,6 +9,7 @@ import net.technics.Utils;
 
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Display;
@@ -51,6 +52,23 @@ public class AccueilController implements SelectionListener {
 
 			}
 		});	
+		
+		
+		vAccueil.getItemLogin().addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				System.out.println(Http.getDisconnectUser());
+				vAccueil.getAccueil().setVisible(false);
+				
+				//Prog.main(null);
+
+				new Prog().main(null);
+				System.exit(0);
+			
+				
+			}
+		});
 		
 		vAccueil.getBtnSupprimerAccueil().addSelectionListener(new SelectionListener() {
 

@@ -49,6 +49,7 @@ public class LoginController implements SelectionListener {
 				vLogin.getShell().close();
 				AccueilController.vAccueil.getTabGestion().setEnabled(true);
 				AccueilController.vAccueil.getItemConnexion().setEnabled(false);
+				AccueilController.vAccueil.getItemLogin().setEnabled(true);
 				AccueilController.vAccueil.getItemConnexion().setText("Bienvenue: "+user.getLogin());
 				AccueilController.vAccueil.getFirstNameCol().setLabelProvider(new ColumnLabelProvider(){
 
