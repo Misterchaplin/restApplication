@@ -237,7 +237,7 @@ public class VAccueil {
 	 * 
 	 */
 	protected void createContents() {
-		accueil = new Shell();
+		accueil = new Shell(SWT.SHELL_TRIM & (~SWT.RESIZE));
 		accueil.setSize(626, 517);
 		accueil.setText("QCM");
 		accueil.setLayout(new FormLayout());

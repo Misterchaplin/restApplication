@@ -9,6 +9,9 @@ import net.technics.Utils;
 
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Display;
@@ -42,6 +45,35 @@ public class AccueilController implements SelectionListener {
 					vLogin.init();
 					loginController.init();
 					vLogin.open();
+					/*vLogin.getShell().addKeyListener(new KeyListener() {
+						
+						@Override
+						public void keyPressed(KeyEvent arg0) {
+							System.out.println("fff");
+								String res = "";
+								switch (arg0.character) {
+									case SWT.CR :
+									res = "Touche Entree";
+									break;
+									case SWT.ESC :
+									res = "Touche Echap";
+									break;
+									default :
+								}
+								System.out.println(res);
+							}
+
+						@Override
+						public void keyReleased(KeyEvent arg0) {
+							// TODO Auto-generated method stub
+							
+						}
+					}); 
+					while (!vLogin.getShell().isDisposed())
+						if (!display.readAndDispatch())
+							display.sleep();
+	
+						display.dispose();*/
 				}
 			}
 

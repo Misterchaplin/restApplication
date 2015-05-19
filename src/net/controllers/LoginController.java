@@ -16,8 +16,13 @@ import net.vues.VLogin;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 
 public class LoginController implements SelectionListener {
@@ -29,6 +34,25 @@ public class LoginController implements SelectionListener {
 	}
 
 	public void init() {
+		vLogin.getShell().getDisplay().addFilter(SWT.KeyDown, new Listener() {
+			
+			@Override
+			public void handleEvent(Event arg0) {
+				System.out.println("fff");
+				String res = "";
+				switch (arg0.character) {
+					case SWT.CR :
+					res = "Touche Entree";
+					break;
+					case SWT.ESC :
+					res = "Touche Echap";
+					break;
+					default :
+				}
+				System.out.println(res);
+			
+			}
+		});
 		
 		vLogin.getBtnConnexion().addSelectionListener(new SelectionListener() {
 						

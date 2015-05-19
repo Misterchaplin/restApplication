@@ -20,6 +20,7 @@ public class VLogin {
 	private Button btnConnexion;
 	private Group grpInformation;
 	private Label lblInformation;
+	private Display display;
 	
 	public Shell getShell() {
 		return shell;
@@ -71,7 +72,7 @@ public class VLogin {
 	 * Open the window.
 	 */
 	public void open() {
-		Display display = Display.getDefault();
+		display = Display.getDefault();
 		shell.open();
 		shell.layout();
 		while (!shell.isDisposed()) {
@@ -86,7 +87,7 @@ public class VLogin {
 	 * @wbp.parser.entryPoint
 	 */
 	protected void createContents() {
-		shell = new Shell();
+		shell = new Shell( SWT.SHELL_TRIM & (~SWT.RESIZE));
 		shell.setSize(454, 316);
 		shell.setText("SWT Application");
 		
@@ -103,13 +104,13 @@ public class VLogin {
 		label_1.setText("Mot de passe :");
 		label_1.setBounds(53, 88, 87, 15);
 		
-		txtPassword = new Text(grpConnexion, SWT.BORDER);
-		txtPassword.setText("test");
-		txtPassword.setBounds(146, 85, 130, 21);
-		
 		txtLogin = new Text(grpConnexion, SWT.BORDER);
 		txtLogin.setText("test");
 		txtLogin.setBounds(146, 53, 130, 21);
+		
+		txtPassword = new Text(grpConnexion, SWT.BORDER);
+		txtPassword.setText("test");
+		txtPassword.setBounds(146, 85, 130, 21);
 		
 		btnConnexion = new Button(grpConnexion, SWT.NONE);
 
