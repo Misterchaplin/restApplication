@@ -13,7 +13,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 public class VLogin {
 
-	protected Shell shell;
+	protected Shell shlLogin;
 	private Text txtPassword;
 	private Text txtLogin;
 	private Group grpConnexion;
@@ -22,8 +22,9 @@ public class VLogin {
 	private Label lblInformation;
 	private Display display;
 	
+	
 	public Shell getShell() {
-		return shell;
+		return shlLogin;
 	}
 
 	public Text getTxtPassword() {
@@ -73,9 +74,9 @@ public class VLogin {
 	 */
 	public void open() {
 		display = Display.getDefault();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
+		shlLogin.open();
+		shlLogin.layout();
+		while (!shlLogin.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
@@ -87,11 +88,11 @@ public class VLogin {
 	 * @wbp.parser.entryPoint
 	 */
 	protected void createContents() {
-		shell = new Shell( SWT.SHELL_TRIM & (~SWT.RESIZE));
-		shell.setSize(454, 316);
-		shell.setText("SWT Application");
+		shlLogin = new Shell( SWT.SHELL_TRIM & (~SWT.RESIZE));
+		shlLogin.setSize(454, 316);
+		shlLogin.setText("Login");
 		
-		grpConnexion = new Group(shell, SWT.NONE);
+		grpConnexion = new Group(shlLogin, SWT.NONE);
 		grpConnexion.setVisible(true);
 		grpConnexion.setText("Connexion");
 		grpConnexion.setBounds(10, 71, 414, 180);
@@ -117,7 +118,7 @@ public class VLogin {
 		btnConnexion.setText("Se connecter");
 		btnConnexion.setBounds(167, 112, 109, 25);
 		
-		grpInformation = new Group(shell, SWT.NONE);
+		grpInformation = new Group(shlLogin, SWT.NONE);
 		grpInformation.setLocation(10, 10);
 		grpInformation.setSize(414, 55);
 		grpInformation.setText("Information :");

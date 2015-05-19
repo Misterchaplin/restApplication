@@ -24,6 +24,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class LoginController implements SelectionListener {
 	private static Integer messageQuestionnaire=0;
@@ -75,6 +76,7 @@ public class LoginController implements SelectionListener {
 				AccueilController.vAccueil.getItemConnexion().setEnabled(false);
 				AccueilController.vAccueil.getItemLogin().setEnabled(true);
 				AccueilController.vAccueil.getItemConnexion().setText("Bienvenue: "+user.getLogin());
+				AccueilController.vAccueil.getItemLogin().setImage(SWTResourceManager.getImage("./images/logout.png"));
 				AccueilController.vAccueil.getFirstNameCol().setLabelProvider(new ColumnLabelProvider(){
 
 		            @Override

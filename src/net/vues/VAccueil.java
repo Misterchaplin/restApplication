@@ -249,15 +249,15 @@ public class VAccueil {
 		fd_menuConnexion.top = new FormAttachment(0);
 		menuConnexion.setLayoutData(fd_menuConnexion);
 
-		itemLogin = new ToolItem(menuConnexion, SWT.NONE);
-		itemLogin.setText("dec");
-		itemLogin.setEnabled(false);
-
 		itemConnexion = new ToolItem(menuConnexion, SWT.NONE);
 		itemConnexion.setText("Connexion");
 		
 		grpInformation = new Group(accueil, SWT.NONE);
 		fd_menuConnexion.bottom = new FormAttachment(grpInformation, -1);
+		
+		itemLogin = new ToolItem(menuConnexion, SWT.NONE);
+		
+
 		grpInformation.setText("Information :");
 		FormData fd_grpInformation = new FormData();
 		fd_grpInformation.top = new FormAttachment(0, 34);
