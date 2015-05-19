@@ -89,7 +89,7 @@ public class Utils {
 	 * Retourne si needle est contenu dans la list haytack
 	 * @param haystack
 	 * @param needle
-	 * @return true si est présente
+	 * @return true si est prï¿½sente
 	 */
 	public static boolean in_array(List<Groupe> haystack, String needle) {
 	    for(int i=0;i<haystack.size();i++) {
@@ -150,6 +150,7 @@ public class Utils {
 	/**
 	 * Ajoute les groupes dans qcm
 	 */
+
 	public static void remplirComboGroupe(){
 		AccueilController.vAccueil.getBtnNouveauQuestionnaire().setVisible(false);
 		AccueilController.vAccueil.getCbvQcm().setLabelProvider(new LabelProvider() {
@@ -167,7 +168,7 @@ public class Utils {
 	
 	
 	/**
-	 * Ajoute les questionnaires dans l'onglet Statistiques en référence au groupe choisi
+	 * Ajoute les questionnaires dans l'onglet Statistiques en rï¿½fï¿½rence au groupe choisi
 	*/
 	public static void remplirComboQuestionnaireStat(Groupe groupe){
 		

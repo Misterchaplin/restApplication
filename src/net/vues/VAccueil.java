@@ -250,6 +250,7 @@ public class VAccueil {
 		menuConnexion.setLayoutData(fd_menuConnexion);
 
 		itemLogin = new ToolItem(menuConnexion, SWT.NONE);
+		itemLogin.setText("dec");
 		itemLogin.setEnabled(false);
 
 		itemConnexion = new ToolItem(menuConnexion, SWT.NONE);
@@ -265,7 +266,7 @@ public class VAccueil {
 		grpInformation.setLayoutData(fd_grpInformation);
 		
 		lblInformation = new Label(grpInformation, SWT.NONE);
-		lblInformation.setBounds(10, 21, 490, 15);
+		lblInformation.setBounds(10, 10, 490, 15);
 		
 		tabGestion = new TabFolder(accueil, SWT.NONE);
 		fd_grpInformation.bottom = new FormAttachment(tabGestion, -1);
@@ -538,7 +539,7 @@ public class VAccueil {
         userStat = new TableViewerColumn(tableViewerStat, columnStat);
         
         columnStat = new TableColumn(tableViewerStat.getTable(), SWT.NONE);
-        columnStat.setText("Pourcentage de bonnes réponses");
+        columnStat.setText("Pourcentage de bonnes rï¿½ponses");
         columnStat.setWidth(216);
         questStat = new TableViewerColumn(tableViewerStat, columnStat);
 		
@@ -637,4 +638,6 @@ public class VAccueil {
 	public Button getBtnAjouterQcm() {
 		return btnAjouterQcm;
 	}
+	
+
 }

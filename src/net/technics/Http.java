@@ -334,6 +334,18 @@ public class Http{
 		return data;
 	}
 	
+	public static ActifUser getDisconnectUser(){
+		try {
+			query=http.get(baseUrl+"user/disconnect/");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ActifUser data=gson.jsonToActif(query);
+		
+		return data;
+	}
+	
 	public static Groupe postGroupe(Groupe groupe){
 		try {
 			query = http.post(baseUrl+"groupes/", groupe);
