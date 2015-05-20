@@ -1,5 +1,7 @@
 package net.vues;
 
+import net.controllers.AccueilController;
+
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -278,6 +280,7 @@ public class VAccueil {
 		tabGestion.setLayoutData(fd_tabGestion);
 		
 		TabItem tbtmAccueil = new TabItem(tabGestion, SWT.NONE);
+		tbtmAccueil.setImage(SWTResourceManager.getImage("./images/home.png"));
 		tbtmAccueil.setText("Accueil");
 		
 		Composite cpAccueil = new Composite(tabGestion, SWT.NONE);
@@ -323,6 +326,7 @@ public class VAccueil {
                
 				
 		tbtmQcm = new TabItem(tabGestion, SWT.NONE);
+		tbtmQcm.setImage(SWTResourceManager.getImage("./images/qcm.png"));
 		tbtmQcm.setText("QCM");
 		
 		Composite cpQcm = new Composite(tabGestion, SWT.NONE);
@@ -439,6 +443,7 @@ public class VAccueil {
 		btnAjouterQuestion.setVisible(false);
 		
 		TabItem tbtmGroupe = new TabItem(tabGestion, SWT.NONE);
+		tbtmGroupe.setImage(SWTResourceManager.getImage("./images/group.png"));
 		tbtmGroupe.setText("Groupe");
 		
 		Composite cpGroupe = new Composite(tabGestion, SWT.NONE);
@@ -485,6 +490,7 @@ public class VAccueil {
 		btnModifierGroupe.setText("Modifier");
 		
 		tbtmStatistiques = new TabItem(tabGestion, SWT.NONE);
+		tbtmStatistiques.setImage(SWTResourceManager.getImage("./images/stats.png"));
 		tbtmStatistiques.setText("Statistiques");
 		
 		cpStatistiques = new Composite(tabGestion, SWT.NONE);

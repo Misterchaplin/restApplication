@@ -487,14 +487,14 @@ public class QcmController implements SelectionListener {
 	}
 	
 	/**
-	 * Mise à jour d'une question
-	 * @return L'id de l'élément modifié
+	 * Mise ï¿½ jour d'une question
+	 * @return L'id de l'ï¿½lï¿½ment modifiï¿½
 	 */
 	public Question updateQuestion(){
 		page=Integer.valueOf(vAccueil.getLblCurrentQuestion().getText());
-		//L'index commencant à 0 et non à 1 on décremante
+		//L'index commencant ï¿½ 0 et non ï¿½ 1 on dï¿½cremante
 		page--;
-		//Récupérer la question à mettre à jour
+		//Rï¿½cupï¿½rer la question ï¿½ mettre ï¿½ jour
 		lesQuestions=Http.getQuestionByQuestionnaire(leQuestionnaire.getId());
 		Integer nbRound=0;
 		for (Question aQuestion : lesQuestions) {
@@ -520,7 +520,7 @@ public class QcmController implements SelectionListener {
 	}
 	
 	/**
-	 * Mettre à jour l'association entre groupe et questionnaire
+	 * Mettre ï¿½ jour l'association entre groupe et questionnaire
 	 * @param questionnaire
 	 * @return
 	 */
@@ -530,7 +530,7 @@ public class QcmController implements SelectionListener {
 		groupeQuestionnaire.setGroupe_id(leGroupe.getId());
 		groupeQuestionnaire.setQuestionnaire_id(questionnaire.getId());
 		updateGroupeQuestionnaire = Http.postGroupeQuestionnaires(groupeQuestionnaire);
-		System.out.println("Insértion : "+groupeQuestionnaire);
+		System.out.println("Insï¿½rtion : "+groupeQuestionnaire);
 		
 		GroupeQuestionnaire[] gq=Http.getGroupesByQuestionnaire(groupeQuestionnaire.getQuestionnaire_id());
 		Integer count=0;
