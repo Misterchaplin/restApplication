@@ -79,6 +79,7 @@ public class VAccueil {
 	private Button btnPrecedent;
 	private Button btnAjouterQuestion;
 	private Button btnModifierGroupe;
+	private Button btnModifierGroupeAccueil;
 	private TabItem tbtmStatistiques;
 	private Composite cpStatistiques;
 	private Label lblStatQuestionnaire;
@@ -92,6 +93,10 @@ public class VAccueil {
 	public TableViewerColumn getUserStat() {
 		return userStat;
 	}
+	
+	public Button getBtnModifierGroupeAccueil() {
+		return btnModifierGroupeAccueil;
+	}
 
 
 	public TableViewerColumn getQuestStat() {
@@ -99,6 +104,7 @@ public class VAccueil {
 	}
 
 	private TableViewerColumn questStat;
+	
 	
 	public TableColumn getColumnStat() {
 		return columnStat;
@@ -288,14 +294,14 @@ public class VAccueil {
 		
 		Group grpListeDesQuestionnaires = new Group(cpAccueil, SWT.NONE);
 		grpListeDesQuestionnaires.setText("Liste des questionnaires");
-		grpListeDesQuestionnaires.setBounds(10, 29, 470, 330);
+		grpListeDesQuestionnaires.setBounds(10, 29, 410, 316);
 		
 		
 		tableViewer = new TableViewer(grpListeDesQuestionnaires, SWT.BORDER | SWT.FULL_SELECTION);
 		table = tableViewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		table.setBounds(10, 22, 450, 298);
+		table.setBounds(10, 22, 391, 267);
 		
 		TableLayout tlayout = new TableLayout();
 	    tlayout.addColumnData( new ColumnWeightData( 50, 250, true ));
@@ -313,15 +319,19 @@ public class VAccueil {
         column.setWidth(223);
         lastNameCol = new TableViewerColumn(tableViewer, column);
 		btnModifierAccueil = new Button(cpAccueil, SWT.NONE);
-        btnModifierAccueil.setBounds(486, 173, 95, 28);
+        btnModifierAccueil.setBounds(444, 154, 130, 28);
         formToolkit.adapt(btnModifierAccueil, true, true);
-        btnModifierAccueil.setText("Modifier");
+        btnModifierAccueil.setText("Modifier QCM");
         
         btnSupprimerAccueil = new Button(cpAccueil, SWT.NONE);
      
-        btnSupprimerAccueil.setBounds(486, 207, 95, 28);
+        btnSupprimerAccueil.setBounds(464, 207, 95, 28);
         formToolkit.adapt(btnSupprimerAccueil, true, true);
         btnSupprimerAccueil.setText("Supprimer");
+        
+        btnModifierGroupeAccueil = new Button(cpAccueil, SWT.NONE);
+        btnModifierGroupeAccueil.setBounds(444, 180, 126, 28);
+        btnModifierGroupeAccueil.setText("Modifier Groupe");
      
                
 				

@@ -115,6 +115,25 @@ public class AccueilController implements SelectionListener {
 			
 		});	
 		
+		
+		vAccueil.getBtnModifierGroupeAccueil().addSelectionListener(new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(SelectionEvent e) {
+        		try {
+        		selectedQuestionnaire=selectionTableViewer();
+        		vAccueil.getTabGestion().setSelection(2);
+		    	GroupeController groupeController = new GroupeController(vAccueil);
+		    	groupeController.setUpdateGroupe(selectedQuestionnaire.getGroupe_id());
+		    	groupeController.setUpdateQcmQuestionnaire(selectedQuestionnaire.getQuestionnaire_id());
+		    	groupeController.init();
+        		}
+        		catch (NullPointerException npe2) {
+					vAccueil.getLblInformation().setText("Veuillez saisir un questionnaire !");
+					vAccueil.getTabGestion().setSelection(0);
+				}
+        	}
+        });
+		
 		vAccueil.getBtnModifierAccueil().addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -122,13 +141,7 @@ public class AccueilController implements SelectionListener {
 				try {
 					selectedQuestionnaire=selectionTableViewer();
 					
-					Shell shell = new Shell(display);
-				    MessageBox messageBox = new MessageBox(shell, SWT.ICON_QUESTION|SWT.YES | SWT.NO);
-				    messageBox.setMessage("Voulez-vous modifier le questionnaire : "+selectedQuestionnaire.getQuestionnaire_libelle()
-				    		+ " ?\n\nPour modifier le groupe : "+selectedQuestionnaire.getGroupe_libelle()+"\ncliquer non.");
-				   
-				    int rc = messageBox.open();
-				    if (rc == SWT.YES){
+					
 				    	vAccueil.getTabGestion().setSelection(1);
 				    	QcmController qcmController = new QcmController(vAccueil);
 				    	/*qcmController.setUpdateQcmQuestionnaire(selectedQuestionnaire.getQuestionnaire_id());
@@ -141,18 +154,12 @@ public class AccueilController implements SelectionListener {
 						vAccueil.getLblMerciDe().setVisible(true);
 						vAccueil.getLblMerciDe().setText("Pour ajouter un nouveau questionnaire vous devez d'abord appuyer sur terminer.");
 						qcmController.initUpdate();
-				    }
-				    if (rc == SWT.NO){
-				    	vAccueil.getTabGestion().setSelection(2);
-				    	GroupeController groupeController = new GroupeController(vAccueil);
-				    	groupeController.setUpdateGroupe(selectedQuestionnaire.getGroupe_id());
-				    	groupeController.setUpdateQcmQuestionnaire(selectedQuestionnaire.getQuestionnaire_id());
-				    	groupeController.init();
-				    	
-				    }
+				    
+				 
 				
 				} catch (NullPointerException npe2) {
 					vAccueil.getLblInformation().setText("Veuillez saisir un questionnaire !");
+					vAccueil.getTabGestion().setSelection(0);
 				}
 				
 			}
