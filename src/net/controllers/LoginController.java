@@ -90,7 +90,7 @@ public class LoginController implements SelectionListener {
 				AccueilController.vAccueil.getItemConnexion().setEnabled(false);
 				AccueilController.vAccueil.getItemLogin().setEnabled(true);
 				AccueilController.vAccueil.getItemConnexion().setText("Bienvenue: "+user.getLogin());// Affichage du message de bienvenue
-				AccueilController.vAccueil.getItemLogin().setImage(SWTResourceManager.getImage("./images/logout.png"));// bouton de déconnexion
+				AccueilController.vAccueil.getItemLogin().setImage(SWTResourceManager.getImage("./bin/net/images/logout.png"));// bouton de déconnexion
 				AccueilController.vAccueil.getFirstNameCol().setLabelProvider(new ColumnLabelProvider(){
 
 		            @Override
