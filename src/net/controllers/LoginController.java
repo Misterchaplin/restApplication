@@ -25,7 +25,11 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.wb.swt.SWTResourceManager;
-
+/**
+ * Classe LoginController permettant de gérer l'onglet login
+ * 
+ * 
+ */
 public class LoginController implements SelectionListener {
 	private static Integer messageQuestionnaire=0;
 	public static VLogin vLogin;
@@ -34,6 +38,11 @@ public class LoginController implements SelectionListener {
 		this.vLogin = vLogin;
 	}
 
+	/**
+	 * Fonction init permettant d'initialiser LoginController
+	 * 
+	 * 
+	 */
 	public void init() {
 		vLogin.getShell().getDisplay().addFilter(SWT.KeyDown, new Listener() {
 			
@@ -55,28 +64,33 @@ public class LoginController implements SelectionListener {
 			}
 		});
 		
+		/**
+		 * Si on appuie sur le bouton connexion 
+		 * 
+		 * 
+		 */
 		vLogin.getBtnConnexion().addSelectionListener(new SelectionListener() {
 						
 		@SuppressWarnings("unchecked")
 		@Override
 		public void widgetSelected(SelectionEvent arg0) {
-			Utilisateur user= new Utilisateur();
+			Utilisateur user= new Utilisateur(); // Instanciation d'un nouvel utilisateur
 			user.setLogin(LoginController.vLogin.getTxtLogin().getText());
 			user.setPassword(LoginController.vLogin.getTxtPassword().getText());
 			
-			ActifUser actif = Http.getConnectUser(user);
-			AppController.setActiveUser(actif);
+			ActifUser actif = Http.getConnectUser(user); 
+			AppController.setActiveUser(actif); // Ajout de l'utilisateur actif
 				
 			if(actif.getconnected()!=true){
-				vLogin.getLblInformation().setText("Erreur dans l'authentification.");
+				vLogin.getLblInformation().setText("Erreur dans l'authentification."); // S'il n'est pas connecté affichage d'une erreur
 			}
-			else{
-				vLogin.getShell().close();
-				AccueilController.vAccueil.getTabGestion().setEnabled(true);
+			else{// Sinon
+				vLogin.getShell().close(); // fermeture du shell de login
+				AccueilController.vAccueil.getTabGestion().setEnabled(true); // et activation de la vue VAccueil
 				AccueilController.vAccueil.getItemConnexion().setEnabled(false);
 				AccueilController.vAccueil.getItemLogin().setEnabled(true);
-				AccueilController.vAccueil.getItemConnexion().setText("Bienvenue: "+user.getLogin());
-				AccueilController.vAccueil.getItemLogin().setImage(SWTResourceManager.getImage("./images/logout.png"));
+				AccueilController.vAccueil.getItemConnexion().setText("Bienvenue: "+user.getLogin());// Affichage du message de bienvenue
+				AccueilController.vAccueil.getItemLogin().setImage(SWTResourceManager.getImage("./images/logout.png"));// bouton de déconnexion
 				AccueilController.vAccueil.getFirstNameCol().setLabelProvider(new ColumnLabelProvider(){
 
 		            @Override
@@ -98,8 +112,10 @@ public class LoginController implements SelectionListener {
 			            }
 
 			        });
+				// Appel de la fonction pour remplier le tableViewer avec les groupes et questionnaires
 				remplirTableViewer();
 				if(messageQuestionnaire==0){
+					// remplissage des combobox
 					Utils.remplirComboQuestionnaire();
 					Utils.remplirComboGroupe();
 					Utils.remplirComboGroupeStat();
@@ -114,7 +130,12 @@ public class LoginController implements SelectionListener {
 		}
 		});
 	}				
-
+	
+	/**
+	 * Après s'etre connecté, remplissage du tableViewer avec les groupes et les questionnaires
+	 * 
+	 * 
+	 */
 	public static void remplirTableViewer(){
 		ArrayList<CollectionQuestionnaireGroupe> questionnairesGroupes = new ArrayList<CollectionQuestionnaireGroupe>();
         Questionnaire[] lesQuestionnaires = Http.getAllQuestionnaires();
@@ -145,7 +166,7 @@ public class LoginController implements SelectionListener {
 				}
 	        }
         }
-	    else{
+	    else{ // S'il est vide affichage messageBox
 	    	 MessageBox messageBox = new MessageBox(AccueilController.vAccueil.getAccueil().getShell(), SWT.ICON_WARNING | SWT.OK);
 	    	 messageQuestionnaire++;
 	         messageBox.setText("Warning");

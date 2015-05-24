@@ -22,7 +22,11 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-
+/**
+ * Classe QcmController permettant de gérer l'onglet qcm
+ * 
+ * 
+ */
 public class QcmController implements SelectionListener {
 	public static VAccueil vAccueil;
 	private String qcm;
@@ -63,8 +67,17 @@ public class QcmController implements SelectionListener {
 	public QcmController(VAccueil vAccueil) {
 		this.vAccueil = vAccueil;
 	}
-
+	/**
+	 * Fonction init permettant d'initialiser QcmController
+	 * 
+	 * 
+	 */
 	public void init() {
+		/**
+		 * Si on appuie sur précédent
+		 * 
+		 * 
+		 */
 		vAccueil.getBtnPrecedent().addSelectionListener(new SelectionListener() {
 			
 			@Override
@@ -83,6 +96,11 @@ public class QcmController implements SelectionListener {
 			}
 		});
 		
+		/**
+		 * Si on appuie sur le bouton suivant 
+		 * 
+		 * 
+		 */
 		vAccueil.getBtnSuivant().addSelectionListener(new SelectionListener() {
 			
 			@Override
@@ -101,14 +119,18 @@ public class QcmController implements SelectionListener {
 			}
 		});
 		
-		
+		/**
+		 * Si on appuie sur le bouton ajouter/modifier de l'onglet Qcm
+		 * 
+		 * 
+		 */
 		vAccueil.getBtnAjouterQcm().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(vAccueil.getBtnAjouterQcm().getText()=="Modifier"){
+				if(vAccueil.getBtnAjouterQcm().getText()=="Modifier"){ // si modifier alors update()
 					UpdateQcm();
 				}else{
-					AddQcm();
+					AddQcm(); // Si ajouter alors add()
 				}
 			}
 			
@@ -120,13 +142,18 @@ public class QcmController implements SelectionListener {
 			}
 		});		
 		
+		/**
+		 * Si on appuie sur le bouton nouveau de l'onglet qcm
+		 * 
+		 * 
+		 */
 		vAccueil.getBtnNouveauQuestionnaire().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
 				//String libelleQuest = vAccueil.getTxtQcm().getText();
-				vAccueil.getBtnAjouterQuestion().setVisible(false);
-				vAccueil.getLblMerciDe().setVisible(false);
+				vAccueil.getBtnAjouterQuestion().setVisible(false);// cache le bouton Ajouter
+				vAccueil.getLblMerciDe().setVisible(false); // cache label
 				AppController.setSession_Id(null);
 				initAddQcm();
 				//AddQcm();
@@ -138,7 +165,11 @@ public class QcmController implements SelectionListener {
 				vAccueil.getLblInformation().setText("Vous pouvez cr�er un nouveau formulaire.");
 			}
 		});
-		
+		/**
+		 * Si on appuie sur le bouton AjouterQuestion de l'onglet qcm
+		 * 
+		 * 
+		 */
 		vAccueil.getBtnAjouterQuestion().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -160,6 +191,11 @@ public class QcmController implements SelectionListener {
 			init();
 		}
 	}
+	/**
+	 * Fonction qui permet de remplir les reponses et checkbox
+	 * 
+	 * 
+	 */
 	
 	public void initReponse(Integer idQuestion){
 
@@ -244,8 +280,8 @@ public class QcmController implements SelectionListener {
 	}
 	
 	/**
-	 * Initialise certaine donn�es pour ajouter un question au questionnaire
-	 * dont au pr�alable on a cliqu� sur modifier
+	 * Initialise certaine données pour ajouter une question au questionnaire
+	 * dont au préalable on a cliqué sur modifier
 	 */
 	public void addQuestionToUpdate(Integer id){
 		System.out.println("la");
@@ -278,7 +314,7 @@ public class QcmController implements SelectionListener {
 	
 	
 	/**
-	 * Fonction g�n�ral d'ajout
+	 * Fonction général d'ajout
 	 */
 	public void AddQcm(){
 		checkQuestGroupe=true;
@@ -342,7 +378,11 @@ public class QcmController implements SelectionListener {
 	}
 	
 	
-
+	/**
+	 * Fonction mis à jour QCM
+	 * 
+	 * 
+	 */
 	public void UpdateQcm(){
 		checkQuestGroupe=true;
 		checkQuestGroupe = beginInsert();

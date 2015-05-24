@@ -2,30 +2,28 @@ package net.controllers;
 
 import net.vues.VAccueil;
 
+/**
+ * Classe de démarrage de l'application 
+ * 
+ * 
+ */
 public class Prog {
 
 	public static VAccueil vAccueil;
 
 	/**
-	 * Launch the application.
+	 * Affichage de la vue vAccueil
 	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
 		try {
-			// ajout de vSprint pour tester la partie sprint sans avoir à se
-			// connecter ne pas effacer svp...
-
+			// Instanciation de la vue
 			vAccueil = new VAccueil();
-			// ceci est un test ici
 			new AppController(vAccueil);
-			// VOverview vOverview = new VOverview();
-			// new AppController(vOverview);
 			vAccueil.open();
-			// vOverview.open();
-			// vSprint.open();
-			// vAddUserStorie.open();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -14,7 +14,11 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-
+/**
+ * Classe GroupeController permettant de gérer l'onglet groupe
+ * 
+ * 
+ */
 public class GroupeController implements SelectionListener {
 	public static VAccueil vAccueil;
 	private String qcm;
@@ -43,24 +47,36 @@ public class GroupeController implements SelectionListener {
 	public GroupeController(VAccueil vAccueil) {
 		this.vAccueil = vAccueil;
 	}
-
+	
+	/**
+	 * Fonction init permettant d'initialiser GroupeController
+	 * 
+	 * 
+	 */
 	public void init() {
+		
 		if(updateGroupe!=null){
 	
 			initGroupeUpdate();
 					
 		}
+		
+		/**
+		 * Si on appuie sur le bouton Ajouter dans l'onglet groupe
+		 * 
+		 * 
+		 */
 		vAccueil.getBtnAjouterGroupe().addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				//on cr�er groupe et le remplit
+				//on crée groupe et le remplit
 				Groupe groupe = new Groupe();
 				groupe.setLibelle(vAccueil.getTxtLibelle().getText());
 				groupe.setCode(vAccueil.getTxtCode().getText());
 				
-				//R�cup�ration du questionnaire s�l�ctionn�
+				//Récupération du questionnaire séléctionné
 				IStructuredSelection selection = (IStructuredSelection) vAccueil.getCbvQuestionnaireGroupe().getSelection();
 	            Questionnaire element = (Questionnaire)selection.getFirstElement();
 				
@@ -115,6 +131,12 @@ public class GroupeController implements SelectionListener {
 	}
 	
 	
+	
+	/**
+	 * Fonction permettant de mettre le questionnaire correspondant dans la combobox
+	 * 
+	 * 
+	 */
 	public void initGroupeUpdate(){
 		leGroupe = Http.getGroupe(getUpdateGroupe());
 		leQuestionnaire = Http.getQuestionnaire(getUpdateQcmQuestionnaire());
@@ -141,7 +163,11 @@ public class GroupeController implements SelectionListener {
 		}
 		
 		
-		
+		/**
+		 * Si on apppuie sur le bouton modifier de l'onglet groupe
+		 * 
+		 * 
+		 */
 		vAccueil.getBtnModifierGroupe().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -167,7 +193,7 @@ public class GroupeController implements SelectionListener {
 					System.out.println(gq.getQuestionnaire_id());
 					
 						
-						if (gq.getQuestionnaire_id() != element.getId()){
+						if (gq.getQuestionnaire_id() != element.getId()){// si le questionnaire choisi est different du questionnaire correspondant au groupe
 							System.out.println(Http.delGroupeQuestionnare(gq));
 							GroupeQuestionnaire newGroup = new GroupeQuestionnaire();
 					        newGroup.setQuestionnaire_id(element.getId());
@@ -180,6 +206,7 @@ public class GroupeController implements SelectionListener {
 					        groupSansQuest.setGroupe_id(48);
 					        Http.postGroupeQuestionnaires(groupSansQuest);
 						}
+						
 						System.out.println(Http.putGroupe(group));
 					
 					//gq.setQuestionnaire_id(element.getId());
@@ -198,6 +225,7 @@ public class GroupeController implements SelectionListener {
 		        vAccueil.getBtnAjouterGroupe().setVisible(true);
 		        vAccueil.getBtnModifierGroupe().setVisible(false);
 		        
+		        // remplissage des combobox
 		        Utils.remplirComboGroupe();
 		        Utils.remplirComboQuestionnaire();
 		        Utils.updateTableViewer();

@@ -15,7 +15,11 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-
+/**
+ * Classe AccueilController permettant de gérer l'onglet accueil
+ * 
+ * 
+ */
 public class AccueilController implements SelectionListener {
 	public static VAccueil vAccueil;
 	private String qcm;
@@ -26,24 +30,27 @@ public class AccueilController implements SelectionListener {
 		this.vAccueil = vAccueil;
 	}
 
+	/**
+	 * Fonction init permettant d'initialiser AccueilController
+	 * 
+	 * 
+	 */
 	public void init() {
-		vAccueil.getItemLogin().setImage(null);
-		vAccueil.getTabGestion().setVisible(true);
-		/*vAccueil.getTabGestion().getTabList()[0].setEnabled(false);
-		vAccueil.getTabGestion().getTabList()[1].setEnabled(false);
-		vAccueil.getTabGestion().getTabList()[2].setEnabled(false);*/
-		// onglet connexion
+		vAccueil.getItemLogin().setImage(null); // enléve l'image
+		vAccueil.getTabGestion().setVisible(true);// Affiche TabGestion
+
+		// Si on appuie sur onglet connexion
 		vAccueil.getItemConnexion().addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				// si on se connecte
 				if (vAccueil.getItemConnexion().getText().equals("Connexion")) {
-					VLogin vLogin = new VLogin();
-					LoginController loginController = new LoginController(vLogin);
+					VLogin vLogin = new VLogin(); // Instanciation de la vue Vlogin
+					LoginController loginController = new LoginController(vLogin); // Instanciation de la vue
 					vLogin.init();
-					loginController.init();
-					vLogin.open();
+					loginController.init(); // Initialisation de loginController
+					vLogin.open(); // Ouverture de la vue
 				}
 			}
 
@@ -54,23 +61,33 @@ public class AccueilController implements SelectionListener {
 			}
 		});	
 		
-		
+		/**
+		 * Si on appuie sur le bouton de déconnexion
+		 * 
+		 * 
+		 */
 		vAccueil.getItemLogin().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				System.out.println(Http.getDisconnectUser());
-				vAccueil.getAccueil().setVisible(false);
+				System.out.println(Http.getDisconnectUser());// déconnexion de l'utilisateur
+				vAccueil.getAccueil().setVisible(false); // 
 				
 				//Prog.main(null);
 
 				new Prog().main(null);
-				System.exit(0);
+				System.exit(0);// Ferme le programme et relance à nouveau l'application
 			
 				
 			}
 		});
 		
+		
+		/**
+		 * Si on appuie sur le bouton supprimer
+		 * 
+		 * 
+		 */
 		vAccueil.getBtnSupprimerAccueil().addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -78,18 +95,18 @@ public class AccueilController implements SelectionListener {
 				
 				try {
 					selectedQuestionnaire=selectionTableViewer();
-					String idGrpQuest = selectedQuestionnaire.getQuestionnaire_id()+ "_" +selectedQuestionnaire.getGroupe_id();
-					Integer idQuestionnaire = selectedQuestionnaire.getQuestionnaire_id();
+					String idGrpQuest = selectedQuestionnaire.getQuestionnaire_id()+ "_" +selectedQuestionnaire.getGroupe_id(); // récuperation de l'id du questionnaire
+					Integer idQuestionnaire = selectedQuestionnaire.getQuestionnaire_id(); // id du groupe 
 					
-					GroupeQuestionnaire[] test = Http.getCIMGrpQst(idGrpQuest);
+					GroupeQuestionnaire[] test = Http.getCIMGrpQst(idGrpQuest); // recuperation de la cim groupeQuestionnaire
 					 
-					Shell shell = new Shell(display);
+					Shell shell = new Shell(display); // affichage de la messageBox
 				    MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING |SWT.YES | SWT.NO);
 				    messageBox.setMessage("Etes-vous sur de vouloir supprimer "+selectedQuestionnaire.getQuestionnaire_libelle()+" ?");
 				   
 				    int rc = messageBox.open();
 				    
-				    if (rc == SWT.YES){
+				    if (rc == SWT.YES){ // SI on appuie sur oui, supression de la cim
 				    	
 				    	for (GroupeQuestionnaire gq : test) {
 							Http.deleteCIMGroupeQuestionnaire(gq.getId(),idGrpQuest,idQuestionnaire);
@@ -101,7 +118,7 @@ public class AccueilController implements SelectionListener {
 				    }
 					
 				} catch (NullPointerException npe1) {
-					vAccueil.getLblInformation().setText("Veuillez saisir un questionnaire !");
+					vAccueil.getLblInformation().setText("Veuillez saisir un questionnaire !"); // Vérification de la selection de quelque chose 
 				}
 				
 				
@@ -115,7 +132,11 @@ public class AccueilController implements SelectionListener {
 			
 		});	
 		
-		
+		/**
+		 * Si on appuie sur le bouton modifier groupe
+		 * 
+		 * 
+		 */
 		vAccueil.getBtnModifierGroupeAccueil().addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
@@ -134,6 +155,11 @@ public class AccueilController implements SelectionListener {
         	}
         });
 		
+		/**
+		 * Si on appuie sur le bouton modifier questionnaire
+		 * 
+		 * 
+		 */
 		vAccueil.getBtnModifierAccueil().addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -142,10 +168,8 @@ public class AccueilController implements SelectionListener {
 					selectedQuestionnaire=selectionTableViewer();
 					
 					
-				    	vAccueil.getTabGestion().setSelection(1);
+				    	vAccueil.getTabGestion().setSelection(1); // Affichage de l'onglet QCM
 				    	QcmController qcmController = new QcmController(vAccueil);
-				    	/*qcmController.setUpdateQcmQuestionnaire(selectedQuestionnaire.getQuestionnaire_id());
-				    	qcmController.setUpdateQcmGroupe(selectedQuestionnaire.getGroupe_id());*/
 				    	AppController.setSession_Id(Http.getQuestionnaire(selectedQuestionnaire.getQuestionnaire_id()));
 				    	AppController.setSessionGroupe_Id(Http.getGroupe(selectedQuestionnaire.getGroupe_id()));
 				    	vAccueil.getBtnAjouterQuestion().setVisible(true);
@@ -172,7 +196,11 @@ public class AccueilController implements SelectionListener {
 		});	
 		
 	}
-	
+	/**
+	 * 
+	 * @return renvoi le questionnaire selectionné
+	 * 
+	 */
 	public CollectionQuestionnaireGroupe selectionTableViewer(){
 		StructuredSelection selection = (StructuredSelection) vAccueil.getTableViewer().getSelection();
 		CollectionQuestionnaireGroupe selectedQuestionnaire = (CollectionQuestionnaireGroupe) selection.getFirstElement();

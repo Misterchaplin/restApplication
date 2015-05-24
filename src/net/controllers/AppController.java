@@ -10,7 +10,11 @@ import net.models.ActifUser;
 import net.models.Groupe;
 import net.models.Questionnaire;
 import net.vues.VAccueil;
-
+/**
+ * Classe AppController permettant d'instancier et d'initialisaer tous les autres controllers
+ * 
+ * 
+ */
 public class AppController {
 	private static ActifUser activeUser = new ActifUser();
 
@@ -41,6 +45,11 @@ public class AppController {
 		AppController.session_Id = session_Id;
 	}
 
+	/**
+	 * Instanciation et initialisation de tous les controllers 
+	 * 
+	 * 
+	 */
 	public AppController(VAccueil vAccueil) {
 		AccueilController accueilController = new AccueilController(vAccueil);
 		GroupeController groupeController = new GroupeController(vAccueil);

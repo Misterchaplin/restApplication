@@ -24,7 +24,11 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-
+/**
+ * Classe StatistiquesController permettant de gérer l'onglet statistique
+ * 
+ * 
+ */
 public class StatistiquesController implements SelectionListener {
 	
 	public static VAccueil vAccueil;
@@ -35,10 +39,18 @@ public class StatistiquesController implements SelectionListener {
 	}
 	
 	
-	
+	/**
+	 * Fonction init permettant d'initialiser StatistiquesController
+	 * 
+	 * 
+	 */
 	public void init(){
 		
-		
+		/**
+		 * Remplissage de la deuxième combobox
+		 * 
+		 * 
+		 */
 		vAccueil.getCbStatistiquesGroupe().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -50,7 +62,11 @@ public class StatistiquesController implements SelectionListener {
 		});
 		
 		
-		
+		/**
+		 * Si on appuie sur le bouton valider de l'onglet Statistiques 
+		 * 
+		 * 
+		 */
 		vAccueil.getBtnStatValider().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
