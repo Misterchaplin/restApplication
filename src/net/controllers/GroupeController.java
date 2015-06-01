@@ -98,7 +98,7 @@ public class GroupeController implements SelectionListener {
 							GroupeQuestionnaire insertGroupeQuestionnaires=Http.postGroupeQuestionnaires(groupQuest);
 							
 							if(insertGu!=null){
-								vAccueil.getLblInformation().setText("Ajout rÃ©ussie");
+								vAccueil.getLblInformation().setText("Ajout réussi");
 								vAccueil.getCbvQcm().setInput(null);
 								vAccueil.getTxtLibelle().setText("");
 								vAccueil.getTxtCode().setText("");
@@ -110,7 +110,7 @@ public class GroupeController implements SelectionListener {
 							}
 						}
 						else{
-							vAccueil.getLblInformation().setText("Ajout rÃ©ussie");
+							vAccueil.getLblInformation().setText("Ajout réussi");
 							vAccueil.getCbvQcm().setInput(null);
 							vAccueil.getTxtLibelle().setText("");
 							vAccueil.getTxtCode().setText("");
@@ -147,8 +147,7 @@ public class GroupeController implements SelectionListener {
 		vAccueil.getBtnAjouterGroupe().setVisible(false);
 		vAccueil.getBtnModifierGroupe().setVisible(true);
 		
-		//lesQuestionnaires lesGroupes = Http.getAllGroupes();
-		// leQuestionnaire leGroupe=Http.getGroupe(getUpdateQcmGroupe());
+		
 		Integer count=0;
 		vAccueil.getCbvQuestionnaireGroupe().setInput(lesQuestionnaires);
 		
@@ -188,37 +187,20 @@ public class GroupeController implements SelectionListener {
 		        GroupeQuestionnaire[] test = Http.getCIMGrpQst(idGrpQuest);
 		        
 		        for (GroupeQuestionnaire gq : test) {
-					System.out.println("1 "+gq);
-					System.out.println(element.getId());
-					System.out.println(gq.getQuestionnaire_id());
+					if (gq.getQuestionnaire_id() != element.getId()){// si le questionnaire choisi est different du questionnaire correspondant au groupe
+						System.out.println(Http.delGroupeQuestionnare(gq));
+						GroupeQuestionnaire newGroup = new GroupeQuestionnaire();
+					    newGroup.setQuestionnaire_id(element.getId());
+					    newGroup.setGroupe_id(group.getId());
+					    Http.postGroupeQuestionnaires(newGroup);
 					
-						
-						if (gq.getQuestionnaire_id() != element.getId()){// si le questionnaire choisi est different du questionnaire correspondant au groupe
-							System.out.println(Http.delGroupeQuestionnare(gq));
-							GroupeQuestionnaire newGroup = new GroupeQuestionnaire();
-					        newGroup.setQuestionnaire_id(element.getId());
-					        newGroup.setGroupe_id(group.getId());
-					        Http.postGroupeQuestionnaires(newGroup);
-					        
-
-					        GroupeQuestionnaire groupSansQuest = new GroupeQuestionnaire();
-					        groupSansQuest.setQuestionnaire_id(leQuestionnaire.getId());
-					        groupSansQuest.setGroupe_id(48);
-					        Http.postGroupeQuestionnaires(groupSansQuest);
-						}
-						
-						System.out.println(Http.putGroupe(group));
-					
-					//gq.setQuestionnaire_id(element.getId());
-					//System.out.println("2 "+gq);
-					// c'est ici qu'il y a une erreur :/
-					//GroupeQuestionnaire[] data = Http.putGroupeQuestionnaire(gq);
-					//for (GroupeQuestionnaire groupeQuestionnaire : data) {
-						//System.out.println(groupeQuestionnaire);
-					//}
+					    GroupeQuestionnaire groupSansQuest = new GroupeQuestionnaire();
+					    groupSansQuest.setQuestionnaire_id(leQuestionnaire.getId());
+					    groupSansQuest.setGroupe_id(48);
+					    Http.postGroupeQuestionnaires(groupSansQuest);
+					}
 				}
-		        
-		        
+
 		        vAccueil.getTxtLibelle().setText("");
 		        vAccueil.getTxtCode().setText("");
 		        vAccueil.getCbvQuestionnaireGroupe().setInput(null);
@@ -230,19 +212,8 @@ public class GroupeController implements SelectionListener {
 		        Utils.remplirComboQuestionnaire();
 		        Utils.updateTableViewer();
 		        Utils.remplirComboGroupeStat();
-		        
-		        
-		        
-		        
-		       // System.out.println(element.getId());
-		        
-		        
-		        
-		      
-		        
-		     
-				
-				vAccueil.getLblInformation().setText("Groupe modifiÃ© avec succÃ©s");
+		
+				vAccueil.getLblInformation().setText("Groupe modifié avec succés");
 			}
 		});
 		

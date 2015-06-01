@@ -274,7 +274,7 @@ public class VAccueil {
 		grpInformation.setLayoutData(fd_grpInformation);
 		
 		lblInformation = new Label(grpInformation, SWT.NONE);
-		lblInformation.setBounds(10, 10, 490, 15);
+		lblInformation.setBounds(10, 21, 490, 15);
 		
 		tabGestion = new TabFolder(accueil, SWT.NONE);
 		fd_grpInformation.bottom = new FormAttachment(tabGestion, -1);
@@ -311,26 +311,26 @@ public class VAccueil {
 	    
 	    TableColumn column = new TableColumn(tableViewer.getTable(), SWT.NONE);
         column.setText("Questionnaires");
-        column.setWidth(223);
+        column.setWidth(194);
         firstNameCol = new TableViewerColumn(tableViewer, column);
    
         column = new TableColumn(tableViewer.getTable(), SWT.NONE);
         column.setText("Groupes");
-        column.setWidth(223);
+        column.setWidth(192);
         lastNameCol = new TableViewerColumn(tableViewer, column);
 		btnModifierAccueil = new Button(cpAccueil, SWT.NONE);
-        btnModifierAccueil.setBounds(444, 154, 130, 28);
+        btnModifierAccueil.setBounds(444, 132, 130, 28);
         formToolkit.adapt(btnModifierAccueil, true, true);
         btnModifierAccueil.setText("Modifier QCM");
         
         btnSupprimerAccueil = new Button(cpAccueil, SWT.NONE);
      
-        btnSupprimerAccueil.setBounds(464, 207, 95, 28);
+        btnSupprimerAccueil.setBounds(444, 200, 130, 28);
         formToolkit.adapt(btnSupprimerAccueil, true, true);
         btnSupprimerAccueil.setText("Supprimer");
         
         btnModifierGroupeAccueil = new Button(cpAccueil, SWT.NONE);
-        btnModifierGroupeAccueil.setBounds(444, 180, 126, 28);
+        btnModifierGroupeAccueil.setBounds(444, 166, 130, 28);
         btnModifierGroupeAccueil.setText("Modifier Groupe");
      
                
@@ -555,7 +555,7 @@ public class VAccueil {
         userStat = new TableViewerColumn(tableViewerStat, columnStat);
         
         columnStat = new TableColumn(tableViewerStat.getTable(), SWT.NONE);
-        columnStat.setText("Pourcentage de bonnes rï¿½ponses");
+        columnStat.setText("Pourcentage de bonnes réponses");
         columnStat.setWidth(216);
         questStat = new TableViewerColumn(tableViewerStat, columnStat);
 		

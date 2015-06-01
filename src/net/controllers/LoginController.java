@@ -170,7 +170,7 @@ public class LoginController implements SelectionListener {
 	    	 MessageBox messageBox = new MessageBox(AccueilController.vAccueil.getAccueil().getShell(), SWT.ICON_WARNING | SWT.OK);
 	    	 messageQuestionnaire++;
 	         messageBox.setText("Warning");
-	         messageBox.setMessage("Vous n'avez crÃ©e aucun questionnaire");
+	         messageBox.setMessage("Vous n'avez crée aucun questionnaire");
 	         messageBox.open();
 	    }
         

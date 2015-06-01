@@ -2,13 +2,8 @@ package net.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import net.http.TestHttp;
-import net.models.CollectionQuestionnaireGroupe;
 import net.models.CollectionUtilisateurScore;
 import net.models.Groupe;
-import net.models.GroupeQuestionnaire;
-import net.models.GroupeUtilisateur;
 import net.models.Question;
 import net.models.Questionnaire;
 import net.models.Realisation;
@@ -17,10 +12,8 @@ import net.technics.Http;
 import net.technics.Utils;
 import net.vues.VAccueil;
 
-import org.apache.http.client.HttpResponseException;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;

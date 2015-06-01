@@ -162,7 +162,7 @@ public class QcmController implements SelectionListener {
 					updateQcmGroupe=null;
 					updateQcmQuestionnaire=null;
 				}
-				vAccueil.getLblInformation().setText("Vous pouvez crï¿½er un nouveau formulaire.");
+				vAccueil.getLblInformation().setText("Vous pouvez créer un nouveau formulaire.");
 			}
 		});
 		/**
@@ -196,7 +196,6 @@ public class QcmController implements SelectionListener {
 	 * 
 	 * 
 	 */
-	
 	public void initReponse(Integer idQuestion){
 
 		lesReponse = Http.getReponsesByQuestion(idQuestion);
@@ -267,8 +266,6 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnCkGroupe2().setSelection(false);
 		vAccueil.getBtnCkGroupe3().setSelection(false);
 		vAccueil.getBtnCkGroupe4().setSelection(false);
-		//session_id=null;
-		
 		countQuestion=0;
 		vAccueil.getLblCurrentQuestion().setText(String.valueOf(countQuestion));
 		vAccueil.getLblLastQuestion().setText(String.valueOf(countQuestion));
@@ -284,12 +281,7 @@ public class QcmController implements SelectionListener {
 	 * dont au prÃ©alable on a cliquÃ© sur modifier
 	 */
 	public void addQuestionToUpdate(Integer id){
-		System.out.println("la");
-		//System.out.println(AppController.getSession_Id().getId());
 		leQuestionnaire.setId(id);
-		//session_id=leQuestionnaire;
-		//AppController.setSession_Id(leQuestionnaire);
-		//System.out.println(AppController.getSession_Id());
 		lesQuestions = Http.getQuestionByQuestionnaire(leQuestionnaire.getId());
 		maxPage=lesQuestions.length;
 		maxPage++;
@@ -445,7 +437,7 @@ public class QcmController implements SelectionListener {
 		vAccueil.getBtnCkGroupe2().setSelection(false);
 		vAccueil.getBtnCkGroupe3().setSelection(false);
 		vAccueil.getBtnCkGroupe4().setSelection(false);
-		vAccueil.getLblInformation().setText("Ajout rÃ©ussie");
+		vAccueil.getLblInformation().setText("Ajout réussi");
 		countQuestion++;
 		vAccueil.getLblCurrentQuestion().setText(String.valueOf(countQuestion));
 		vAccueil.getLblLastQuestion().setText(String.valueOf(countQuestion));
@@ -662,18 +654,6 @@ public class QcmController implements SelectionListener {
 		}
 		return nbTrueAnswer;
 	}
-	
-	/*public void startUpdate(){
-		if(AppController.getSession_Id()!= null){
-			System.out.println("deux");
-			initAddQcm();
-			initQuestionnaireUpdate();			
-			initGroupeUpdate();
-			initQuestionUpdate(0);
-			vAccueil.getBtnAjouterQcm().setText("Modifier");
-			
-		}
-	}*/
 
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0) {
